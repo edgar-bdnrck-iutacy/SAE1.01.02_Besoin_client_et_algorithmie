@@ -1,0 +1,23 @@
+﻿<Window
+    x:Class="SAE.Parametre"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SAE"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Parametre"
+    Width="1280"
+    Height="720"
+    mc:Ignorable="d">
+    <Grid>
+        <Label
+            x:Name="titre"
+            Width="352"
+            Height="64"
+            Margin="0,64,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Content="Paramètre"
+            FontSize="36" />
+    </Grid>
+</Window>

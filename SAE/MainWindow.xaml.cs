@@ -19,6 +19,22 @@ namespace SAE
         public MainWindow()
         {
             InitializeComponent();
+
+        }
+
+        private void butJouer_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void butParametre_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void butQuitter_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }
