@@ -12,12 +12,12 @@
     <Grid>
         <Label
             x:Name="titre"
-            Width="352"
+            Width="252"
             Height="64"
             Margin="0,64,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
-            Content="Paramètre"
-            FontSize="36" />
+            Content="Paramètres"
+            FontSize="48" />
     </Grid>
 </Window>

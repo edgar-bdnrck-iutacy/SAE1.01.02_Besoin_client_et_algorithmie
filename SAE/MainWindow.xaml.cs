@@ -29,6 +29,12 @@ namespace SAE
 
         private void butParametre_Click(object sender, RoutedEventArgs e)
         {
+            Parametre dialog = new Parametre();
+            bool? result = dialog.ShowDialog();
+            if (result == true)
+            {
+
+            }
 
         }
 
