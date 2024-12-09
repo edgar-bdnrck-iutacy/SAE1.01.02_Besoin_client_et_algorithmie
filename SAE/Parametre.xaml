@@ -12,12 +12,29 @@
     <Grid>
         <Label
             x:Name="titre"
-            Width="352"
+            Width="252"
             Height="64"
-            Margin="0,64,0,0"
+            Margin="0,56,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
-            Content="Paramètre"
-            FontSize="36" />
+            Content="Paramètres"
+            FontSize="48" />
+        <Slider
+            Width="322"
+            Height="24"
+            Margin="12,384,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            RenderTransformOrigin="0.5,0.5">
+            <Slider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform Angle="90" />
+                    <TranslateTransform />
+                </TransformGroup>
+            </Slider.RenderTransform>
+        </Slider>
+        <Label Content="Sons&#xD;&#xA;" HorizontalAlignment="Left" Margin="154,562,0,0" VerticalAlignment="Top" Width="48" FontSize="18"/>
     </Grid>
 </Window>
