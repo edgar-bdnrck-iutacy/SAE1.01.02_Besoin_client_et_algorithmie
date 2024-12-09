@@ -1,0 +1,106 @@
+﻿<Window
+    x:Class="SAE.MenuDemarrage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="MenuDemarrage"
+    Width="1280"
+    Height="720"
+    WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <!--  Animation de rotation pour imgLune  -->
+        <Storyboard x:Key="RotateMoonStoryboard" RepeatBehavior="Forever">
+            <DoubleAnimation
+                Storyboard.TargetName="imgLune"
+                Storyboard.TargetProperty="(RenderTransform).(RotateTransform.Angle)"
+                From="0"
+                To="360"
+                Duration="0:1:59" />
+        </Storyboard>
+
+        <!--  Animation de montée et descente pour imgAstro  -->
+        <Storyboard
+            x:Key="MoveAstronautStoryboard"
+            AutoReverse="True"
+            RepeatBehavior="Forever">
+            <DoubleAnimation
+                Storyboard.TargetName="imgAstro"
+                Storyboard.TargetProperty="(RenderTransform).(TranslateTransform.Y)"
+                From="0"
+                To="50"
+                Duration="0:0:5" />
+        </Storyboard>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/img/sky.jpg" />
+        </Grid.Background>
+
+        <!--  Image de la lune avec une rotation  -->
+        <Image
+            x:Name="imgLune"
+            Margin="-552,48,552,-574"
+            Source="/img/lune.png"
+            Stretch="Fill">
+            <Image.RenderTransform>
+                <RotateTransform />
+            </Image.RenderTransform>
+        </Image>
+
+        <!--  Image de l'astronaute avec un déplacement vertical  -->
+        <Image
+            x:Name="imgAstro"
+            Margin="430,147,-123,-417"
+            Source="/img/astronaute_fusee_dorsale_T_pose.png"
+            Stretch="Fill">
+            <Image.RenderTransform>
+                <TranslateTransform Y="0" />
+            </Image.RenderTransform>
+        </Image>
+
+        <!--  Titre  -->
+        <Label
+            x:Name="titre"
+            Width="994"
+            Height="142"
+            Margin="0,76,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Content="LE COSMONAUTE"
+            FontFamily="72 Black"
+            FontSize="110"
+            Foreground="White" />
+
+        <!--  Boutons  -->
+        <Button
+            x:Name="butJouer"
+            Width="258"
+            Height="104"
+            Margin="124,295,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="butJouer_Click"
+            Content="Jouer"
+            FontSize="36" />
+        <Button
+            x:Name="butParametre"
+            Width="258"
+            Height="104"
+            Margin="124,428,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="butParametre_Click"
+            Content="Paramètres"
+            FontSize="36" />
+        <Button
+            x:Name="butQuitter"
+            Width="258"
+            Height="104"
+            Margin="124,561,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="butQuitter_Click"
+            Content="Quitter"
+            FontSize="36" />
+    </Grid>
+</Window>
