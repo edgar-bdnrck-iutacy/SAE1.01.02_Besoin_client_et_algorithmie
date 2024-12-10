@@ -100,11 +100,11 @@ namespace SAE
             double centreCosmoY = Canvas.GetTop(cosmo) + cosmo.Height / 2;
 
             // Calcule la différence entre la position de la souris et le centre du rectangle
-            double deltaX = position.X - centreCosmoX;
-            double deltaY = position.Y - centreCosmoY;
+            double distanceX = position.X - centreCosmoX;
+            double distanceY = position.Y - centreCosmoY;
 
             // Calcule l'angle en utilisant la fonction Atan2
-            double angle = Math.Atan2(deltaY, deltaX) * (180 / Math.PI) + 90; // Conversion en degrés et ajustement de l'angle
+            double angle = Math.Atan2(distanceY, distanceX) * (180 / Math.PI) + 90; // Conversion en degrés et ajustement de l'angle
 
             cosmo.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);  // Point d'origine au centre du rectangle
 
@@ -136,13 +136,9 @@ namespace SAE
                     double deltaX = Math.Cos(angleRadians);
                     double deltaY = Math.Sin(angleRadians);
 
-                    // Récupère la position actuelle du rectangle
-                    double currentLeft = Canvas.GetLeft(cosmo);
-                    double currentTop = Canvas.GetTop(cosmo);
-
                     // Déplace le rectangle en fonction de l'angle
-                    Canvas.SetLeft(cosmo, currentLeft - deltaX);
-                    Canvas.SetTop(cosmo, currentTop - deltaY);
+                    Canvas.SetLeft(cosmo, Canvas.GetLeft(cosmo) - deltaX);
+                    Canvas.SetTop(cosmo, Canvas.GetTop(cosmo) - deltaY);
                 }
             }
             else if (droite)
@@ -159,13 +155,9 @@ namespace SAE
                     double deltaX = Math.Cos(angleRadians);
                     double deltaY = Math.Sin(angleRadians);
 
-                    // Récupère la position actuelle du rectangle
-                    double currentLeft = Canvas.GetLeft(cosmo);
-                    double currentTop = Canvas.GetTop(cosmo);
-
                     // Déplace le rectangle en fonction de l'angle
-                    Canvas.SetLeft(cosmo, currentLeft + deltaX);
-                    Canvas.SetTop(cosmo, currentTop + deltaY);
+                    Canvas.SetLeft(cosmo, Canvas.GetLeft(cosmo) + deltaX);
+                    Canvas.SetTop(cosmo, Canvas.GetTop(cosmo) + deltaY);
                 }
             }
             if (haut && bas)
@@ -177,26 +169,20 @@ namespace SAE
                 // Récupérer la position actuelle de la souris relative au Canvas
                 System.Windows.Point PositionSouris = Mouse.GetPosition(this);
 
-                // Récupérer la position actuelle de l'objet
-                double currentLeft = Canvas.GetLeft(cosmo);
-                double currentTop = Canvas.GetTop(cosmo);
-
                 // Calculer le vecteur de déplacement vers la souris
-                double deltaX = PositionSouris.X - currentLeft;
-                double deltaY = PositionSouris.Y - currentTop;
+                double distanceX = PositionSouris.X - Canvas.GetLeft(cosmo);
+                double distanceY = PositionSouris.Y - Canvas.GetTop(cosmo);
 
                 // Calculer la distance vers la souris avec le théoreme de pythagore
-                double distance = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
+                double distanceXY = Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
 
-                if (distance > 30)
+                if (distanceXY > 30)
                 {
-                    if (distance > 0)
-                    {
-                        deltaX = (deltaX / distance);
-                        deltaY = (deltaY / distance);
-                    }
-                Canvas.SetLeft(cosmo, currentLeft + deltaX);
-                Canvas.SetTop(cosmo, currentTop + deltaY);
+                    distanceX = distanceX / distanceXY;
+                    distanceY = distanceY / distanceXY;
+
+                    Canvas.SetLeft(cosmo, Canvas.GetLeft(cosmo) + distanceX);
+                    Canvas.SetTop(cosmo, Canvas.GetTop(cosmo) + distanceY);
                 }
             }
             else if (bas)
