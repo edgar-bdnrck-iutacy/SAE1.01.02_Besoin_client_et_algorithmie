@@ -39,9 +39,9 @@
         <!--  Image de la lune avec une rotation  -->
         <Image
             x:Name="imgLune"
-            Margin="-552,48,552,-574"
+            Margin="-550,50,550,-575"
             Source="/img/lune.png"
-            Stretch="Fill">
+            Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="1280" Height="1230">
             <Image.RenderTransform>
                 <RotateTransform />
             </Image.RenderTransform>
@@ -75,19 +75,18 @@
             x:Name="butJouer"
             Width="258"
             Height="104"
-            Margin="124,295,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
             Click="butJouer_Click"
             Content="Jouer"
-            FontSize="36" />
+            FontSize="36" Margin="0,0,0,300" />
         <Button
             x:Name="butParametre"
             Width="258"
             Height="104"
-            Margin="124,428,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
+            Margin="0,0,0,175"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
             Click="butParametre_Click"
             Content="Paramètres"
             FontSize="36" />
@@ -95,11 +94,10 @@
             x:Name="butQuitter"
             Width="258"
             Height="104"
-            Margin="124,561,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
             Click="butQuitter_Click"
             Content="Quitter"
-            FontSize="36" />
+            FontSize="36" Margin="0,0,0,50" />
     </Grid>
 </Window>

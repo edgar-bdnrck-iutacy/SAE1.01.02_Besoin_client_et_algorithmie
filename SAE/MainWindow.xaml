@@ -12,6 +12,9 @@
     KeyUp="Window_KeyUp"
     mc:Ignorable="d">
     <Canvas>
+        <Canvas.Background>
+            <ImageBrush ImageSource="/img/sky.jpg" />
+        </Canvas.Background>
         <Rectangle
             x:Name="cosmo"
             Canvas.Left="340"
