@@ -15,7 +15,7 @@
         <Canvas.Background>
             <ImageBrush ImageSource="/img/sky.jpg" />
         </Canvas.Background>
-        <Rectangle
+        <Image
             x:Name="cosmo"
             Canvas.Left="339"
             Canvas.Top="220"
