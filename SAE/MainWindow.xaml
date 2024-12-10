@@ -9,12 +9,7 @@
     Width="800"
     Height="450"
     mc:Ignorable="d">
-    <Grid>
-        <Label
-            Margin="385,283,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Label" />
-
-    </Grid>
+    <Canvas>
+        <Rectangle x:Name="cosmo" HorizontalAlignment="Left" Height="100" Stroke="Black" VerticalAlignment="Top" Width="60" Canvas.Left="370" Canvas.Top="324"/>
+    </Canvas>
 </Window>
