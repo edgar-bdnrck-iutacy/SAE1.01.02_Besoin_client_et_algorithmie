@@ -5,7 +5,7 @@
     Title="MenuDemarrage"
     Width="1280"
     Height="720"
-    WindowStartupLocation="CenterScreen">
+    WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <Window.Resources>
         <!--  Animation de rotation pour imgLune  -->
         <Storyboard x:Key="RotateMoonStoryboard" RepeatBehavior="Forever">
@@ -14,7 +14,7 @@
                 Storyboard.TargetProperty="(RenderTransform).(RotateTransform.Angle)"
                 From="0"
                 To="360"
-                Duration="0:1:59" />
+                Duration="0:2:59" />
         </Storyboard>
 
         <!--  Animation de montée et descente pour imgAstro  -->
@@ -50,9 +50,8 @@
         <!--  Image de l'astronaute avec un déplacement vertical  -->
         <Image
             x:Name="imgAstro"
-            Margin="430,147,-123,-417"
             Source="/img/astronaute_fusee_dorsale_T_pose.png"
-            Stretch="Fill">
+            Stretch="Fill" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="973" Height="973" Margin="0,0,-150,-300">
             <Image.RenderTransform>
                 <TranslateTransform Y="0" />
             </Image.RenderTransform>

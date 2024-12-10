@@ -8,10 +8,11 @@
     Title="Parametre"
     Width="1280"
     Height="720"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Grid>
         <Label
-            x:Name="titre"
+            x:Name="labTitre"
             Width="252"
             Height="64"
             Margin="0,56,0,0"
@@ -20,6 +21,7 @@
             Content="Paramètres"
             FontSize="48" />
         <Slider
+            x:Name="slidVolume"
             Width="322"
             Height="24"
             Margin="12,384,0,0"
@@ -30,11 +32,18 @@
                 <TransformGroup>
                     <ScaleTransform />
                     <SkewTransform />
-                    <RotateTransform Angle="90" />
+                    <RotateTransform Angle="270" />
                     <TranslateTransform />
                 </TransformGroup>
             </Slider.RenderTransform>
         </Slider>
-        <Label Content="Sons&#xD;&#xA;" HorizontalAlignment="Left" Margin="154,562,0,0" VerticalAlignment="Top" Width="48" FontSize="18"/>
+        <Label
+            x:Name="labVolume"
+            Width="71"
+            Margin="136,569,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Volume"
+            FontSize="18" />
     </Grid>
 </Window>

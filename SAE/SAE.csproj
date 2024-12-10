@@ -17,6 +17,9 @@
     <None Remove="img\atronaute_T_pose.png" />
     <None Remove="img\lune.png" />
     <None Remove="img\sky.jpg" />
+    <None Remove="music\Level.mp3" />
+    <None Remove="music\Main Menu.mp3" />
+    <None Remove="music\Mission Control.mp3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +31,15 @@
     <Resource Include="img\atronaute_T_pose.png" />
     <Resource Include="img\lune.png" />
     <Resource Include="img\sky.jpg" />
+    <Content Include="music\Level.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="music\Main Menu.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="music\Mission Control.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

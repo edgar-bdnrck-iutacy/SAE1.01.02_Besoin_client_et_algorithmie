@@ -17,12 +17,30 @@ namespace SAE
     /// </summary>
     public partial class MenuDemarrage : Window
     {
+        private MediaPlayer musique;
         public MenuDemarrage()
         {
             InitializeComponent();
 
             // Démarre les animations
-            Loaded += MenuDemarrage_Loaded; //Appel de la methode qui dit que la fenetre a été chargé
+            Loaded += MenuDemarrage_Loaded;
+
+            // Initialisation du lecteur média
+            musique = new MediaPlayer();
+
+            // Chemin vers la musique (exemple : musique.mp3 dans le dossier Musiques)
+            musique.Open(new Uri("music/Main Menu.mp3", UriKind.Relative));
+
+            // Lecture en boucle
+            musique.MediaEnded += (s, e) =>
+            {
+                musique.Position = TimeSpan.Zero;
+                musique.Play();
+            };
+
+            musique.Volume = 1;
+
+            musique.Play();
         }
 
         private void MenuDemarrage_Loaded(object sender, RoutedEventArgs e)
