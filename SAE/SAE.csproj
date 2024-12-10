@@ -23,14 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="img\astronaute_atterisage.png" />
-    <Resource Include="img\astronaute_celebration.png" />
-    <Resource Include="img\astronaute_fusee_dorsale_T_pose.png" />
-    <Resource Include="img\astronaute_Fusee_dorsal_saut.png" />
-    <Resource Include="img\astronaute_marche.png" />
-    <Resource Include="img\atronaute_T_pose.png" />
-    <Resource Include="img\lune.png" />
-    <Resource Include="img\sky.jpg" />
     <Content Include="music\Level.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -40,6 +32,17 @@
     <Content Include="music\Mission Control.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="img\astronaute_atterisage.png" />
+    <Resource Include="img\astronaute_celebration.png" />
+    <Resource Include="img\astronaute_fusee_dorsale_T_pose.png" />
+    <Resource Include="img\astronaute_Fusee_dorsal_saut.png" />
+    <Resource Include="img\astronaute_marche.png" />
+    <Resource Include="img\atronaute_T_pose.png" />
+    <Resource Include="img\lune.png" />
+    <Resource Include="img\sky.jpg" />
   </ItemGroup>
 
 </Project>
