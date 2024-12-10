@@ -12,29 +12,23 @@
     KeyUp="Window_KeyUp"
     mc:Ignorable="d">
     <Canvas>
-        <Rectangle
+        <Image
             x:Name="cosmo"
-            Canvas.Left="340"
-            Canvas.Top="217"
-            Width="60"
+            Canvas.Left="339"
+            Canvas.Top="220"
+            Width="100"
             Height="100"
             HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Stroke="Black">
-            <Rectangle.Fill>
-                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                    <GradientStop Color="Black" />
-                    <GradientStop Offset="1" Color="White" />
-                </LinearGradientBrush>
-            </Rectangle.Fill>
-        </Rectangle>
+            VerticalAlignment="Center"
+            Source="/img/astronaute_T_pose.png" />
         <Image
-            Canvas.Left="600"
-            Canvas.Top="167"
-            Width="100"
-            Height="167"
-            HorizontalAlignment="Center"
+            x:Name="Fusee"
+            Canvas.Left="598"
+            Canvas.Top="61"
+            Width="139"
+            Height="326"
+            HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Source="/img/testFusée1" />
+            Source="/img/testFusée1.png" />
     </Canvas>
 </Window>

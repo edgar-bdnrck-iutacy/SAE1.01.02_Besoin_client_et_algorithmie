@@ -23,7 +23,8 @@ namespace SAE
     public partial class MainWindow : Window
     {
         public bool pause = false, gauche = false, droite = false, haut = false, bas = false;
-        private static DispatcherTimer tick, tick2, temps;
+        private static DispatcherTimer tick, temps;
+        private static double inercieX = 0, inercieY = 0;
 
 
         public MainWindow()
@@ -75,8 +76,17 @@ namespace SAE
         {
             if (!pause)
             {
-
                 DeplacementCosmo();
+                if (inercieX > -10)
+                {
+                    Canvas.SetLeft(cosmo, Canvas.GetLeft(cosmo) + inercieX);
+                    inercieX = inercieX - 0.75;
+                }
+                if (inercieY > -10)
+                {
+                    Canvas.SetTop(cosmo, Canvas.GetTop(cosmo) + inercieY);
+                    inercieY = inercieY - 0.75;
+                }
             }
         }
 
@@ -84,7 +94,7 @@ namespace SAE
         {
             System.Windows.Point position = e.GetPosition(this); // Récupère la position de la souris par rapport à la fenêtre
             /* Console.WriteLine($"X: {position.X}, Y: {position.Y}"); */ // Affiche les coordonnées dans la fenêtre (par exemple dans une TextBox ou Console)
-
+            
             // Récupère les coordonnées du centre du rectangle
             double centreCosmoX = Canvas.GetLeft(cosmo) + cosmo.Width / 2;
             double centreCosmoY = Canvas.GetTop(cosmo) + cosmo.Height / 2;
@@ -104,6 +114,11 @@ namespace SAE
             // Appliquer la transformation de rotation au rectangle
             cosmo.RenderTransform = Rotation;
         }
+        private bool TropProche()
+        {
+            bool temp = true;
+            return temp;
+        }
 
         private void DeplacementCosmo()
         {
@@ -113,20 +128,18 @@ namespace SAE
             }
             else if (gauche)
             {
+
                 RotateTransform rotateTransform = cosmo.RenderTransform as RotateTransform;
                 if (rotateTransform != null)
                 {
                     double angle = rotateTransform.Angle;
 
-                    // Calcule le déplacement en fonction de l'angle
-                    double vitesse = 10; // La vitesse de déplacement
-
                     // Convertir l'angle en radians
                     double angleRadians = angle * Math.PI / 180;
 
                     // Calculer le déplacement horizontal (gauche) et vertical
-                    double deltaX = vitesse * Math.Cos(angleRadians);
-                    double deltaY = vitesse * Math.Sin(angleRadians);
+                    double deltaX = Math.Cos(angleRadians);
+                    double deltaY = Math.Sin(angleRadians);
 
                     // Récupère la position actuelle du rectangle
                     double currentLeft = Canvas.GetLeft(cosmo);
@@ -144,15 +157,12 @@ namespace SAE
                 {
                     double angle = rotateTransform.Angle;
 
-                    // Calcule le déplacement en fonction de l'angle
-                    double vitesse = 10; // La vitesse de déplacement
-
                     // Convertir l'angle en radians
                     double angleRadians = angle * Math.PI / 180;
 
                     // Calculer le déplacement horizontal (gauche) et vertical
-                    double deltaX = vitesse * Math.Cos(angleRadians);
-                    double deltaY = vitesse * Math.Sin(angleRadians);
+                    double deltaX = Math.Cos(angleRadians);
+                    double deltaY = Math.Sin(angleRadians);
 
                     // Récupère la position actuelle du rectangle
                     double currentLeft = Canvas.GetLeft(cosmo);
@@ -183,23 +193,45 @@ namespace SAE
                 // Calculer la distance vers la souris
                 double distance = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
 
-                // Normaliser le vecteur de déplacement pour un mouvement constant
-                double vitesse = 10; // Vitesse de déplacement par tick
-                if (distance > 0) // Éviter une division par zéro
+                if (distance > 30)
                 {
-                    deltaX = (deltaX / distance) * vitesse;
-                    deltaY = (deltaY / distance) * vitesse;
-                }
+                    if (distance > 0)
+                    {
+                        deltaX = (deltaX / distance);
+                        deltaY = (deltaY / distance);
+                    }
 
-                // Appliquer le déplacement
-                Canvas.SetLeft(cosmo, currentLeft + deltaX);
-                Canvas.SetTop(cosmo, currentTop + deltaY);
+                
+                    Canvas.SetLeft(cosmo, currentLeft + deltaX);
+                    Canvas.SetTop(cosmo, currentTop + deltaY);
+                }
             }
             else if (bas)
             {
-                Console.WriteLine("bas");
+                
+                // Récupérer la position actuelle de la souris relative au Canvas
+                System.Windows.Point mousePosition = Mouse.GetPosition(this);
+
+                // Récupérer la position actuelle de l'objet
+                double currentLeft = Canvas.GetLeft(cosmo);
+                double currentTop = Canvas.GetTop(cosmo);
+
+                // Calculer le vecteur de déplacement vers la souris
+                double deltaX = mousePosition.X - currentLeft;
+                double deltaY = mousePosition.Y - currentTop;
+
+                // Calculer la distance vers la souris
+                double distance = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
+
+
+                if (distance > 0)
+                {
+                    deltaX = (deltaX / distance);
+                    deltaY = (deltaY / distance);
+                }
+                    Canvas.SetLeft(cosmo, currentLeft - deltaX);
+                    Canvas.SetTop(cosmo, currentTop - deltaY);
             }
-            // Console.WriteLine($"gauche: {gauche}, droite: {droite}, bas: {bas}, haut: {haut}");
         }
     }
 }

@@ -14,7 +14,7 @@
     <None Remove="img\astronaute_fusee_dorsale_T_pose.png" />
     <None Remove="img\astronaute_Fusee_dorsal_saut.png" />
     <None Remove="img\astronaute_marche.png" />
-    <None Remove="img\atronaute_T_pose.png" />
+    <None Remove="img\astronaute_T_pose.png" />
     <None Remove="img\lune.png" />
     <None Remove="img\sky.jpg" />
     <None Remove="music\Level.mp3" />
@@ -40,7 +40,7 @@
     <Resource Include="img\astronaute_fusee_dorsale_T_pose.png" />
     <Resource Include="img\astronaute_Fusee_dorsal_saut.png" />
     <Resource Include="img\astronaute_marche.png" />
-    <Resource Include="img\atronaute_T_pose.png" />
+    <Resource Include="img\astronaute_T_pose.png" />
     <Resource Include="img\lune.png" />
     <Resource Include="img\sky.jpg" />
   </ItemGroup>
