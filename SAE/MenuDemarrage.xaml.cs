@@ -32,7 +32,7 @@ namespace SAE
             musique.Open(new Uri("music/Main Menu.mp3", UriKind.Relative));
 
             // Abonnement à l'événement de changement de volume
-            Parametre.VolumeChange += MajVolume;
+            // Parametre.VolumeChange += MajVolume;
             Console.WriteLine($"Valeur du volume récupéré: {musique.Volume}");
 
             // Lecture en boucle
