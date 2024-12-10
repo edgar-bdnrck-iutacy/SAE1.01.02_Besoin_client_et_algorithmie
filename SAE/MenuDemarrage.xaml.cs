@@ -31,6 +31,10 @@ namespace SAE
             // Chemin vers la musique (exemple : musique.mp3 dans le dossier Musiques)
             musique.Open(new Uri("music/Main Menu.mp3", UriKind.Relative));
 
+            // Abonnement à l'événement de changement de volume
+            Parametre.VolumeChange += MajVolume;
+            Console.WriteLine($"Valeur du volume récupéré: {musique.Volume}");
+
             // Lecture en boucle
             musique.MediaEnded += (s, e) =>
             {
@@ -38,9 +42,13 @@ namespace SAE
                 musique.Play();
             };
 
-            musique.Volume = 1;
-
             musique.Play();
+        }
+
+        private void MajVolume(double volume)
+        {
+            musique.Volume = volume / 10; // Mettre à jour le volume en temps réel
+            Console.WriteLine($"Volume mis à jour : {musique.Volume}");
         }
 
         private void MenuDemarrage_Loaded(object sender, RoutedEventArgs e)
@@ -68,10 +76,10 @@ namespace SAE
         {
             Parametre dialog = new Parametre();
             bool? result = dialog.ShowDialog();
-            if (result == true)
+            /*if (result == true)
             {
 
-            }
+            }*/
 
         }
 
