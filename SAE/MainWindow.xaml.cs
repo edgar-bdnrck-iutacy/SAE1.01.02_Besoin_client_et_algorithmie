@@ -22,8 +22,8 @@ namespace SAE
 
     public partial class MainWindow : Window
     {
-        public bool pause, gauche, droite, haut , bas = false;
-        private static DispatcherTimer tick, temps;
+        public bool pause = false, gauche = false, droite = false, haut = false, bas = false;
+        private static DispatcherTimer tick, tick2, temps;
 
 
         public MainWindow()
@@ -47,7 +47,6 @@ namespace SAE
             tick.Interval = TimeSpan.FromMilliseconds(16);
             tick.Tick += Jeu;
             tick.Start();
-
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -76,7 +75,7 @@ namespace SAE
         {
             if (!pause)
             {
-                
+
                 DeplacementCosmo();
             }
         }

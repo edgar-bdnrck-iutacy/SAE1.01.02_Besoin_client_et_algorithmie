@@ -8,7 +8,9 @@
     Title="MainWindow"
     Width="800"
     Height="450"
-    mc:Ignorable="d" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
+    KeyDown="Window_KeyDown"
+    KeyUp="Window_KeyUp"
+    mc:Ignorable="d">
     <Canvas>
         <Rectangle
             x:Name="cosmo"
@@ -26,5 +28,13 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
+        <Image
+            Canvas.Left="600"
+            Canvas.Top="167"
+            Width="100"
+            Height="167"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Source="/img/testFusée1" />
     </Canvas>
 </Window>
