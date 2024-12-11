@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,7 +21,7 @@ namespace SAE
     {
         public bool pause = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false;
         private static DispatcherTimer tick, temps;
-        private static double inercieX = 0, inercieY = 0, distanceX = 0, distanceY = 0, vitesse = 2;
+        private static double inercieX = 0, inercieY = 0, distanceX = 0, distanceY = 0, vitesse = 2, vitesseLazer = 20;
         private MediaPlayer musique;
 
 
@@ -74,6 +75,7 @@ namespace SAE
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
+            Console.WriteLine(e.Key);
             switch (e.Key)
             {
                 case Key.Up:
@@ -90,6 +92,10 @@ namespace SAE
 
                 case Key.Right:
                     droite = true;
+                    break;
+
+                case Key.Space:
+                    tirLazer();
                     break;
             }
         }
@@ -119,23 +125,19 @@ namespace SAE
             // Récupère la position de la souris par rapport à la fenêtre
             System.Windows.Point position = e.GetPosition(this);
             
-            // Récupère les coordonnées du centre du rectangle
-            double centreCosmoX = Canvas.GetLeft(cosmo) + cosmo.Width / 2;
-            double centreCosmoY = Canvas.GetTop(cosmo) + cosmo.Height / 2;
-
             // Calcule la différence entre la position de la souris et le centre du rectangle
-            distanceX = position.X - centreCosmoX;
-            distanceY = position.Y - centreCosmoY;
+            distanceX = position.X - Canvas.GetLeft(cosmo) + cosmo.Width / 2;
+            distanceY = position.Y - Canvas.GetTop(cosmo) + cosmo.Height / 2;
 
             // Calcule l'angle en utilisant la fonction Atan2
             double angle = Math.Atan2(distanceY, distanceX) * (180 / Math.PI) + 90; // Conversion en degrés et ajustement de l'angle
 
-            cosmo.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);  // Point d'origine au centre du rectangle
+            cosmo.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
 
             // Créer un objet RotateTransform avec l'angle calculé et le centre comme origine de la rotation
             RotateTransform Rotation = new RotateTransform(angle);
 
-            // Appliquer la transformation de rotation au rectangle
+            // Appliquer la transformation de rotation a cosmo
             cosmo.RenderTransform = Rotation;
         }
 
@@ -230,6 +232,31 @@ namespace SAE
                 Canvas.SetLeft(cosmo, Canvas.GetLeft(cosmo) + distanceX* vitesse);
                 Canvas.SetTop(cosmo, Canvas.GetTop(cosmo) + distanceY * vitesse);
             }
+        }
+        private void tirLazer()
+        {
+
+            distanceX = (Canvas.GetLeft(cosmo) + cosmo.Width / 2) - (Canvas.GetLeft(lazer) + lazer.Width / 2);
+            distanceY = (Canvas.GetTop(cosmo) + cosmo.Height / 2) - (Canvas.GetTop(lazer) + lazer.Height / 2);
+
+            // Calcule l'angle en utilisant la fonction Atan2
+            double angle = Math.Atan2(distanceY, distanceX) * (180 / Math.PI) + 90; // Conversion en degrés et ajustement de l'angle
+
+            lazer.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
+
+            // Créer un objet RotateTransform avec l'angle calculé et le centre comme origine de la rotation
+            RotateTransform Rotation = new RotateTransform(angle);
+
+            // Appliquer la transformation de rotation a cosmo
+            lazer.RenderTransform = Rotation;
+
+            double distanceXY = Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
+
+            distanceX = distanceX / distanceXY;
+            distanceY = distanceY / distanceXY;
+
+            Canvas.SetLeft(lazer, Canvas.GetLeft(lazer) + distanceX * vitesseLazer);
+            Canvas.SetTop(lazer, Canvas.GetTop(lazer) + distanceY * vitesseLazer);
         }
     }
 }
