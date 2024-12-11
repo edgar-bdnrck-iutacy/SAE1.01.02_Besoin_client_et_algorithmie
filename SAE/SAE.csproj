@@ -9,14 +9,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="img\alien.png" />
     <None Remove="img\astronaute_atterisage.png" />
     <None Remove="img\astronaute_celebration.png" />
     <None Remove="img\astronaute_fusee_dorsale_T_pose.png" />
     <None Remove="img\astronaute_Fusee_dorsal_saut.png" />
     <None Remove="img\astronaute_marche.png" />
     <None Remove="img\astronaute_T_pose.png" />
+    <None Remove="img\atronaute_T_pose.png" />
+    <None Remove="img\cockpit.png" />
+    <None Remove="img\fuseeComplete.png" />
+    <None Remove="img\FuseeDepart.png" />
+    <None Remove="img\ignition.png" />
     <None Remove="img\lune.png" />
+    <None Remove="img\meteore1.png" />
+    <None Remove="img\meteore2.png" />
+    <None Remove="img\meteore3.png" />
+    <None Remove="img\moteur.png" />
+    <None Remove="img\pointe.png" />
+    <None Remove="img\satellite.png" />
+    <None Remove="img\separation.png" />
     <None Remove="img\sky.jpg" />
+    <None Remove="img\testFusée1.png" />
+    <None Remove="img\testFusée2.png" />
+    <None Remove="img\testFusée3.png" />
+    <None Remove="img\testFusée4.png" />
     <None Remove="music\Level.mp3" />
     <None Remove="music\Main Menu.mp3" />
     <None Remove="music\Mission Control.mp3" />
@@ -35,14 +52,31 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="img\alien.png" />
     <Resource Include="img\astronaute_atterisage.png" />
     <Resource Include="img\astronaute_celebration.png" />
     <Resource Include="img\astronaute_fusee_dorsale_T_pose.png" />
     <Resource Include="img\astronaute_Fusee_dorsal_saut.png" />
     <Resource Include="img\astronaute_marche.png" />
     <Resource Include="img\astronaute_T_pose.png" />
+    <Resource Include="img\atronaute_T_pose.png" />
+    <Resource Include="img\cockpit.png" />
+    <Resource Include="img\fuseeComplete.png" />
+    <Resource Include="img\FuseeDepart.png" />
+    <Resource Include="img\ignition.png" />
     <Resource Include="img\lune.png" />
+    <Resource Include="img\meteore1.png" />
+    <Resource Include="img\meteore2.png" />
+    <Resource Include="img\meteore3.png" />
+    <Resource Include="img\moteur.png" />
+    <Resource Include="img\pointe.png" />
+    <Resource Include="img\satellite.png" />
+    <Resource Include="img\separation.png" />
     <Resource Include="img\sky.jpg" />
+    <Resource Include="img\testFusée1.png" />
+    <Resource Include="img\testFusée2.png" />
+    <Resource Include="img\testFusée3.png" />
+    <Resource Include="img\testFusée4.png" />
   </ItemGroup>
 
 </Project>

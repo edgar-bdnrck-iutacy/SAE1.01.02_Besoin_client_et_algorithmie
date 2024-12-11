@@ -5,7 +5,8 @@
     Title="MenuDemarrage"
     Width="1280"
     Height="720"
-    WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    WindowStartupLocation="CenterScreen"
+    WindowState="Maximized">
     <Window.Resources>
         <!--  Animation de rotation pour imgLune  -->
         <Storyboard x:Key="RotateMoonStoryboard" RepeatBehavior="Forever">
@@ -14,7 +15,7 @@
                 Storyboard.TargetProperty="(RenderTransform).(RotateTransform.Angle)"
                 From="0"
                 To="360"
-                Duration="0:2:59" />
+                Duration="0:3:00" />
         </Storyboard>
 
         <!--  Animation de montée et descente pour imgAstro  -->
@@ -39,9 +40,13 @@
         <!--  Image de la lune avec une rotation  -->
         <Image
             x:Name="imgLune"
+            Width="1280"
+            Height="1230"
             Margin="-550,50,550,-575"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
             Source="/img/lune.png"
-            Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="1280" Height="1230">
+            Stretch="Fill">
             <Image.RenderTransform>
                 <RotateTransform />
             </Image.RenderTransform>
@@ -50,8 +55,13 @@
         <!--  Image de l'astronaute avec un déplacement vertical  -->
         <Image
             x:Name="imgAstro"
+            Width="973"
+            Height="973"
+            Margin="0,0,-150,-300"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
             Source="/img/astronaute_fusee_dorsale_T_pose.png"
-            Stretch="Fill" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="973" Height="973" Margin="0,0,-150,-300">
+            Stretch="Fill">
             <Image.RenderTransform>
                 <TranslateTransform Y="0" />
             </Image.RenderTransform>
@@ -75,11 +85,12 @@
             x:Name="butJouer"
             Width="258"
             Height="104"
+            Margin="0,0,0,300"
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
             Click="butJouer_Click"
             Content="Jouer"
-            FontSize="36" Margin="0,0,0,300" />
+            FontSize="36" />
         <Button
             x:Name="butParametre"
             Width="258"
@@ -94,10 +105,11 @@
             x:Name="butQuitter"
             Width="258"
             Height="104"
+            Margin="0,0,0,50"
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
             Click="butQuitter_Click"
             Content="Quitter"
-            FontSize="36" Margin="0,0,0,50" />
+            FontSize="36" />
     </Grid>
 </Window>
