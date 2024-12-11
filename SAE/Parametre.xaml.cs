@@ -22,7 +22,7 @@ namespace SAE
         // Variable statique pour stocker le volume
         public static double Volume { get; set; } = 100; // Valeur par défaut 100%
         // Délégué pour notifier le changement de volume
-        public static event Action<double> VolumeChange;
+        public static event Action<double> changementVolume;
 
         public Parametre()
         {
@@ -34,7 +34,7 @@ namespace SAE
         private void SlidVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Volume = slidVolume.Value; // Mettre à jour la variable statique
-            VolumeChange?.Invoke(Volume); // Notifier les abonnés
+            changementVolume?.Invoke(Volume); // Notifier les abonnés
             Console.WriteLine($"Valeur du slider volume: {Volume}");
         }
 

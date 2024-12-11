@@ -69,7 +69,6 @@ namespace SAE
 
         private void butJouer_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void butParametre_Click(object sender, RoutedEventArgs e)

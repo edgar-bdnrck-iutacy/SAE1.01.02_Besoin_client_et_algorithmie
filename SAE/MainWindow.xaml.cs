@@ -21,6 +21,7 @@ namespace SAE
         public bool pause = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false;
         private static DispatcherTimer tick, temps;
         private static double inercieX = 0, inercieY = 0, distanceX = 0, distanceY = 0, vitesse = 2;
+        private MediaPlayer musique;
 
 
         public MainWindow()
@@ -28,6 +29,31 @@ namespace SAE
             InitializeComponent();
             InitTimer();
             this.MouseMove += DeplacementSouris;
+
+            //Init du lecteur de média pour la musique de niveaux
+            musique = new MediaPlayer();
+            musique.Open(new Uri("music/Level.mp3", UriKind.Relative));
+
+            //Definit Volume par rapport au slider vu en paramètres
+            musique.Volume = Parametre.Volume / 10;
+
+            //Lecutre en boucle
+            musique.MediaEnded += (s, e) =>
+            {
+                musique.Position = TimeSpan.Zero;
+                musique.Play();
+            };
+
+            musique.Play();
+
+            // Changement du volume en temps réel
+            Parametre.changementVolume += MajVolume;
+        }
+
+        private void MajVolume(double volume)
+        {
+            musique.Volume = volume / 10; // Mise a jour du volume
+            Console.WriteLine($"Volume mis a jour dans le MainWindow: {musique.Volume}");
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
