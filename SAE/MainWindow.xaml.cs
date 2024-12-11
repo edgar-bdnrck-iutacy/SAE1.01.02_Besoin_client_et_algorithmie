@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading.Tasks;
@@ -19,9 +20,9 @@ namespace SAE
 {
     public partial class MainWindow : Window
     {
-        public bool pause = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false;
+        public bool pause = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false, lazerToucheCosmo = false, lazerSortEcran = false;
         private static DispatcherTimer tick, temps;
-        private static double inercieX = 0, inercieY = 0, distanceX = 0, distanceY = 0, vitesse = 2, vitesseLazer = 20;
+        private static double distanceX = 0, distanceY = 0, vitesse = 2, vitesseLazer = 20, ticks = 0;
         private MediaPlayer musique;
 
 
@@ -95,7 +96,7 @@ namespace SAE
                     break;
 
                 case Key.Space:
-                    tirLazer();
+                    lazerSortEcran = true;
                     break;
             }
         }
@@ -113,7 +114,7 @@ namespace SAE
                         vitesse = vitesse + 0.25;
                     }
                 }
-                else 
+                else
                 {
                     vitesse = 0;
                 }
@@ -235,28 +236,48 @@ namespace SAE
         }
         private void tirLazer()
         {
+                Canvas.SetLeft(lazer, Canvas.GetLeft(alien));
+                Canvas.SetTop(lazer, Canvas.GetTop(alien));
+                lazerToucheCosmo = false;
+                lazerSortEcran = false;
+                lazerTire = true;
 
-            distanceX = (Canvas.GetLeft(cosmo) + cosmo.Width / 2) - (Canvas.GetLeft(lazer) + lazer.Width / 2);
-            distanceY = (Canvas.GetTop(cosmo) + cosmo.Height / 2) - (Canvas.GetTop(lazer) + lazer.Height / 2);
+            while (!(lazerToucheCosmo || lazerSortEcran)) 
+            {
+                    distanceX = (Canvas.GetLeft(cosmo) + cosmo.Width / 2) - (Canvas.GetLeft(lazer) + lazer.Width / 2);
+                    distanceY = (Canvas.GetTop(cosmo) + cosmo.Height / 2) - (Canvas.GetTop(lazer) + lazer.Height / 2);
 
-            // Calcule l'angle en utilisant la fonction Atan2
-            double angle = Math.Atan2(distanceY, distanceX) * (180 / Math.PI) + 90; // Conversion en degrés et ajustement de l'angle
+                    // Calcule l'angle en utilisant la fonction Atan2
+                    double angle = Math.Atan2(distanceY, distanceX) * (180 / Math.PI) + 90; // Conversion en degrés et ajustement de l'angle
 
-            lazer.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
+                    lazer.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
 
-            // Créer un objet RotateTransform avec l'angle calculé et le centre comme origine de la rotation
-            RotateTransform Rotation = new RotateTransform(angle);
+                    // Créer un objet RotateTransform avec l'angle calculé et le centre comme origine de la rotation
+                    RotateTransform Rotation = new RotateTransform(angle);
 
-            // Appliquer la transformation de rotation a cosmo
-            lazer.RenderTransform = Rotation;
+                    // Appliquer la transformation de rotation a cosmo
+                    lazer.RenderTransform = Rotation;
 
-            double distanceXY = Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
+                    double distanceXY = Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
 
-            distanceX = distanceX / distanceXY;
-            distanceY = distanceY / distanceXY;
+                    distanceX = distanceX / distanceXY;
+                    distanceY = distanceY / distanceXY;
 
-            Canvas.SetLeft(lazer, Canvas.GetLeft(lazer) + distanceX * vitesseLazer);
-            Canvas.SetTop(lazer, Canvas.GetTop(lazer) + distanceY * vitesseLazer);
+                    Canvas.SetLeft(lazer, Canvas.GetLeft(lazer) + distanceX * vitesseLazer);
+                    Canvas.SetTop(lazer, Canvas.GetTop(lazer) + distanceY * vitesseLazer);
+
+                    if ((Canvas.GetTop(lazer) + lazer.Height) > Canvas.GetTop(cosmo) && Canvas.GetTop(lazer) < (Canvas.GetTop(cosmo) + cosmo.Height) && ((Canvas.GetLeft(lazer) + lazer.Width) > Canvas.GetLeft(cosmo) && Canvas.GetLeft(lazer) < (Canvas.GetLeft(cosmo) + cosmo.Width)))
+
+                    {
+                        lazerTire = false;
+                        lazerToucheCosmo = true;
+                    }
+                    /*else if () 
+                    {
+                        lazerSortEcran = true;
+                    }*/
+                }
+            }
         }
     }
 }
