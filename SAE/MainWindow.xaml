@@ -6,32 +6,53 @@
     xmlns:local="clr-namespace:SAE"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
-    Width="800"
-    Height="450"
+    Width="1280"
+    Height="720"
     KeyDown="Window_KeyDown"
     KeyUp="Window_KeyUp"
+    WindowStartupLocation="CenterScreen"
+    WindowState="Maximized"
     mc:Ignorable="d">
     <Canvas>
         <Canvas.Background>
             <ImageBrush ImageSource="/img/sky.jpg" />
         </Canvas.Background>
         <Image
+            x:Name="alien"
+            Canvas.Left="1070"
+            Canvas.Top="494"
+            Width="200"
+            Height="200"
+            Source="/img/astronaute_marche.png" />
+        <Image
+            x:Name="lazer"
+            Canvas.Left="1095"
+            Canvas.Top="533"
+            Width="30"
+            Height="50"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            RenderTransformOrigin="0.5,0.5"
+            Source="/img/astronaute_Fusee_dorsal_saut.png"
+            Stretch="Fill" />
+        <Image
+            x:Name="SolLunaire"
+            Canvas.Left="-688"
+            Canvas.Top="809"
+            Width="3558"
+            Height="838"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Source="/img/lune.png"
+            Stretch="Fill" />
+        <Image
             x:Name="cosmo"
-            Canvas.Left="339"
-            Canvas.Top="220"
+            Canvas.Left="350"
+            Canvas.Top="167"
             Width="100"
             Height="100"
             HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Source="/img/astronaute_T_pose.png" />
-        <Image
-            x:Name="Fusee"
-            Canvas.Left="598"
-            Canvas.Top="61"
-            Width="139"
-            Height="326"
-            HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Source="/img/testFusée1.png" />
+            Source="/img/astronaute_T_pose.png" />
     </Canvas>
 </Window>
