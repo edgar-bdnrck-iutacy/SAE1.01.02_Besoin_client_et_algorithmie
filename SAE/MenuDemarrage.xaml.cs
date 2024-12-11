@@ -32,7 +32,7 @@ namespace SAE
             musique.Open(new Uri("music/Main Menu.mp3", UriKind.Relative));
 
             // Abonnement à l'événement de changement de volume
-            // Parametre.VolumeChange += MajVolume;
+            Parametre.changementVolume += MajVolume;
             Console.WriteLine($"Valeur du volume récupéré: {musique.Volume}");
 
             // Lecture en boucle
@@ -69,18 +69,26 @@ namespace SAE
 
         private void butJouer_Click(object sender, RoutedEventArgs e)
         {
+            // Arret de la musique actuelle
+            musique.Stop();
 
+            // Crée une nouvelle instance de MainWindow
+            MainWindow mainWindow = new MainWindow();
+
+            // Définit MainWindow comme la fenêtre principale de l'application
+            Application.Current.MainWindow = mainWindow;
+
+            // Affiche la nouvelle fenêtre
+            mainWindow.Show();
+
+            // Ferme la fenêtre actuelle (MenuDemarrage)
+            this.Close();
         }
 
         private void butParametre_Click(object sender, RoutedEventArgs e)
         {
             Parametre dialog = new Parametre();
             bool? result = dialog.ShowDialog();
-            /*if (result == true)
-            {
-
-            }*/
-
         }
 
         private void butQuitter_Click(object sender, RoutedEventArgs e)
