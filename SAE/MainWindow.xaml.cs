@@ -16,15 +16,11 @@ using System.Windows.Threading;
 
 namespace SAE
 {
-    /// <summary>
-    /// Logique d'interaction pour MainWindow.xaml
-    /// </summary>
-
     public partial class MainWindow : Window
     {
-        public bool pause = false, gauche = false, droite = false, haut = false, bas = false;
+        public bool pause = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false;
         private static DispatcherTimer tick, temps;
-        private static double inercieX = 0, inercieY = 0;
+        private static double inercieX = 0, inercieY = 0, distanceX = 0, distanceY = 0, vitesse = 2;
 
 
         public MainWindow()
@@ -74,18 +70,20 @@ namespace SAE
 
         private void Jeu(object sender, EventArgs e)
         {
+            enMouvement = (droite || gauche || haut || bas) && !(droite && gauche) && !(haut && bas);
             if (!pause)
             {
                 DeplacementCosmo();
-                if (inercieX > -10)
+                if (enMouvement)
                 {
-                    Canvas.SetLeft(cosmo, Canvas.GetLeft(cosmo) + inercieX);
-                    inercieX = inercieX - 0.75;
+                    if (vitesse < 10)
+                    {
+                        vitesse = vitesse + 0.25;
+                    }
                 }
-                if (inercieY > -10)
+                else 
                 {
-                    Canvas.SetTop(cosmo, Canvas.GetTop(cosmo) + inercieY);
-                    inercieY = inercieY - 0.75;
+                    vitesse = 0;
                 }
             }
         }
@@ -100,8 +98,8 @@ namespace SAE
             double centreCosmoY = Canvas.GetTop(cosmo) + cosmo.Height / 2;
 
             // Calcule la différence entre la position de la souris et le centre du rectangle
-            double distanceX = position.X - centreCosmoX;
-            double distanceY = position.Y - centreCosmoY;
+            distanceX = position.X - centreCosmoX;
+            distanceY = position.Y - centreCosmoY;
 
             // Calcule l'angle en utilisant la fonction Atan2
             double angle = Math.Atan2(distanceY, distanceX) * (180 / Math.PI) + 90; // Conversion en degrés et ajustement de l'angle
@@ -133,12 +131,12 @@ namespace SAE
                     double angleRadians = angle * Math.PI / 180;
 
                     // Calculer le déplacement horizontal (gauche) et vertical
-                    double deltaX = Math.Cos(angleRadians);
-                    double deltaY = Math.Sin(angleRadians);
+                    distanceX = Math.Cos(angleRadians);
+                    distanceY = Math.Sin(angleRadians);
 
                     // Déplace le rectangle en fonction de l'angle
-                    Canvas.SetLeft(cosmo, Canvas.GetLeft(cosmo) - deltaX);
-                    Canvas.SetTop(cosmo, Canvas.GetTop(cosmo) - deltaY);
+                    Canvas.SetLeft(cosmo, Canvas.GetLeft(cosmo) - distanceX * vitesse);
+                    Canvas.SetTop(cosmo, Canvas.GetTop(cosmo) - distanceY * vitesse);
                 }
             }
             else if (droite)
@@ -152,12 +150,12 @@ namespace SAE
                     double angleRadians = angle * Math.PI / 180;
 
                     // Calculer le déplacement horizontal (gauche) et vertical
-                    double deltaX = Math.Cos(angleRadians);
-                    double deltaY = Math.Sin(angleRadians);
+                    distanceX = Math.Cos(angleRadians);
+                    distanceY = Math.Sin(angleRadians);
 
                     // Déplace le rectangle en fonction de l'angle
-                    Canvas.SetLeft(cosmo, Canvas.GetLeft(cosmo) + deltaX);
-                    Canvas.SetTop(cosmo, Canvas.GetTop(cosmo) + deltaY);
+                    Canvas.SetLeft(cosmo, Canvas.GetLeft(cosmo) + distanceX * vitesse);
+                    Canvas.SetTop(cosmo, Canvas.GetTop(cosmo) + distanceY * vitesse);
                 }
             }
             if (haut && bas)
@@ -170,8 +168,8 @@ namespace SAE
                 System.Windows.Point PositionSouris = Mouse.GetPosition(this);
 
                 // Calculer le vecteur de déplacement vers la souris
-                double distanceX = PositionSouris.X - Canvas.GetLeft(cosmo);
-                double distanceY = PositionSouris.Y - Canvas.GetTop(cosmo);
+                distanceX = PositionSouris.X - (Canvas.GetLeft(cosmo) + cosmo.Width / 2);
+                distanceY = PositionSouris.Y - (Canvas.GetTop(cosmo) + cosmo.Height / 2);
 
                 // Calculer la distance vers la souris avec le théoreme de pythagore
                 double distanceXY = Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
@@ -181,8 +179,8 @@ namespace SAE
                     distanceX = distanceX / distanceXY;
                     distanceY = distanceY / distanceXY;
 
-                    Canvas.SetLeft(cosmo, Canvas.GetLeft(cosmo) + distanceX);
-                    Canvas.SetTop(cosmo, Canvas.GetTop(cosmo) + distanceY);
+                    Canvas.SetLeft(cosmo, Canvas.GetLeft(cosmo) + distanceX * vitesse);
+                    Canvas.SetTop(cosmo, Canvas.GetTop(cosmo) + distanceY * vitesse);
                 }
             }
             else if (bas)
@@ -191,24 +189,20 @@ namespace SAE
                 // Récupérer la position actuelle de la souris relative au Canvas
                 System.Windows.Point PositionSouris = Mouse.GetPosition(this);
 
-                // Récupérer la position actuelle de l'objet
-                double currentLeft = Canvas.GetLeft(cosmo);
-                double currentTop = Canvas.GetTop(cosmo);
-
                 // Calculer le vecteur de déplacement vers la souris
-                double deltaX = PositionSouris.X - currentLeft;
-                double deltaY = PositionSouris.Y - currentTop;
+                distanceX = PositionSouris.X - (Canvas.GetLeft(cosmo) + cosmo.Width / 2);
+                distanceY = PositionSouris.Y - (Canvas.GetTop(cosmo) + cosmo.Height / 2);
 
                 // Calculer la distance vers la souris avec le théoreme de pythagore
-                double distance = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
+                double distance = Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
 
                 if (distance > 0)
                 {
-                    deltaX = (deltaX / distance);
-                    deltaY = (deltaY / distance);
+                    distanceX = -distanceX / distance;
+                    distanceY = -distanceY / distance;
                 }
-                Canvas.SetLeft(cosmo, currentLeft - deltaX);
-                Canvas.SetTop(cosmo, currentTop - deltaY);
+                Canvas.SetLeft(cosmo, Canvas.GetLeft(cosmo) + distanceX* vitesse);
+                Canvas.SetTop(cosmo, Canvas.GetTop(cosmo) + distanceY * vitesse);
             }
         }
     }
