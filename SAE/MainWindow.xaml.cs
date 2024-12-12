@@ -112,6 +112,7 @@ namespace SAE
                 if (CollisionAvecSatellite())
                 {
                     score++;
+                    labelScore.Content = $"{score}/10";
                     satellite.Visibility = Visibility.Hidden;
                     Canvas.SetTop(satellite,-10000);
                 }

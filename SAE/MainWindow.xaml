@@ -73,5 +73,12 @@
             Height="145"
             Source="/img/satellite.png"
             Stretch="Fill" />
+        <Label
+            x:Name="labelScore"
+            Canvas.Left="1170"
+            Canvas.Top="23"
+            Content="0/10"
+            FontSize="36"
+            Foreground="#FF10B35D" />
     </Canvas>
 </Window>
