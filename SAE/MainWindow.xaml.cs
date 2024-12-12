@@ -272,35 +272,12 @@ namespace SAE
                         lazerTire = false;
                         lazerToucheCosmo = true;
                     }
-
-
-            
-            else if (CollisionAvecBord(canvas,lazer)) 
-            {
-                lazerTire = false;
+                    /*else if () 
+                    {
+                        lazerSortEcran = true;
+                    }*/
+                }
             }
-            
-        }
-        private bool CollisionAvecBord(Canvas canvas, UIElement element)
-        {
-            // Récupérer la position et les dimensions de l'élément
-            double left = Canvas.GetLeft(element);
-            double top = Canvas.GetTop(element);
-            double width = element.RenderSize.Width;
-            double height = element.RenderSize.Height;
-
-            // Récupérer les dimensions du Canvas
-            double canvasWidth = canvas.ActualWidth;
-            double canvasHeight = canvas.ActualHeight;
-
-            // Vérifier les collisions avec les bords
-            bool toucheGauche = left <= 0;
-            bool toucheDroite = left + width >= canvasWidth;
-            bool toucheHaut = top <= 0;
-            bool toucheBas = top + height >= canvasHeight;
-
-            // Retourner vrai si une collision est détectée
-            return toucheGauche || toucheDroite || toucheHaut || toucheBas;
         }
     }
  }
