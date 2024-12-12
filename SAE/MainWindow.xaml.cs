@@ -265,12 +265,15 @@ namespace SAE
             Canvas.SetLeft(lazer, Canvas.GetLeft(lazer) + trajectoireX * vitesseLazer);
             Canvas.SetTop(lazer, Canvas.GetTop(lazer) + trajectoireY * vitesseLazer);
 
-            if ((Canvas.GetTop(lazer) + lazer.Height) > Canvas.GetTop(cosmo) && Canvas.GetTop(lazer) < (Canvas.GetTop(cosmo) + cosmo.Height) && ((Canvas.GetLeft(lazer) + lazer.Width) > Canvas.GetLeft(cosmo) && Canvas.GetLeft(lazer) < (Canvas.GetLeft(cosmo) + cosmo.Width)))
 
-            {
-                lazerTire = false;
-                lazerToucheCosmo = true;
-            }
+                    if ((Canvas.GetTop(lazer) + lazer.Height) > Canvas.GetTop(cosmo) && Canvas.GetTop(lazer) < (Canvas.GetTop(cosmo) + cosmo.Height) && ((Canvas.GetLeft(lazer) + lazer.Width) > Canvas.GetLeft(cosmo) && Canvas.GetLeft(lazer) < (Canvas.GetLeft(cosmo) + cosmo.Width)))
+
+                    {
+                        lazerTire = false;
+                        lazerToucheCosmo = true;
+                    }
+
+
             
             else if (CollisionAvecBord(canvas,lazer)) 
             {
