@@ -63,6 +63,15 @@
             Content="Game Over"
             FontSize="70"
             FontWeight="Bold"
-            Foreground="Red" />
+            Foreground="Red"
+            Visibility="Hidden" />
+        <Image
+            x:Name="satellite"
+            Canvas.Left="1025"
+            Canvas.Top="90"
+            Width="145"
+            Height="145"
+            Source="/img/satellite.png"
+            Stretch="Fill" />
     </Canvas>
 </Window>

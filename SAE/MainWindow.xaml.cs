@@ -23,6 +23,7 @@ namespace SAE
         public bool pause = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false, lazerToucheCosmo = false;
         private static DispatcherTimer tick, temps;
         private static double distanceX = 0, distanceY = 0, vitesse = 2, vitesseLazer = 10, ticks = 0, trajectoireX, trajectoireY;
+        private static int score = 0;
         private MediaPlayer musique;
 
 
@@ -80,18 +81,22 @@ namespace SAE
             switch (e.Key)
             {
                 case Key.Up:
+                case Key.Z:
                     haut = true;
                     break;
 
                 case Key.Down:
+                case Key.S:
                     bas = true;
                     break;
 
                 case Key.Left:
+                case Key.Q:
                     gauche = true;
                     break;
 
                 case Key.Right:
+                case Key.D:
                     droite = true;
                     break;
             }
@@ -102,8 +107,14 @@ namespace SAE
             enMouvement = (droite || gauche || haut || bas) && !(droite && gauche) && !(haut && bas);
             if (!pause)
             {
+                Console.WriteLine(score);
                 DeplacementCosmo();
-
+                if (CollisionAvecSatellite())
+                {
+                    score++;
+                    satellite.Visibility = Visibility.Hidden;
+                    Canvas.SetTop(satellite,-10000);
+                }
                 if (enMouvement)
                 {
                     if (vitesse < 10)
@@ -129,29 +140,39 @@ namespace SAE
                 {
                     Canvas.SetLeft(LabelGameOver, canvas.ActualWidth / 2);
                     Canvas.SetTop(LabelGameOver, canvas.ActualHeight / 2);
+                    LabelGameOver.Visibility = Visibility.Visible;
+                    pause = true;
+
+                }
+                else
+                { 
+                    LabelGameOver.Visibility = Visibility.Hidden; 
                 }
             }
         }
 
         private void DeplacementSouris(object sender, MouseEventArgs e)
         {
-            // Récupère la position de la souris par rapport à la fenêtre
-            System.Windows.Point position = e.GetPosition(this);
-            
-            // Calcule la différence entre la position de la souris et le centre du rectangle
-            distanceX = position.X - (Canvas.GetLeft(cosmo) + cosmo.Width / 2);
-            distanceY = position.Y - (Canvas.GetTop(cosmo) + cosmo.Height / 2);
+            if (!pause)
+            {
+                // Récupère la position de la souris par rapport à la fenêtre
+                System.Windows.Point position = e.GetPosition(this);
 
-            // Calcule l'angle en utilisant la fonction Atan2
-            double angle = Math.Atan2(distanceY, distanceX) * (180 / Math.PI) + 90; // Conversion en degrés et ajustement de l'angle
+                // Calcule la différence entre la position de la souris et le centre du rectangle
+                distanceX = position.X - (Canvas.GetLeft(cosmo) + cosmo.Width / 2);
+                distanceY = position.Y - (Canvas.GetTop(cosmo) + cosmo.Height / 2);
 
-            cosmo.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
+                // Calcule l'angle en utilisant la fonction Atan2
+                double angle = Math.Atan2(distanceY, distanceX) * (180 / Math.PI) + 90; // Conversion en degrés et ajustement de l'angle
 
-            // Créer un objet RotateTransform avec l'angle calculé et le centre comme origine de la rotation
-            RotateTransform Rotation = new RotateTransform(angle);
+                cosmo.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
 
-            // Appliquer la transformation de rotation a cosmo
-            cosmo.RenderTransform = Rotation;
+                // Créer un objet RotateTransform avec l'angle calculé et le centre comme origine de la rotation
+                RotateTransform Rotation = new RotateTransform(angle);
+
+                // Appliquer la transformation de rotation a cosmo
+                cosmo.RenderTransform = Rotation;
+            }
         }
 
         private void InitialiseTrajectoire()
@@ -306,6 +327,27 @@ namespace SAE
             bool toucheBas = top >= canvasHeight;
 
             return toucheGauche || toucheDroite || toucheHaut || toucheBas;
+        }
+
+        private bool CollisionAvecSatellite()
+        {
+
+            double left = Canvas.GetLeft(cosmo);
+            double top = Canvas.GetTop(cosmo);
+            double width = cosmo.RenderSize.Width;
+            double height = cosmo.RenderSize.Height;
+
+            double leftSatellite = Canvas.GetLeft(satellite);
+            double topSatellite = Canvas.GetTop(satellite);
+            double widthSatellite = satellite.RenderSize.Width;
+            double heightSatellite = satellite.RenderSize.Height;
+
+            bool toucheGauche = left <= leftSatellite + widthSatellite;
+            bool toucheDroite = left  + width >= leftSatellite;
+            bool toucheHaut = top <= topSatellite + heightSatellite;
+            bool toucheBas = top + height >= topSatellite;
+
+            return (toucheGauche && toucheDroite && toucheHaut && toucheBas);
         }
     }
  }
