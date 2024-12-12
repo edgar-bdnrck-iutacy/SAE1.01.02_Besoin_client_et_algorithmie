@@ -72,10 +72,6 @@
     <Resource Include="img\satellite.png" />
     <Resource Include="img\separation.png" />
     <Resource Include="img\sky.jpg" />
-    <Resource Include="img\testFusée1.png" />
-    <Resource Include="img\testFusée2.png" />
-    <Resource Include="img\testFusée3.png" />
-    <Resource Include="img\testFusée4.png" />
   </ItemGroup>
 
 </Project>
