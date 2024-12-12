@@ -13,7 +13,7 @@
     WindowStartupLocation="CenterScreen"
     WindowState="Maximized"
     mc:Ignorable="d">
-    <Canvas>
+    <Canvas x:Name="canvas">
         <Canvas.Background>
             <ImageBrush ImageSource="/img/sky.jpg" />
         </Canvas.Background>

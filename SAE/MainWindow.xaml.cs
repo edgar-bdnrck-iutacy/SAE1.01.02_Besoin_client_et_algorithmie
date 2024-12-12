@@ -20,9 +20,9 @@ namespace SAE
 {
     public partial class MainWindow : Window
     {
-        public bool pause = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false, lazerToucheCosmo = false, lazerSortEcran = false;
+        public bool pause = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false, lazerToucheCosmo = false;
         private static DispatcherTimer tick, temps;
-        private static double distanceX = 0, distanceY = 0, vitesse = 2, vitesseLazer = 20, ticks = 0;
+        private static double distanceX = 0, distanceY = 0, vitesse = 2, vitesseLazer = 10, ticks = 0, trajectoireX, trajectoireY;
         private MediaPlayer musique;
 
 
@@ -94,10 +94,6 @@ namespace SAE
                 case Key.Right:
                     droite = true;
                     break;
-
-                case Key.Space:
-                    lazerSortEcran = true;
-                    break;
             }
         }
 
@@ -118,6 +114,36 @@ namespace SAE
                 {
                     vitesse = 0;
                 }
+                if (!lazerTire)
+                {
+                    Canvas.SetLeft(lazer, Canvas.GetLeft(alien));
+                    Canvas.SetTop(lazer, Canvas.GetTop(alien));
+                    lazerTire = true;
+                    lazerToucheCosmo = false;
+
+                    distanceX = (Canvas.GetLeft(cosmo) + cosmo.Width / 2) - (Canvas.GetLeft(lazer) + lazer.Width / 2);
+                    distanceY = (Canvas.GetTop(cosmo) + cosmo.Height / 2) - (Canvas.GetTop(lazer) + lazer.Height / 2);
+
+                    // Calcule l'angle en utilisant la fonction Atan2
+                    double angle = Math.Atan2(distanceY, distanceX) * (180 / Math.PI) + 90; // Conversion en degrés et ajustement de l'angle
+
+                    lazer.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
+
+                    // Créer un objet RotateTransform avec l'angle calculé et le centre comme origine de la rotation
+                    RotateTransform Rotation = new RotateTransform(angle);
+
+                    // Appliquer la transformation de rotation a cosmo
+                    lazer.RenderTransform = Rotation;
+
+                    double distanceXY = Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
+
+                    trajectoireX = distanceX / distanceXY;
+                    trajectoireY = distanceY / distanceXY;
+                } 
+                else
+                {
+                    TirLazer();
+                }
             }
         }
 
@@ -127,8 +153,8 @@ namespace SAE
             System.Windows.Point position = e.GetPosition(this);
             
             // Calcule la différence entre la position de la souris et le centre du rectangle
-            distanceX = position.X - Canvas.GetLeft(cosmo) + cosmo.Width / 2;
-            distanceY = position.Y - Canvas.GetTop(cosmo) + cosmo.Height / 2;
+            distanceX = position.X - (Canvas.GetLeft(cosmo) + cosmo.Width / 2);
+            distanceY = position.Y - (Canvas.GetTop(cosmo) + cosmo.Height / 2);
 
             // Calcule l'angle en utilisant la fonction Atan2
             double angle = Math.Atan2(distanceY, distanceX) * (180 / Math.PI) + 90; // Conversion en degrés et ajustement de l'angle
@@ -234,50 +260,45 @@ namespace SAE
                 Canvas.SetTop(cosmo, Canvas.GetTop(cosmo) + distanceY * vitesse);
             }
         }
-        private void tirLazer()
+        private void TirLazer()
         {
-                Canvas.SetLeft(lazer, Canvas.GetLeft(alien));
-                Canvas.SetTop(lazer, Canvas.GetTop(alien));
-                lazerToucheCosmo = false;
-                lazerSortEcran = false;
-                lazerTire = true;
+            Canvas.SetLeft(lazer, Canvas.GetLeft(lazer) + trajectoireX * vitesseLazer);
+            Canvas.SetTop(lazer, Canvas.GetTop(lazer) + trajectoireY * vitesseLazer);
 
-            while (!(lazerToucheCosmo || lazerSortEcran)) 
+            if ((Canvas.GetTop(lazer) + lazer.Height) > Canvas.GetTop(cosmo) && Canvas.GetTop(lazer) < (Canvas.GetTop(cosmo) + cosmo.Height) && ((Canvas.GetLeft(lazer) + lazer.Width) > Canvas.GetLeft(cosmo) && Canvas.GetLeft(lazer) < (Canvas.GetLeft(cosmo) + cosmo.Width)))
+
             {
-                    distanceX = (Canvas.GetLeft(cosmo) + cosmo.Width / 2) - (Canvas.GetLeft(lazer) + lazer.Width / 2);
-                    distanceY = (Canvas.GetTop(cosmo) + cosmo.Height / 2) - (Canvas.GetTop(lazer) + lazer.Height / 2);
-
-                    // Calcule l'angle en utilisant la fonction Atan2
-                    double angle = Math.Atan2(distanceY, distanceX) * (180 / Math.PI) + 90; // Conversion en degrés et ajustement de l'angle
-
-                    lazer.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
-
-                    // Créer un objet RotateTransform avec l'angle calculé et le centre comme origine de la rotation
-                    RotateTransform Rotation = new RotateTransform(angle);
-
-                    // Appliquer la transformation de rotation a cosmo
-                    lazer.RenderTransform = Rotation;
-
-                    double distanceXY = Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
-
-                    distanceX = distanceX / distanceXY;
-                    distanceY = distanceY / distanceXY;
-
-                    Canvas.SetLeft(lazer, Canvas.GetLeft(lazer) + distanceX * vitesseLazer);
-                    Canvas.SetTop(lazer, Canvas.GetTop(lazer) + distanceY * vitesseLazer);
-
-                    if ((Canvas.GetTop(lazer) + lazer.Height) > Canvas.GetTop(cosmo) && Canvas.GetTop(lazer) < (Canvas.GetTop(cosmo) + cosmo.Height) && ((Canvas.GetLeft(lazer) + lazer.Width) > Canvas.GetLeft(cosmo) && Canvas.GetLeft(lazer) < (Canvas.GetLeft(cosmo) + cosmo.Width)))
-
-                    {
-                        lazerTire = false;
-                        lazerToucheCosmo = true;
-                    }
-                    /*else if () 
-                    {
-                        lazerSortEcran = true;
-                    }*/
-                }
+                lazerTire = false;
+                lazerToucheCosmo = true;
             }
+            
+            else if (CollisionAvecBord(canvas,lazer)) 
+            {
+                lazerTire = false;
+            }
+            
+        }
+        private bool CollisionAvecBord(Canvas canvas, UIElement element)
+        {
+            // Récupérer la position et les dimensions de l'élément
+            double left = Canvas.GetLeft(element);
+            double top = Canvas.GetTop(element);
+            double width = element.RenderSize.Width;
+            double height = element.RenderSize.Height;
+
+            // Récupérer les dimensions du Canvas
+            double canvasWidth = canvas.ActualWidth;
+            double canvasHeight = canvas.ActualHeight;
+
+            // Vérifier les collisions avec les bords
+            bool toucheGauche = left <= 0;
+            bool toucheDroite = left + width >= canvasWidth;
+            bool toucheHaut = top <= 0;
+            bool toucheBas = top + height >= canvasHeight;
+
+            // Retourner vrai si une collision est détectée
+            return toucheGauche || toucheDroite || toucheHaut || toucheBas;
         }
     }
-}
+ }
+
