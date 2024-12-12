@@ -20,6 +20,7 @@
     <None Remove="img\fuseeComplete.png" />
     <None Remove="img\FuseeDepart.png" />
     <None Remove="img\ignition.png" />
+    <None Remove="img\laser.png" />
     <None Remove="img\lune.png" />
     <None Remove="img\meteore1.png" />
     <None Remove="img\meteore2.png" />
@@ -62,6 +63,7 @@
     <Resource Include="img\fuseeComplete.png" />
     <Resource Include="img\FuseeDepart.png" />
     <Resource Include="img\ignition.png" />
+    <Resource Include="img\laser.png" />
     <Resource Include="img\lune.png" />
     <Resource Include="img\meteore1.png" />
     <Resource Include="img\meteore2.png" />

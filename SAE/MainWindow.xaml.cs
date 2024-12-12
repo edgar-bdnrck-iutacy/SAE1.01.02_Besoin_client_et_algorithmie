@@ -103,6 +103,7 @@ namespace SAE
             if (!pause)
             {
                 DeplacementCosmo();
+
                 if (enMouvement)
                 {
                     if (vitesse < 10)
@@ -114,35 +115,20 @@ namespace SAE
                 {
                     vitesse = 0;
                 }
+
                 if (!lazerTire)
                 {
-                    Canvas.SetLeft(lazer, Canvas.GetLeft(alien));
-                    Canvas.SetTop(lazer, Canvas.GetTop(alien));
-                    lazerTire = true;
-                    lazerToucheCosmo = false;
-
-                    distanceX = (Canvas.GetLeft(cosmo) + cosmo.Width / 2) - (Canvas.GetLeft(lazer) + lazer.Width / 2);
-                    distanceY = (Canvas.GetTop(cosmo) + cosmo.Height / 2) - (Canvas.GetTop(lazer) + lazer.Height / 2);
-
-                    // Calcule l'angle en utilisant la fonction Atan2
-                    double angle = Math.Atan2(distanceY, distanceX) * (180 / Math.PI) + 90; // Conversion en degrés et ajustement de l'angle
-
-                    lazer.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
-
-                    // Créer un objet RotateTransform avec l'angle calculé et le centre comme origine de la rotation
-                    RotateTransform Rotation = new RotateTransform(angle);
-
-                    // Appliquer la transformation de rotation a cosmo
-                    lazer.RenderTransform = Rotation;
-
-                    double distanceXY = Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
-
-                    trajectoireX = distanceX / distanceXY;
-                    trajectoireY = distanceY / distanceXY;
+                    InitialiseTrajectoire();
                 } 
                 else
                 {
                     TirLazer();
+                }
+
+                if (lazerToucheCosmo)
+                {
+                    Canvas.SetLeft(LabelGameOver, canvas.ActualWidth / 2);
+                    Canvas.SetTop(LabelGameOver, canvas.ActualHeight / 2);
                 }
             }
         }
@@ -166,6 +152,33 @@ namespace SAE
 
             // Appliquer la transformation de rotation a cosmo
             cosmo.RenderTransform = Rotation;
+        }
+
+        private void InitialiseTrajectoire()
+        {
+            Canvas.SetLeft(lazer, Canvas.GetLeft(alien) + alien.Width / 2);
+            Canvas.SetTop(lazer, Canvas.GetTop(alien) + alien.Height / 2);
+            lazerTire = true;
+            lazerToucheCosmo = false;
+
+            distanceX = (Canvas.GetLeft(cosmo) + cosmo.Width / 2) - (Canvas.GetLeft(lazer) + lazer.Width / 2);
+            distanceY = (Canvas.GetTop(cosmo) + cosmo.Height / 2) - (Canvas.GetTop(lazer) + lazer.Height / 2);
+
+            // Calcule l'angle en utilisant la fonction Atan2
+            double angle = Math.Atan2(distanceY, distanceX) * (180 / Math.PI) + 180; // Conversion en degrés et ajustement de l'angle
+
+            lazer.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
+
+            // Créer un objet RotateTransform avec l'angle calculé et le centre comme origine de la rotation
+            RotateTransform Rotation = new RotateTransform(angle);
+
+            // Appliquer la transformation de rotation a cosmo
+            lazer.RenderTransform = Rotation;
+
+            double distanceXY = Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
+
+            trajectoireX = distanceX / distanceXY;
+            trajectoireY = distanceY / distanceXY;
         }
 
         private void DeplacementCosmo()
@@ -287,10 +300,10 @@ namespace SAE
             double canvasWidth = canvas.ActualWidth;
             double canvasHeight = canvas.ActualHeight;
 
-            bool toucheGauche = left <= 0;
-            bool toucheDroite = left + width >= canvasWidth;
-            bool toucheHaut = top <= 0;
-            bool toucheBas = top + height >= canvasHeight;
+            bool toucheGauche = left <= -width;
+            bool toucheDroite = left >= canvasWidth;
+            bool toucheHaut = top <= -height;
+            bool toucheBas = top >= canvasHeight;
 
             return toucheGauche || toucheDroite || toucheHaut || toucheBas;
         }

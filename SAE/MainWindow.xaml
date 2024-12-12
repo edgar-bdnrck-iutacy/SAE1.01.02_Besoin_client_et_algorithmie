@@ -18,23 +18,25 @@
             <ImageBrush ImageSource="/img/sky.jpg" />
         </Canvas.Background>
         <Image
+            x:Name="lazer"
+            Canvas.Left="1001"
+            Canvas.Top="543"
+            Width="120"
+            Height="28"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            RenderTransformOrigin="0.5,0.5"
+            Source="/img/laser.png"
+            Stretch="Fill" />
+        <Image
             x:Name="alien"
             Canvas.Left="1070"
             Canvas.Top="494"
             Width="200"
             Height="200"
-            Source="/img/astronaute_marche.png" />
-        <Image
-            x:Name="lazer"
-            Canvas.Left="1095"
-            Canvas.Top="533"
-            Width="30"
-            Height="50"
             HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            RenderTransformOrigin="0.5,0.5"
-            Source="/img/astronaute_Fusee_dorsal_saut.png"
-            Stretch="Fill" />
+            VerticalAlignment="Center"
+            Source="/img/alien.png" />
         <Image
             x:Name="SolLunaire"
             Canvas.Left="-688"
@@ -54,5 +56,13 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Source="/img/astronaute_T_pose.png" />
+        <Label
+            x:Name="LabelGameOver"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Content="Game Over"
+            FontSize="70"
+            FontWeight="Bold"
+            Foreground="Red" />
     </Canvas>
 </Window>
