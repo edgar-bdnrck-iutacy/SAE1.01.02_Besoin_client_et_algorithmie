@@ -266,19 +266,35 @@ namespace SAE
             Canvas.SetTop(lazer, Canvas.GetTop(lazer) + trajectoireY * vitesseLazer);
 
 
-                    if ((Canvas.GetTop(lazer) + lazer.Height) > Canvas.GetTop(cosmo) && Canvas.GetTop(lazer) < (Canvas.GetTop(cosmo) + cosmo.Height) && ((Canvas.GetLeft(lazer) + lazer.Width) > Canvas.GetLeft(cosmo) && Canvas.GetLeft(lazer) < (Canvas.GetLeft(cosmo) + cosmo.Width)))
-
-                    {
-                        lazerTire = false;
-                        lazerToucheCosmo = true;
-                    }
-                    /*else if () 
-                    {
-                        lazerSortEcran = true;
-                    }*/
-                }
+            if ((Canvas.GetTop(lazer) + lazer.Height) > Canvas.GetTop(cosmo) && Canvas.GetTop(lazer) < (Canvas.GetTop(cosmo) + cosmo.Height) && ((Canvas.GetLeft(lazer) + lazer.Width) > Canvas.GetLeft(cosmo) && Canvas.GetLeft(lazer) < (Canvas.GetLeft(cosmo) + cosmo.Width)))
+            {
+                lazerTire = false;
+                lazerToucheCosmo = true;
+            } 
+            if (CollisionAvecBord(canvas,lazer)) 
+            {
+                lazerTire = false;
             }
+        }
+        private bool CollisionAvecBord(Canvas canvas, UIElement element)
+        {
+
+            double left = Canvas.GetLeft(element);
+            double top = Canvas.GetTop(element);
+            double width = element.RenderSize.Width;
+            double height = element.RenderSize.Height;
+
+            double canvasWidth = canvas.ActualWidth;
+            double canvasHeight = canvas.ActualHeight;
+
+            bool toucheGauche = left <= 0;
+            bool toucheDroite = left + width >= canvasWidth;
+            bool toucheHaut = top <= 0;
+            bool toucheBas = top + height >= canvasHeight;
+
+            return toucheGauche || toucheDroite || toucheHaut || toucheBas;
         }
     }
  }
+
 
