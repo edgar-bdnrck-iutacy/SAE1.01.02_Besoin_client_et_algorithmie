@@ -13,6 +13,9 @@
     <None Remove="img\astronaute_atterisage.png" />
     <None Remove="img\astronaute_celebration.png" />
     <None Remove="img\astronaute_fusee_dorsale_T_pose.png" />
+    <None Remove="img\astronaute_fusee_dorsale_T_pose_full_power.png" />
+    <None Remove="img\astronaute_fusee_dorsale_T_pose_medium_power.png" />
+    <None Remove="img\astronaute_fusee_dorsale_T_pose_no_power.png" />
     <None Remove="img\astronaute_Fusee_dorsal_saut.png" />
     <None Remove="img\astronaute_marche.png" />
     <None Remove="img\astronaute_T_pose.png" />
@@ -61,8 +64,9 @@
     <Resource Include="img\alien.png" />
     <Resource Include="img\astronaute_atterisage.png" />
     <Resource Include="img\astronaute_celebration.png" />
-    <Resource Include="img\astronaute_fusee_dorsale_T_pose.png" />
-    <Resource Include="img\astronaute_Fusee_dorsal_saut.png" />
+    <Resource Include="img\astronaute_fusee_dorsale_T_pose_full_power.png" />
+    <Resource Include="img\astronaute_fusee_dorsale_T_pose_medium_power.png" />
+    <Resource Include="img\astronaute_fusee_dorsale_T_pose_no_power.png" />
     <Resource Include="img\astronaute_marche.png" />
     <Resource Include="img\astronaute_T_pose.png" />
     <Resource Include="img\cockpit.png" />
@@ -70,7 +74,6 @@
     <Resource Include="img\debrisStage2.png" />
     <Resource Include="img\debrisStage3.png" />
     <Resource Include="img\fuseeComplete.png" />
-    <Resource Include="img\FuseeDepart.png" />
     <Resource Include="img\fuseeStage1.png" />
     <Resource Include="img\fuseeStage2.png" />
     <Resource Include="img\fuseeStage3.png" />
