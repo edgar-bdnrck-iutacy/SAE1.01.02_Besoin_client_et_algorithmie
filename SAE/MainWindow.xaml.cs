@@ -24,9 +24,10 @@ namespace SAE
     {
         public bool lobby = true, pause = false, interaction = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false, lazerToucheCosmo = false;
         private static DispatcherTimer tick, temps;
-        private static double distanceX = 0, distanceY = 0, vitesse = 2, vitesseLazer = 10, ticks = 0, trajectoireX, trajectoireY;
+        private static double distanceX = 0, distanceY = 0, vitesse = 2, vitesseLazer = 15, ticks = 0, trajectoireX, trajectoireY;
         private static int score = 0;
         private MediaPlayer musique;
+        private Random random = new Random();
 
 
         public MainWindow()
@@ -35,6 +36,7 @@ namespace SAE
             InitTimer();
             InitialiseLobby();
             this.MouseMove += DeplacementSouris;
+            
 
             //Init du lecteur de média pour la musique de niveaux
             musique = new MediaPlayer();
@@ -159,8 +161,8 @@ namespace SAE
                     {
                         score++;
                         labelScore.Content = $"{score}/10";
-                        satellite.Visibility = Visibility.Hidden;
-                        Canvas.SetTop(satellite, -10000);
+                        Canvas.SetLeft(satellite, random.Next(0,(int)(canvas.ActualWidth - satellite.Width)));
+                        Canvas.SetTop(satellite, random.Next(0, (int)(canvas.ActualHeight - satellite.Height)));
                     }
 
                     if (!lazerTire)
@@ -201,8 +203,8 @@ namespace SAE
         }
         private void InitialiseLobby()
         {
-            Canvas.SetLeft(cosmo,596);
-            Canvas.SetLeft(cosmo,308);
+            Canvas.SetLeft(cosmo, canvas.ActualWidth / 2);
+            Canvas.SetLeft(cosmo, canvas.ActualHeight / 2);
             labelScore.Visibility = Visibility.Hidden;
             alien.Visibility = Visibility.Hidden;
             lazer.Visibility = Visibility.Hidden;
