@@ -4,7 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="MenuDemarrage"
     Width="1280"
-    Height="720" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    Height="720"
+    ResizeMode="CanMinimize"
+    WindowStartupLocation="CenterScreen">
+
     <Window.Resources>
         <!--  Animation de rotation pour imgLune  -->
         <Storyboard x:Key="RotateMoonStoryboard" RepeatBehavior="Forever">
@@ -53,15 +56,17 @@
         <!--  Image de l'astronaute avec un déplacement vertical  -->
         <Image
             x:Name="imgAstro"
-            Width="790"
-            Height="790"
-            Margin="0,0,-130,-304"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            Source="/img/astronaute_fusee_dorsale_T_pose.png"
+            Margin="813,325,28,-199"
+            RenderTransformOrigin="0.5,0.5"
+            Source="/img/astronaute_fusee_dorsale_T_pose_full_power.png"
             Stretch="Fill">
             <Image.RenderTransform>
-                <TranslateTransform Y="0" />
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform Angle="11.384" />
+                    <TranslateTransform Y="0" />
+                </TransformGroup>
             </Image.RenderTransform>
         </Image>
 

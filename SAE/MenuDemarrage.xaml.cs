@@ -22,7 +22,7 @@ namespace SAE
         {
             InitializeComponent();
 
-            // Démarre les animations
+            // Démarrer les animations
             Loaded += MenuDemarrage_Loaded;
 
             // Initialisation du lecteur média
@@ -58,11 +58,11 @@ namespace SAE
             luneTransform.CenterX = imgLune.ActualWidth / 2;
             luneTransform.CenterY = imgLune.ActualHeight / 2;
 
-            // Lancer l'animation
+            // Démarrer l'animation de la lune
             var moonStoryboard = (Storyboard)FindResource("RotateMoonStoryboard");
             moonStoryboard.Begin();
 
-            // Lance l'animation de montée et descente pour imgAstro
+            // Démarrer l'animation de l'astronaute
             var astroStoryboard = (Storyboard)FindResource("MoveAstronautStoryboard");
             astroStoryboard.Begin();
         }
