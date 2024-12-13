@@ -10,8 +10,8 @@
     Height="720"
     KeyDown="Window_KeyDown"
     KeyUp="Window_KeyUp"
+    ResizeMode="CanMinimize"
     WindowStartupLocation="CenterScreen"
-    WindowState="Maximized"
     mc:Ignorable="d">
     <Canvas x:Name="canvas">
         <Canvas.Background>
@@ -19,10 +19,10 @@
         </Canvas.Background>
         <Image
             x:Name="lazer"
-            Canvas.Left="1001"
-            Canvas.Top="543"
-            Width="120"
-            Height="28"
+            Canvas.Left="107"
+            Canvas.Top="408"
+            Width="80"
+            Height="18"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             RenderTransformOrigin="0.5,0.5"
@@ -30,31 +30,41 @@
             Stretch="Fill" />
         <Image
             x:Name="alien"
-            Canvas.Left="1070"
-            Canvas.Top="494"
-            Width="200"
-            Height="200"
+            Canvas.Left="62"
+            Canvas.Top="322"
+            Width="166"
+            Height="166"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center"
+            VerticalAlignment="Top"
             Source="/img/alien.png" />
         <Image
             x:Name="SolLunaire"
-            Canvas.Left="-688"
-            Canvas.Top="809"
+            Canvas.Left="-1139"
+            Canvas.Top="538"
             Width="3558"
             Height="838"
             HorizontalAlignment="Left"
-            VerticalAlignment="Center"
+            VerticalAlignment="Top"
             Source="/img/lune.png"
             Stretch="Fill" />
         <Image
-            x:Name="cosmo"
-            Canvas.Left="350"
-            Canvas.Top="167"
-            Width="100"
-            Height="100"
+            x:Name="Fusee"
+            Canvas.Left="860"
+            Canvas.Top="52"
+            Width="420"
+            Height="749"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
+            Source="/img/fuseeComplete.png"
+            Stretch="Fill" />
+        <Image
+            x:Name="cosmo"
+            Canvas.Left="580"
+            Canvas.Top="264"
+            Width="88"
+            Height="88"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
             Source="/img/astronaute_T_pose.png" />
         <Label
             x:Name="LabelGameOver"
@@ -67,16 +77,18 @@
             Visibility="Hidden" />
         <Image
             x:Name="satellite"
-            Canvas.Left="1025"
-            Canvas.Top="90"
-            Width="145"
-            Height="145"
+            Canvas.Left="306"
+            Canvas.Top="82"
+            Width="107"
+            Height="107"
             Source="/img/satellite.png"
             Stretch="Fill" />
         <Label
             x:Name="labelScore"
-            Canvas.Left="1170"
-            Canvas.Top="23"
+            Canvas.Left="1188"
+            Canvas.Top="10"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
             Content="0/10"
             FontSize="36"
             Foreground="#FF10B35D" />

@@ -15,12 +15,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Xml.Linq;
 
 namespace SAE
 {
     public partial class MainWindow : Window
     {
-        public bool pause = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false, lazerToucheCosmo = false;
+        public bool lobby = true, pause = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false, lazerToucheCosmo = false;
         private static DispatcherTimer tick, temps;
         private static double distanceX = 0, distanceY = 0, vitesse = 2, vitesseLazer = 10, ticks = 0, trajectoireX, trajectoireY;
         private static int score = 0;
@@ -99,6 +100,10 @@ namespace SAE
                 case Key.D:
                     droite = true;
                     break;
+
+                case Key.P:
+                    pause = !pause;
+                    break;
             }
         }
 
@@ -109,13 +114,6 @@ namespace SAE
             {
                 Console.WriteLine(score);
                 DeplacementCosmo();
-                if (CollisionAvecSatellite())
-                {
-                    score++;
-                    labelScore.Content = $"{score}/10";
-                    satellite.Visibility = Visibility.Hidden;
-                    Canvas.SetTop(satellite,-10000);
-                }
                 if (enMouvement)
                 {
                     if (vitesse < 10)
@@ -127,27 +125,58 @@ namespace SAE
                 {
                     vitesse = 0;
                 }
+                if (!lobby)
+                {
+                    if (CollisionEntreEntité(cosmo, satellite))
+                    {
+                        score++;
+                        labelScore.Content = $"{score}/10";
+                        satellite.Visibility = Visibility.Hidden;
+                        Canvas.SetTop(satellite, -10000);
+                    }
 
-                if (!lazerTire)
-                {
-                    InitialiseTrajectoire();
-                } 
-                else
-                {
-                    TirLazer();
+                    if (!lazerTire)
+                    {
+                        InitialiseTrajectoire();
+                    }
+                    else
+                    {
+                        TirLazer();
+                    }
+
+                    if (CollisionEntreEntité(lazer, cosmo))
+                    {
+                        Canvas.SetLeft(LabelGameOver, canvas.ActualWidth / 2);
+                        Canvas.SetTop(LabelGameOver, canvas.ActualHeight / 2);
+                        LabelGameOver.Visibility = Visibility.Visible;
+                        lobby = true;
+                    }
+                    else
+                    {
+                        LabelGameOver.Visibility = Visibility.Hidden;
+
+                    }
+
+                    SolLunaire.Visibility = Visibility.Hidden;
+                    Fusee.Visibility = Visibility.Hidden;
+
+                    satellite.Visibility = Visibility.Visible;
+                    alien.Visibility = Visibility.Visible;
+                    lazer.Visibility = Visibility.Visible;
                 }
-
-                if (lazerToucheCosmo)
+                else 
                 {
-                    Canvas.SetLeft(LabelGameOver, canvas.ActualWidth / 2);
-                    Canvas.SetTop(LabelGameOver, canvas.ActualHeight / 2);
-                    LabelGameOver.Visibility = Visibility.Visible;
-                    pause = true;
+                    alien.Visibility = Visibility.Hidden;
+                    lazer.Visibility = Visibility.Hidden;
+                    satellite.Visibility = Visibility.Hidden;
 
-                }
-                else
-                { 
-                    LabelGameOver.Visibility = Visibility.Hidden; 
+                    SolLunaire.Visibility = Visibility.Visible;
+                    Fusee.Visibility = Visibility.Visible;
+
+                    if (CollisionEntreEntité(cosmo,Fusee))
+                    {
+                        Console.WriteLine("décolage");
+                    }
                 }
             }
         }
@@ -330,23 +359,23 @@ namespace SAE
             return toucheGauche || toucheDroite || toucheHaut || toucheBas;
         }
 
-        private bool CollisionAvecSatellite()
+        private bool CollisionEntreEntité(UIElement element1, UIElement element2)
         {
 
-            double left = Canvas.GetLeft(cosmo);
-            double top = Canvas.GetTop(cosmo);
-            double width = cosmo.RenderSize.Width;
-            double height = cosmo.RenderSize.Height;
+            double left = Canvas.GetLeft(element1);
+            double top = Canvas.GetTop(element1);
+            double width = element1.RenderSize.Width;
+            double height = element1.RenderSize.Height;
 
-            double leftSatellite = Canvas.GetLeft(satellite);
-            double topSatellite = Canvas.GetTop(satellite);
-            double widthSatellite = satellite.RenderSize.Width;
-            double heightSatellite = satellite.RenderSize.Height;
+            double left2 = Canvas.GetLeft(element2);
+            double top2 = Canvas.GetTop(element2);
+            double width2 = element2.RenderSize.Width;
+            double height2 = element2.RenderSize.Height;
 
-            bool toucheGauche = left <= leftSatellite + widthSatellite;
-            bool toucheDroite = left  + width >= leftSatellite;
-            bool toucheHaut = top <= topSatellite + heightSatellite;
-            bool toucheBas = top + height >= topSatellite;
+            bool toucheGauche = left <= left2 + width2;
+            bool toucheDroite = left  + width >= left2;
+            bool toucheHaut = top <= top2 + height2;
+            bool toucheBas = top + height >= top2;
 
             return (toucheGauche && toucheDroite && toucheHaut && toucheBas);
         }
