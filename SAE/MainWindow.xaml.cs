@@ -23,7 +23,7 @@ namespace SAE
     public partial class MainWindow : Window
     {
         public static readonly int SCOREMAX1 = 10, SCOREMAX2 = 15;
-        public bool lobby = true, pause = false, interaction = false, gauche = false, droite = false, haut = false, versDroite = true, bas = false, enMouvement = false, lazerTire = false, lazerToucheCosmo = false;
+        public bool versDroite = true, versDroite_2 = true, lobby = true, pause = false, interaction = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false, lazerToucheCosmo = false;
         private static DispatcherTimer tick, temps;
         private static double distanceX = 0, distanceY = 0, vitesse = 2, vitesseLazer = 15, vitesseAlien = 5, ticks = 0, trajectoireX, trajectoireY;
         private static int score = 0, niveau = 1, scoreMax = 0;
@@ -160,30 +160,11 @@ namespace SAE
                     if (niveau == 1)
                     {
                         scoreMax = SCOREMAX1;
+                        Canvas.SetLeft(alien, 50);
+                        Canvas.SetTop(alien, 269);
                         if (versDroite)
                         {
                             Canvas.SetLeft(alien, Canvas.GetLeft(alien) + vitesseAlien);
-                            if (Canvas.GetLeft(alien) > 800)
-                            {
-                                versDroite = false;
-                            }
-                        }
-                        else 
-                        {
-                            Canvas.SetLeft(alien, Canvas.GetLeft(alien) - vitesseAlien);
-                            if (Canvas.GetLeft(alien) < 50)
-                            {
-                                versDroite = true;
-                            }
-                        }
-                    } 
-                    else if (niveau == 2)
-                    {
-                        scoreMax = SCOREMAX2;
-                        if (versDroite)
-                        {
-                            Canvas.SetLeft(alien, Canvas.GetLeft(alien) + vitesseAlien);
-                            Canvas.SetLeft(alien_2, Canvas.GetLeft(alien_2) + vitesseAlien);
                             if (Canvas.GetLeft(alien) > 800)
                             {
                                 versDroite = false;
@@ -195,6 +176,29 @@ namespace SAE
                             if (Canvas.GetLeft(alien) < 50)
                             {
                                 versDroite = true;
+                            }
+                        }
+                    } 
+                    else if (niveau == 2)
+                    {
+                        alien_2.Visibility = Visibility.Visible;
+                        scoreMax = SCOREMAX2;
+                        Canvas.SetLeft(alien, 50);
+                        Canvas.SetTop(alien, 352);
+                        if (versDroite_2)
+                        {
+                            Canvas.SetLeft(alien_2, Canvas.GetLeft(alien_2) + vitesseAlien);
+                            if (Canvas.GetLeft(alien_2) > 800)
+                            {
+                                versDroite_2 = false;
+                            }
+                        }
+                        else
+                        {
+                            Canvas.SetLeft(alien_2, Canvas.GetLeft(alien_2) - vitesseAlien);
+                            if (Canvas.GetLeft(alien) < 50)
+                            {
+                                versDroite_2 = true;
                             }
                         }
                     }
@@ -246,6 +250,7 @@ namespace SAE
                 }
             }
         }
+
         private void InitialiseLobby()
         {
             Canvas.SetLeft(cosmo, canvas.ActualWidth / 2);
@@ -254,6 +259,7 @@ namespace SAE
             alien.Visibility = Visibility.Hidden;
             lazer.Visibility = Visibility.Hidden;
             satellite.Visibility = Visibility.Hidden;
+            alien_2.Visibility = Visibility.Hidden;
 
             SolLunaire.Visibility = Visibility.Visible;
             Fusee.Visibility = Visibility.Visible;
