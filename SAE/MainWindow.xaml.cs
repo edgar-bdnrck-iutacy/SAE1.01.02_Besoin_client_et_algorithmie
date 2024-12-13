@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
@@ -21,7 +22,7 @@ namespace SAE
 {
     public partial class MainWindow : Window
     {
-        public bool lobby = true, pause = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false, lazerToucheCosmo = false;
+        public bool lobby = true, pause = false, interaction = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false, lazerToucheCosmo = false;
         private static DispatcherTimer tick, temps;
         private static double distanceX = 0, distanceY = 0, vitesse = 2, vitesseLazer = 10, ticks = 0, trajectoireX, trajectoireY;
         private static int score = 0;
@@ -62,10 +63,32 @@ namespace SAE
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
-            gauche = false;
-            droite = false;
-            haut = false;
-            bas = false;
+            switch (e.Key)
+            {
+                case Key.Up:
+                case Key.Z:
+                    haut = false;
+                    break;
+
+                case Key.Down:
+                case Key.S:
+                    bas = false;
+                    break;
+
+                case Key.Left:
+                case Key.Q:
+                    gauche = false;
+                    break;
+
+                case Key.Right:
+                case Key.D:
+                    droite = false;
+                    break;
+
+                case Key.Space:
+                    interaction = false;
+                    break;
+            }
         }
 
         private void InitTimer()
@@ -103,6 +126,10 @@ namespace SAE
 
                 case Key.P:
                     pause = !pause;
+                    break;
+
+                case Key.Space:
+                    interaction = true;
                     break;
             }
         }
@@ -150,35 +177,47 @@ namespace SAE
                         Canvas.SetTop(LabelGameOver, canvas.ActualHeight / 2);
                         LabelGameOver.Visibility = Visibility.Visible;
                         lobby = true;
+                        InitialiseLobby();
                     }
                     else
                     {
                         LabelGameOver.Visibility = Visibility.Hidden;
 
                     }
-
-                    SolLunaire.Visibility = Visibility.Hidden;
-                    Fusee.Visibility = Visibility.Hidden;
-
-                    satellite.Visibility = Visibility.Visible;
-                    alien.Visibility = Visibility.Visible;
-                    lazer.Visibility = Visibility.Visible;
                 }
                 else 
                 {
-                    alien.Visibility = Visibility.Hidden;
-                    lazer.Visibility = Visibility.Hidden;
-                    satellite.Visibility = Visibility.Hidden;
-
-                    SolLunaire.Visibility = Visibility.Visible;
-                    Fusee.Visibility = Visibility.Visible;
-
                     if (CollisionEntreEntité(cosmo,Fusee))
                     {
-                        Console.WriteLine("décolage");
+                        if (interaction)
+                        {
+                            lobby = false;
+                            InitialiseNiveau();
+                        }
                     }
                 }
             }
+        }
+        private void InitialiseLobby()
+        {
+            labelScore.Visibility = Visibility.Hidden;
+            alien.Visibility = Visibility.Hidden;
+            lazer.Visibility = Visibility.Hidden;
+            satellite.Visibility = Visibility.Hidden;
+
+            SolLunaire.Visibility = Visibility.Visible;
+            Fusee.Visibility = Visibility.Visible;
+        }
+
+        private void InitialiseNiveau() 
+        {
+            SolLunaire.Visibility = Visibility.Hidden;
+            Fusee.Visibility = Visibility.Hidden;
+
+            labelScore.Visibility = Visibility.Visible;
+            satellite.Visibility = Visibility.Visible;
+            alien.Visibility = Visibility.Visible;
+            lazer.Visibility = Visibility.Visible;
         }
 
         private void DeplacementSouris(object sender, MouseEventArgs e)
@@ -343,18 +382,18 @@ namespace SAE
         private bool CollisionAvecBord(Canvas canvas, UIElement element)
         {
 
-            double left = Canvas.GetLeft(element);
-            double top = Canvas.GetTop(element);
-            double width = element.RenderSize.Width;
-            double height = element.RenderSize.Height;
+            double gauche = Canvas.GetLeft(element);
+            double haut = Canvas.GetTop(element);
+            double largeur = element.RenderSize.Width;
+            double hauteur = element.RenderSize.Height;
 
             double canvasWidth = canvas.ActualWidth;
             double canvasHeight = canvas.ActualHeight;
 
-            bool toucheGauche = left <= -width;
-            bool toucheDroite = left >= canvasWidth;
-            bool toucheHaut = top <= -height;
-            bool toucheBas = top >= canvasHeight;
+            bool toucheGauche = gauche <= -largeur;
+            bool toucheDroite = gauche >= canvasWidth;
+            bool toucheHaut = haut <= -hauteur;
+            bool toucheBas = haut >= canvasHeight;
 
             return toucheGauche || toucheDroite || toucheHaut || toucheBas;
         }
@@ -362,20 +401,20 @@ namespace SAE
         private bool CollisionEntreEntité(UIElement element1, UIElement element2)
         {
 
-            double left = Canvas.GetLeft(element1);
-            double top = Canvas.GetTop(element1);
-            double width = element1.RenderSize.Width;
-            double height = element1.RenderSize.Height;
+            double gauche = Canvas.GetLeft(element1);
+            double haut = Canvas.GetTop(element1);
+            double largeur = element1.RenderSize.Width;
+            double hauteur = element1.RenderSize.Height;
 
-            double left2 = Canvas.GetLeft(element2);
-            double top2 = Canvas.GetTop(element2);
-            double width2 = element2.RenderSize.Width;
-            double height2 = element2.RenderSize.Height;
+            double gauche2 = Canvas.GetLeft(element2);
+            double haut2 = Canvas.GetTop(element2);
+            double largeur2 = element2.RenderSize.Width;
+            double hauteur2 = element2.RenderSize.Height;
 
-            bool toucheGauche = left <= left2 + width2;
-            bool toucheDroite = left  + width >= left2;
-            bool toucheHaut = top <= top2 + height2;
-            bool toucheBas = top + height >= top2;
+            bool toucheGauche = gauche <= gauche2 + largeur2;
+            bool toucheDroite = gauche + largeur >= gauche2;
+            bool toucheHaut = haut <= haut2 + hauteur2;
+            bool toucheBas = haut + hauteur >= haut2;
 
             return (toucheGauche && toucheDroite && toucheHaut && toucheBas);
         }

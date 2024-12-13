@@ -85,10 +85,10 @@
             Stretch="Fill" />
         <Label
             x:Name="labelScore"
-            Canvas.Left="1188"
+            Canvas.Left="1160"
             Canvas.Top="10"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
             Content="0/10"
             FontSize="36"
             Foreground="#FF10B35D" />
