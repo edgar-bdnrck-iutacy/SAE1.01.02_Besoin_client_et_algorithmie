@@ -33,6 +33,7 @@ namespace SAE
         {
             InitializeComponent();
             InitTimer();
+            InitialiseLobby();
             this.MouseMove += DeplacementSouris;
 
             //Init du lecteur de média pour la musique de niveaux
@@ -200,6 +201,8 @@ namespace SAE
         }
         private void InitialiseLobby()
         {
+            Canvas.SetLeft(cosmo,596);
+            Canvas.SetLeft(cosmo,308);
             labelScore.Visibility = Visibility.Hidden;
             alien.Visibility = Visibility.Hidden;
             lazer.Visibility = Visibility.Hidden;
