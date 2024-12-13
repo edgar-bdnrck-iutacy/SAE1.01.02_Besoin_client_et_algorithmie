@@ -49,12 +49,12 @@
             Stretch="Fill" />
         <Image
             x:Name="Fusee"
-            Canvas.Left="860"
-            Canvas.Top="52"
-            Width="420"
-            Height="749"
+            Canvas.Left="965"
+            Canvas.Top="131"
+            Width="208"
+            Height="549"
             HorizontalAlignment="Left"
-            VerticalAlignment="Top"
+            VerticalAlignment="Center"
             Source="/img/fuseeComplete.png"
             Stretch="Fill" />
         <Image
@@ -86,11 +86,31 @@
         <Label
             x:Name="labelScore"
             Canvas.Left="1160"
-            Canvas.Top="10"
+            Canvas.Top="23"
             HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Content="0/10"
+            VerticalAlignment="Top"
+            Content="0/50"
             FontSize="36"
             Foreground="#FF10B35D" />
+        <Image
+            x:Name="lazer_2"
+            Canvas.Left="107"
+            Canvas.Top="242"
+            Width="80"
+            Height="18"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            RenderTransformOrigin="0.5,0.5"
+            Source="/img/laser.png"
+            Stretch="Fill" />
+        <Image
+            x:Name="alien_2"
+            Canvas.Left="62"
+            Canvas.Top="156"
+            Width="166"
+            Height="166"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Source="/img/alien.png" />
     </Canvas>
 </Window>

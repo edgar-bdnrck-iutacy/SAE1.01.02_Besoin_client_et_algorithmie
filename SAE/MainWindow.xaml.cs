@@ -22,10 +22,11 @@ namespace SAE
 {
     public partial class MainWindow : Window
     {
-        public bool lobby = true, pause = false, interaction = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false, lazerToucheCosmo = false;
+        public static readonly int SCOREMAX1 = 10, SCOREMAX2 = 15;
+        public bool lobby = true, pause = false, interaction = false, gauche = false, droite = false, haut = false, versDroite = true, bas = false, enMouvement = false, lazerTire = false, lazerToucheCosmo = false;
         private static DispatcherTimer tick, temps;
-        private static double distanceX = 0, distanceY = 0, vitesse = 2, vitesseLazer = 15, ticks = 0, trajectoireX, trajectoireY;
-        private static int score = 0;
+        private static double distanceX = 0, distanceY = 0, vitesse = 2, vitesseLazer = 15, vitesseAlien = 5, ticks = 0, trajectoireX, trajectoireY;
+        private static int score = 0, niveau = 1, scoreMax = 0;
         private MediaPlayer musique;
         private Random random = new Random();
 
@@ -142,7 +143,6 @@ namespace SAE
             enMouvement = (droite || gauche || haut || bas) && !(droite && gauche) && !(haut && bas);
             if (!pause)
             {
-                Console.WriteLine(score);
                 DeplacementCosmo();
                 if (enMouvement)
                 {
@@ -157,10 +157,55 @@ namespace SAE
                 }
                 if (!lobby)
                 {
+                    if (niveau == 1)
+                    {
+                        scoreMax = SCOREMAX1;
+                        if (versDroite)
+                        {
+                            Canvas.SetLeft(alien, Canvas.GetLeft(alien) + vitesseAlien);
+                            if (Canvas.GetLeft(alien) > 800)
+                            {
+                                versDroite = false;
+                            }
+                        }
+                        else 
+                        {
+                            Canvas.SetLeft(alien, Canvas.GetLeft(alien) - vitesseAlien);
+                            if (Canvas.GetLeft(alien) < 50)
+                            {
+                                versDroite = true;
+                            }
+                        }
+                    } 
+                    else if (niveau == 2)
+                    {
+                        scoreMax = SCOREMAX2;
+                        if (versDroite)
+                        {
+                            Canvas.SetLeft(alien, Canvas.GetLeft(alien) + vitesseAlien);
+                            Canvas.SetLeft(alien_2, Canvas.GetLeft(alien_2) + vitesseAlien);
+                            if (Canvas.GetLeft(alien) > 800)
+                            {
+                                versDroite = false;
+                            }
+                        }
+                        else
+                        {
+                            Canvas.SetLeft(alien, Canvas.GetLeft(alien) - vitesseAlien);
+                            if (Canvas.GetLeft(alien) < 50)
+                            {
+                                versDroite = true;
+                            }
+                        }
+                    }
+                    if (score == scoreMax)
+                    {
+                        niveau++;
+                    }
                     if (CollisionEntreEntité(cosmo, satellite))
                     {
                         score++;
-                        labelScore.Content = $"{score}/10";
+                        labelScore.Content = $"{score}/{scoreMax}";
                         Canvas.SetLeft(satellite, random.Next(0,(int)(canvas.ActualWidth - satellite.Width)));
                         Canvas.SetTop(satellite, random.Next(0, (int)(canvas.ActualHeight - satellite.Height)));
                     }
@@ -425,5 +470,3 @@ namespace SAE
         }
     }
  }
-
-
