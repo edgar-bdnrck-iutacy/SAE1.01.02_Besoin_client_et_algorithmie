@@ -62,16 +62,12 @@
     <Resource Include="img\cockpit.png" />
     <Resource Include="img\fuseeComplete.png" />
     <Resource Include="img\FuseeDepart.png" />
-    <Resource Include="img\ignition.png" />
     <Resource Include="img\laser.png" />
     <Resource Include="img\lune.png" />
     <Resource Include="img\meteore1.png" />
     <Resource Include="img\meteore2.png" />
     <Resource Include="img\meteore3.png" />
-    <Resource Include="img\moteur.png" />
-    <Resource Include="img\pointe.png" />
     <Resource Include="img\satellite.png" />
-    <Resource Include="img\separation.png" />
     <Resource Include="img\sky.jpg" />
   </ItemGroup>
 
