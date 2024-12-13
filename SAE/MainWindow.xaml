@@ -19,18 +19,18 @@
         </Canvas.Background>
         <Image
             x:Name="lazer"
-            Canvas.Left="105"
-            Canvas.Top="352"
+            Canvas.Left="93"
+            Canvas.Top="279"
             Width="80"
             Height="18"
             HorizontalAlignment="Left"
-            VerticalAlignment="Center"
+            VerticalAlignment="Top"
             RenderTransformOrigin="0.5,0.5"
             Source="/img/laser.png"
             Stretch="Fill" />
         <Image
             x:Name="alien"
-            Canvas.Left="62"
+            Canvas.Left="50"
             Canvas.Top="352"
             Width="166"
             Height="166"
@@ -59,13 +59,13 @@
             Stretch="Fill" />
         <Image
             x:Name="cosmo"
-            Canvas.Left="596"
+            Canvas.Left="607"
             Canvas.Top="308"
-            Width="88"
+            Width="68"
             Height="88"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Source="/img/astronaute_T_pose.png" />
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Source="/img/astronaute_fusee_dorsale_T_pose_full_power.png" />
         <Label
             x:Name="LabelGameOver"
             HorizontalAlignment="Center"
@@ -105,7 +105,7 @@
             Stretch="Fill" />
         <Image
             x:Name="alien_2"
-            Canvas.Left="62"
+            Canvas.Left="50"
             Canvas.Top="186"
             Width="166"
             Height="166"

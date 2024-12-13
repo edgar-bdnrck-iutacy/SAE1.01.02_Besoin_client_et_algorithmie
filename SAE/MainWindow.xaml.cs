@@ -23,9 +23,9 @@ namespace SAE
     public partial class MainWindow : Window
     {
         public static readonly int SCOREMAX1 = 10, SCOREMAX2 = 15;
-        public bool versDroite = true, versDroite_2 = true, lobby = true, pause = false, interaction = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false, lazerToucheCosmo = false;
+        public bool dejaAppele = false, versDroite = true, versDroite_2 = true, lobby = true, pause = false, interaction = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false, lazerToucheCosmo = false;
         private static DispatcherTimer tick, temps;
-        private static double distanceX = 0, distanceY = 0, vitesse = 2, vitesseLazer = 15, vitesseAlien = 5, ticks = 0, trajectoireX, trajectoireY;
+        private static double distanceX = 0, distanceY = 0, vitesse = 2, vitesseLazer = 15, vitesseAlien = 5, ticks = 0, trajectoireX, trajectoireY, trajectoireX_2, trajectoireY_2;
         private static int score = 0, niveau = 1, scoreMax = 0;
         private MediaPlayer musique;
         private Random random = new Random();
@@ -160,8 +160,8 @@ namespace SAE
                     if (niveau == 1)
                     {
                         scoreMax = SCOREMAX1;
-                        Canvas.SetLeft(alien, 50);
-                        Canvas.SetTop(alien, 269);
+                        if (dejaAppele)
+                            InitialiseNiv();
                         if (versDroite)
                         {
                             Canvas.SetLeft(alien, Canvas.GetLeft(alien) + vitesseAlien);
@@ -181,10 +181,24 @@ namespace SAE
                     } 
                     else if (niveau == 2)
                     {
-                        alien_2.Visibility = Visibility.Visible;
-                        scoreMax = SCOREMAX2;
-                        Canvas.SetLeft(alien, 50);
-                        Canvas.SetTop(alien, 352);
+                        if (dejaAppele)
+                            InitialiseNiv();
+                        if (versDroite)
+                        {
+                            Canvas.SetLeft(alien, Canvas.GetLeft(alien) + vitesseAlien);
+                            if (Canvas.GetLeft(alien) > 800)
+                            {
+                                versDroite = false;
+                            }
+                        }
+                        else
+                        {
+                            Canvas.SetLeft(alien, Canvas.GetLeft(alien) - vitesseAlien);
+                            if (Canvas.GetLeft(alien) < 50)
+                            {
+                                versDroite = true;
+                            }
+                        }
                         if (versDroite_2)
                         {
                             Canvas.SetLeft(alien_2, Canvas.GetLeft(alien_2) + vitesseAlien);
@@ -204,6 +218,7 @@ namespace SAE
                     }
                     if (score == scoreMax)
                     {
+                        dejaAppele = false;
                         niveau++;
                     }
                     if (CollisionEntreEntité(cosmo, satellite))
@@ -217,10 +232,11 @@ namespace SAE
                     if (!lazerTire)
                     {
                         InitialiseTrajectoire();
+                        InitialiseTrajectoire2();
                     }
                     else
                     {
-                        TirLazer();
+                        TirLazer2();
                     }
 
                     if (CollisionEntreEntité(lazer, cosmo))
@@ -251,6 +267,25 @@ namespace SAE
             }
         }
 
+        private void InitialiseNiv()
+        {
+            dejaAppele = true;
+            if (niveau == 1)
+            {
+                scoreMax = SCOREMAX1;
+                Canvas.SetLeft(alien, 50);
+                Canvas.SetTop(alien, 269);
+            }
+            else if (niveau == 2)
+            {
+                alien_2.Visibility = Visibility.Visible;
+                scoreMax = SCOREMAX2;
+                Canvas.SetLeft(alien, 50);
+                Canvas.SetTop(alien, 352);
+                Canvas.SetLeft(alien_2, 50);
+                Canvas.SetTop(alien_2, 186);
+            }
+        }
         private void InitialiseLobby()
         {
             Canvas.SetLeft(cosmo, canvas.ActualWidth / 2);
@@ -325,6 +360,33 @@ namespace SAE
 
             trajectoireX = distanceX / distanceXY;
             trajectoireY = distanceY / distanceXY;
+        }
+
+        private void InitialiseTrajectoire2()
+        {
+            Canvas.SetLeft(lazer_2, Canvas.GetLeft(alien_2) + alien.Width / 2);
+            Canvas.SetTop(lazer_2, Canvas.GetTop(alien_2) + alien.Height / 2);
+            lazerTire = true;
+            lazerToucheCosmo = false;
+
+            distanceX = (Canvas.GetLeft(cosmo) + cosmo.Width / 2) - (Canvas.GetLeft(lazer_2) + lazer.Width / 2);
+            distanceY = (Canvas.GetTop(cosmo) + cosmo.Height / 2) - (Canvas.GetTop(lazer_2) + lazer.Height / 2);
+
+            // Calcule l'angle en utilisant la fonction Atan2
+            double angle = Math.Atan2(distanceY, distanceX) * (180 / Math.PI) + 180; // Conversion en degrés et ajustement de l'angle
+
+            lazer.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
+
+            // Créer un objet RotateTransform avec l'angle calculé et le centre comme origine de la rotation
+            RotateTransform Rotation = new RotateTransform(angle);
+
+            // Appliquer la transformation de rotation a cosmo
+            lazer_2.RenderTransform = Rotation;
+
+            double distanceXY = Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
+
+            trajectoireX_2 = distanceX / distanceXY;
+            trajectoireY_2 = distanceY / distanceXY;
         }
 
         private void DeplacementCosmo()
@@ -425,12 +487,28 @@ namespace SAE
             Canvas.SetTop(lazer, Canvas.GetTop(lazer) + trajectoireY * vitesseLazer);
 
 
-            if ((Canvas.GetTop(lazer) + lazer.Height) > Canvas.GetTop(cosmo) && Canvas.GetTop(lazer) < (Canvas.GetTop(cosmo) + cosmo.Height) && ((Canvas.GetLeft(lazer) + lazer.Width) > Canvas.GetLeft(cosmo) && Canvas.GetLeft(lazer) < (Canvas.GetLeft(cosmo) + cosmo.Width)))
+            if (CollisionEntreEntité(lazer, cosmo))
             {
                 lazerTire = false;
                 lazerToucheCosmo = true;
             } 
             if (CollisionAvecBord(canvas,lazer)) 
+            {
+                lazerTire = false;
+            }
+        }
+        private void TirLazer2()
+        {
+            Canvas.SetLeft(lazer_2, Canvas.GetLeft(lazer_2) + trajectoireX * vitesseLazer);
+            Canvas.SetTop(lazer_2, Canvas.GetTop(lazer_2) + trajectoireY * vitesseLazer);
+
+
+            if (CollisionEntreEntité(lazer_2,cosmo))
+            {
+                lazerTire = false;
+                lazerToucheCosmo = true;
+            }
+            if (CollisionAvecBord(canvas, lazer))
             {
                 lazerTire = false;
             }

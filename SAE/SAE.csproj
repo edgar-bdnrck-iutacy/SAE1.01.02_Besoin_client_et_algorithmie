@@ -74,6 +74,7 @@
     <Resource Include="img\debrisStage2.png" />
     <Resource Include="img\debrisStage3.png" />
     <Resource Include="img\fuseeComplete.png" />
+    <Resource Include="img\FuseeDepart.png" />
     <Resource Include="img\fuseeStage1.png" />
     <Resource Include="img\fuseeStage2.png" />
     <Resource Include="img\fuseeStage3.png" />
