@@ -19,23 +19,23 @@
         </Canvas.Background>
         <Image
             x:Name="lazer"
-            Canvas.Left="93"
-            Canvas.Top="279"
+            Canvas.Left="-745"
+            Canvas.Top="116"
             Width="80"
             Height="18"
             HorizontalAlignment="Left"
-            VerticalAlignment="Top"
+            VerticalAlignment="Center"
             RenderTransformOrigin="0.5,0.5"
             Source="/img/laser.png"
             Stretch="Fill" />
         <Image
             x:Name="alien"
-            Canvas.Left="50"
-            Canvas.Top="352"
+            Canvas.Left="-788"
+            Canvas.Top="213"
             Width="166"
             Height="166"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
             Source="/img/alien.png" />
         <Image
             x:Name="SolLunaire"
@@ -77,8 +77,8 @@
             Visibility="Hidden" />
         <Image
             x:Name="satellite"
-            Canvas.Left="306"
-            Canvas.Top="82"
+            Canvas.Left="80"
+            Canvas.Top="289"
             Width="107"
             Height="107"
             Source="/img/satellite.png"
@@ -94,23 +94,23 @@
             Foreground="#FF10B35D" />
         <Image
             x:Name="lazer_2"
-            Canvas.Left="107"
-            Canvas.Top="242"
+            Canvas.Left="-731"
+            Canvas.Top="79"
             Width="80"
             Height="18"
             HorizontalAlignment="Left"
-            VerticalAlignment="Top"
+            VerticalAlignment="Center"
             RenderTransformOrigin="0.5,0.5"
             Source="/img/laser.png"
             Stretch="Fill" />
         <Image
             x:Name="alien_2"
-            Canvas.Left="50"
-            Canvas.Top="186"
+            Canvas.Left="-788"
+            Canvas.Top="23"
             Width="166"
             Height="166"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
             Source="/img/alien.png" />
     </Canvas>
 </Window>
