@@ -23,7 +23,7 @@ namespace SAE
             InitializeComponent();
 
             // Démarrer les animations
-            Loaded += MenuDemarrage_Loaded;
+            Loaded += MenuDemarrage_Chargée;
 
             // Initialisation du lecteur média
             musique = new MediaPlayer();
@@ -51,7 +51,7 @@ namespace SAE
             Console.WriteLine($"Volume mis à jour : {musique.Volume}");
         }
 
-        private void MenuDemarrage_Loaded(object sender, RoutedEventArgs e)
+        private void MenuDemarrage_Chargée(object sender, RoutedEventArgs e)
         {
             // Obtenir les dimensions réelles de l'image
             var luneTransform = (RotateTransform)imgLune.RenderTransform;
