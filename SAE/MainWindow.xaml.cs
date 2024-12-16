@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml.Linq;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace SAE
 {
@@ -171,9 +172,12 @@ namespace SAE
 
                     if (score == scoreMax)
                     {
+                        score = 0;
                         dejaAppele = false;
                         niveau++;
                         lobby = true;
+                        Fusee.Source = new BitmapImage(new Uri($"img/fuseeStage{niveau}.png",UriKind.Relative));
+                        debris.Source = new BitmapImage(new Uri($"img/debrisStage{niveau}.png", UriKind.Relative));
                     }
 
                     if (CollisionEntreEntité(cosmo, satellite))
@@ -251,8 +255,11 @@ namespace SAE
                     InitialiseLobby();
                     if (CollisionEntreEntité(cosmo,Fusee))
                     {
-                        
-                        if (interaction)
+                        if (niveau >= 4 && interaction)
+                        {
+
+                        }
+                        else if (interaction)
                         {
                             lobby = false;
                         }
@@ -265,6 +272,8 @@ namespace SAE
         {
             SolLunaire.Visibility = Visibility.Hidden;
             Fusee.Visibility = Visibility.Hidden;
+            debris.Visibility = Visibility.Hidden;
+
             labelScore.Visibility = Visibility.Visible;
             satellite.Visibility = Visibility.Visible;
             alien.Visibility = Visibility.Visible;
@@ -307,6 +316,7 @@ namespace SAE
 
             SolLunaire.Visibility = Visibility.Visible;
             Fusee.Visibility = Visibility.Visible;
+            debris.Visibility = Visibility.Visible;
         }
 
         private void DeplacementSouris(object sender, MouseEventArgs e)

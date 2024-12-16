@@ -30,12 +30,12 @@
             Stretch="Fill" />
         <Image
             x:Name="alien"
-            Canvas.Left="-788"
-            Canvas.Top="213"
+            Canvas.Left="-801"
+            Canvas.Top="159"
             Width="166"
-            Height="166"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
+            Height="95"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
             Source="/img/alien.png" />
         <Image
             x:Name="SolLunaire"
@@ -55,7 +55,7 @@
             Height="549"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
-            Source="/img/fuseeComplete.png"
+            Source="/img/fuseeStage1.png"
             Stretch="Fill" />
         <Image
             x:Name="cosmo"
@@ -105,12 +105,22 @@
             Stretch="Fill" />
         <Image
             x:Name="alien_2"
-            Canvas.Left="-788"
-            Canvas.Top="23"
+            Canvas.Left="-800"
+            Canvas.Top="52"
             Width="166"
-            Height="166"
+            Height="95"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Source="/img/alienRouge.png" />
+        <Image
+            x:Name="debris"
+            Canvas.Left="812"
+            Canvas.Top="571"
+            Width="458"
+            Height="109"
             HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Source="/img/alien.png" />
+            VerticalAlignment="Top"
+            Source="/img/debrisStage1.png"
+            Stretch="Fill" />
     </Canvas>
 </Window>
