@@ -245,9 +245,9 @@ namespace SAE
                     }
                     else
                     {
-                        TirLazer();
+                        TirLazer(lazer,trajectoireX,trajectoireY);
                         if (niveau >= 2)
-                            TirLazerRouge();
+                            TirLazer(lazer_2, trajectoireX_2, trajectoireY_2);
                     }
 
                     if (CollisionEntreEntite(lazer, cosmo) || CollisionEntreEntite(lazer_2, cosmo) || CollisionEntreEntite(alien, cosmo) || CollisionEntreEntite(alien_2, cosmo))
@@ -552,7 +552,7 @@ namespace SAE
             }
         }
 
-        private void TirLazer()
+        private void TirLazer(Image lazer, double trajectoireX, double trajectoireY)
         {
             Canvas.SetLeft(lazer, Canvas.GetLeft(lazer) + trajectoireX * VITESSE_LAZER);
             Canvas.SetTop(lazer, Canvas.GetTop(lazer) + trajectoireY * VITESSE_LAZER);
@@ -563,22 +563,6 @@ namespace SAE
                 lazerTire = false;
             } 
             if (CollisionAvecBord(canvas,lazer)) 
-            {
-                lazerTire = false;
-            }
-        }
-
-        private void TirLazerRouge()
-        {
-            Canvas.SetLeft(lazer_2, Canvas.GetLeft(lazer_2) + trajectoireX_2 * VITESSE_LAZER);
-            Canvas.SetTop(lazer_2, Canvas.GetTop(lazer_2) + trajectoireY_2 * VITESSE_LAZER);
-
-
-            if (CollisionEntreEntite(lazer_2,cosmo))
-            {
-                lazerTire = false;
-            }
-            if (CollisionAvecBord(canvas, lazer_2))
             {
                 lazerTire = false;
             }
