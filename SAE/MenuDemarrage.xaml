@@ -102,8 +102,16 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
             Click="butParametre_Click"
-            Content="Paramètres"
-            FontSize="36" />
+            FontSize="36">
+            <Button.Content>
+                <TextBlock TextAlignment="Center">
+                    <Run Text="Paramètres" />
+                    <LineBreak />
+                    <Run Text="Commandes" />
+                </TextBlock>
+            </Button.Content>
+        </Button>
+
         <Button
             x:Name="butQuitter"
             Width="258"
