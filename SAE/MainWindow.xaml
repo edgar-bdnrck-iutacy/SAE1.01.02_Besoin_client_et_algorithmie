@@ -122,5 +122,12 @@
             VerticalAlignment="Top"
             Source="/img/debrisStage1.png"
             Stretch="Fill" />
+        <Label
+            x:Name="Label"
+            Canvas.Left="84"
+            Canvas.Top="-184"
+            Width="1117"
+            Height="28"
+            Content=" Bonjour Cosmo, je suis dans le regret de t'informer que dans le cadre d'une mission spaciale ta fusée s'est écrasé sur la lune. Il faut maintenant ramaser quelque satellites pour pouvoir la réparer. Bonne chance." />
     </Canvas>
 </Window>

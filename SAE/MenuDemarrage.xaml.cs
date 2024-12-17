@@ -17,6 +17,7 @@ namespace SAE
     /// </summary>
     public partial class MenuDemarrage : Window
     {
+        private static readonly int AJUSTEMENTVOLUME = 10;
         private MediaPlayer musique;
         public MenuDemarrage()
         {
@@ -47,7 +48,7 @@ namespace SAE
 
         private void MajVolume(double volume)
         {
-            musique.Volume = volume / 10; // Mettre à jour le volume en temps réel
+            musique.Volume = volume / AJUSTEMENTVOLUME; // Mettre à jour le volume en temps réel
             Console.WriteLine($"Volume mis à jour : {musique.Volume}");
         }
 

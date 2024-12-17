@@ -26,7 +26,7 @@ namespace SAE
 {
     public partial class MainWindow : Window
     {
-        public static readonly int SCOREMAX1 = 10, SCOREMAX2 = 15, LIMITE_DROITE_ALIEN = 800, LIMITE_GAUCHE_ALIEN = 20, SCOREMAX3 = 25, VITESSE_LAZER = 15, GRANDEVITESSE = 30;
+        public static readonly int VITESSE_ALIEN2 = 4, DEMITOUR = 180,AJUSTEMENT_ANGLE = 90 ,SCOREMAX1 = 10, SCOREMAX2 = 15, LIMITE_DROITE_ALIEN = 800, POSITION_ALIEN2_LEFT = 50, POSITION_ALIEN2_TOP = 200, POSITION_ALIEN_TOP = 280, POSITION_ALIEN_LEFT = 360, FPS = 16, LIMITE_GAUCHE_ALIEN = 20, SCOREMAX3 = 25, VITESSE_LAZER = 15, GRANDEVITESSE = 30, AJUSTEMENTVOLUME = 10;
         public static readonly double ACCELERATION_PAR_TICK = 0.25, ACCELERATION_DECOLAGE = 0.5;
 
         public bool dejaAppele = false, versDroite = true, decolage = false, lobby = true, pause = false, interaction = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false;
@@ -52,7 +52,7 @@ namespace SAE
             musique.Open(new Uri("music/Level.mp3", UriKind.Relative));
 
             //Definit Volume par rapport au slider vu en paramètres
-            musique.Volume = Parametre.Volume / 10;
+            musique.Volume = Parametre.Volume / AJUSTEMENTVOLUME;
 
             //Lecutre en boucle
             musique.MediaEnded += (s, e) =>
@@ -65,12 +65,13 @@ namespace SAE
 
             // Changement du volume en temps réel
             Parametre.changementVolume += MajVolume;
-            MessageBox.Show("   Bonjour Cosmo, je suis dans le regret de t'informer que dans le cadre d'une mission spaciale ta fusée s'est écrasé sur la lune. Il faut maintenant ramaser quelque satellites pour pouvoir la réparer. Bonne chance.", "Rapport spacial", MessageBoxButton.OK);
+            //
+            // MessageBox.Show("   Bonjour Cosmo, je suis dans le regret de t'informer que dans le cadre d'une mission spaciale ta fusée s'est écrasé sur la lune. Il faut maintenant ramaser quelque satellites pour pouvoir la réparer. Bonne chance.", "Rapport spacial", MessageBoxButton.OK);
         }
 
         private void MajVolume(double volume)
         {
-            musique.Volume = volume / 10; // Mise a jour du volume
+            musique.Volume = volume / AJUSTEMENTVOLUME; // Mise a jour du volume
             Console.WriteLine($"Volume mis a jour dans le MainWindow: {musique.Volume}");
         }
 
@@ -107,7 +108,7 @@ namespace SAE
         private void InitTimer()
         {
             tick = new DispatcherTimer();
-            tick.Interval = TimeSpan.FromMilliseconds(16);
+            tick.Interval = TimeSpan.FromMilliseconds(FPS);
             tick.Tick += Jeu;
             tick.Start();
         }
@@ -333,8 +334,8 @@ namespace SAE
                 case 1 : 
                     {
                         scoreMax = SCOREMAX1;
-                        Canvas.SetLeft(alien, 360);
-                        Canvas.SetTop(alien, 280);
+                        Canvas.SetLeft(alien, POSITION_ALIEN_LEFT);
+                        Canvas.SetTop(alien, POSITION_ALIEN_TOP);
                         break;
                     }
 
@@ -343,8 +344,8 @@ namespace SAE
                         lazer_2.Visibility = Visibility.Visible;
                         alien_2.Visibility = Visibility.Visible;
                         scoreMax = SCOREMAX2;
-                        Canvas.SetLeft(alien_2, 50);
-                        Canvas.SetTop(alien_2, 200);
+                        Canvas.SetLeft(alien_2, POSITION_ALIEN2_LEFT);
+                        Canvas.SetTop(alien_2, POSITION_ALIEN2_TOP);
                         break;
                     }
 
@@ -384,7 +385,7 @@ namespace SAE
                     distanceY = position.Y - (Canvas.GetTop(cosmo) + cosmo.Height / 2);
                     
                     // Calcule l'angle en utilisant la fonction Atan2
-                    double angle = Math.Atan2(distanceY, distanceX) * (180 / Math.PI) + 90; // Conversion en degrés et ajustement de l'angle
+                    double angle = Math.Atan2(distanceY, distanceX) * (DEMITOUR / Math.PI) + (DEMITOUR/2); // Conversion en degrés et ajustement de l'angle
 
                     cosmo.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
 
@@ -406,7 +407,7 @@ namespace SAE
             distanceY = (Canvas.GetTop(cosmo) + cosmo.Height / 2) - (Canvas.GetTop(lazer) + lazer.Height / 2);
 
             // Calcule l'angle en utilisant la fonction Atan2
-            double angle = Math.Atan2(distanceY, distanceX) * (180 / Math.PI) + 180; // Conversion en degrés et ajustement de l'angle
+            double angle = Math.Atan2(distanceY, distanceX) * (DEMITOUR / Math.PI) + DEMITOUR; // Conversion en degrés et ajustement de l'angle
 
             lazer.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
 
@@ -432,7 +433,7 @@ namespace SAE
             distanceY = (Canvas.GetTop(cosmo) + cosmo.Height / 2) - (Canvas.GetTop(lazer_2) + lazer.Height / 2);
 
             // Calcule l'angle en utilisant la fonction Atan2
-            double angle = Math.Atan2(distanceY, distanceX) * (180 / Math.PI) + 180; // Conversion en degrés et ajustement de l'angle
+            double angle = Math.Atan2(distanceY, distanceX) * (DEMITOUR / Math.PI) + DEMITOUR; // Conversion en degrés et ajustement de l'angle
 
             lazer.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
 
@@ -475,7 +476,7 @@ namespace SAE
                     double angle = rotateTransform.Angle;
 
                     // Convertir l'angle en radians
-                    double angleRadians = angle * Math.PI / 180;
+                    double angleRadians = angle * Math.PI / DEMITOUR;
 
                     // Calculer le déplacement horizontal (gauche) et vertical
                     distanceX = Math.Cos(angleRadians);
@@ -570,8 +571,8 @@ namespace SAE
 
         private void DeplacementAlien()
         {
-            Canvas.SetLeft(alien_2, Canvas.GetLeft(alien_2) + trajectoireX_2 * 4);
-            Canvas.SetTop(alien_2, Canvas.GetTop(alien_2) + trajectoireY_2 * 4);
+            Canvas.SetLeft(alien_2, Canvas.GetLeft(alien_2) + trajectoireX_2 * VITESSE_ALIEN2);
+            Canvas.SetTop(alien_2, Canvas.GetTop(alien_2) + trajectoireY_2 * VITESSE_ALIEN2);
 
             if (CollisionEntreEntite(cosmo, alien_2))
             {
