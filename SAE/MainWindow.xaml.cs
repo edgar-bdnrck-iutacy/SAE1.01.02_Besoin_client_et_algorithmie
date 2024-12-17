@@ -18,7 +18,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml.Linq;
+using System.Threading;
 using static System.Formats.Asn1.AsnWriter;
+using System.Windows.Media.Animation;
 
 namespace SAE
 {
@@ -39,8 +41,9 @@ namespace SAE
         {
             InitializeComponent();
             InitTimer();
+            MenuDemarrage menuDemarrage = new MenuDemarrage();
+            menuDemarrage.ShowDialog();
             InitialiseLobby();
-            MessageBox.Show("   Bonjour Cosmo, je suis dans le regret de t'informer que dans le cadre d'une mission spaciale ta fusée s'est écrasé sur la lune. Il faut maintenant ramaser quelque satellites pour pouvoir la réparer. Bonne chance.", "Rapport spacial", MessageBoxButton.OK);
             this.MouseMove += DeplacementSouris;
             
 
@@ -62,6 +65,7 @@ namespace SAE
 
             // Changement du volume en temps réel
             Parametre.changementVolume += MajVolume;
+            MessageBox.Show("   Bonjour Cosmo, je suis dans le regret de t'informer que dans le cadre d'une mission spaciale ta fusée s'est écrasé sur la lune. Il faut maintenant ramaser quelque satellites pour pouvoir la réparer. Bonne chance.", "Rapport spacial", MessageBoxButton.OK);
         }
 
         private void MajVolume(double volume)
@@ -174,7 +178,10 @@ namespace SAE
                 if (!lobby)
                 {
                     if (!dejaAppele)
+                    {
                         InitialiseNiv();
+                        Thread.Sleep(100);
+                    }
 
                     if (score == scoreMax)
                     {
@@ -198,6 +205,7 @@ namespace SAE
                         }
                         while (CollisionEntreEntite(alien, satellite));
                     }
+
                     switch (niveau)
                     {
                         case 2:
@@ -320,27 +328,32 @@ namespace SAE
             lazer.Visibility = Visibility.Visible;
             dejaAppele = true;
 
-            if (niveau == 1)
+            switch (niveau)
             {
-                scoreMax = SCOREMAX1;
-                Canvas.SetLeft(alien, 360);
-                Canvas.SetTop(alien, 280);
-            }
-            else if (niveau == 2)
-            {
-                lazer_2.Visibility = Visibility.Visible;
-                alien_2.Visibility = Visibility.Visible;
-                scoreMax = SCOREMAX2;
-                Canvas.SetLeft(alien_2, 50);
-                Canvas.SetTop(alien_2, 200);
-            }
-            else if (niveau == 3)
-            {
-                alien_2.Visibility = Visibility.Visible;
-                scoreMax = SCOREMAX3;
-            }
-            else if (niveau == 4) 
-            { 
+                case 1 : 
+                    {
+                        scoreMax = SCOREMAX1;
+                        Canvas.SetLeft(alien, 360);
+                        Canvas.SetTop(alien, 280);
+                        break;
+                    }
+
+                case 2:
+                    {
+                        lazer_2.Visibility = Visibility.Visible;
+                        alien_2.Visibility = Visibility.Visible;
+                        scoreMax = SCOREMAX2;
+                        Canvas.SetLeft(alien_2, 50);
+                        Canvas.SetTop(alien_2, 200);
+                        break;
+                    }
+
+                case 3:
+                    {
+                        alien_2.Visibility = Visibility.Visible;
+                        scoreMax = SCOREMAX3;
+                        break;
+                    }
 
             }
         }
@@ -363,23 +376,23 @@ namespace SAE
         {
             if (!pause)
             {
-                // Récupère la position de la souris par rapport à la fenêtre
-                System.Windows.Point position = e.GetPosition(this);
+                    // Récupère la position de la souris par rapport à la fenêtre
+                    System.Windows.Point position = e.GetPosition(this);
 
-                // Calcule la différence entre la position de la souris et le centre du rectangle
-                distanceX = position.X - (Canvas.GetLeft(cosmo) + cosmo.Width / 2);
-                distanceY = position.Y - (Canvas.GetTop(cosmo) + cosmo.Height / 2);
+                    // Calcule la différence entre la position de la souris et le centre du rectangle
+                    distanceX = position.X - (Canvas.GetLeft(cosmo) + cosmo.Width / 2);
+                    distanceY = position.Y - (Canvas.GetTop(cosmo) + cosmo.Height / 2);
+                    
+                    // Calcule l'angle en utilisant la fonction Atan2
+                    double angle = Math.Atan2(distanceY, distanceX) * (180 / Math.PI) + 90; // Conversion en degrés et ajustement de l'angle
 
-                // Calcule l'angle en utilisant la fonction Atan2
-                double angle = Math.Atan2(distanceY, distanceX) * (180 / Math.PI) + 90; // Conversion en degrés et ajustement de l'angle
+                    cosmo.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
 
-                cosmo.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
+                    // Créer un objet RotateTransform avec l'angle calculé et le centre comme origine de la rotation
+                    RotateTransform Rotation = new RotateTransform(angle);
 
-                // Créer un objet RotateTransform avec l'angle calculé et le centre comme origine de la rotation
-                RotateTransform Rotation = new RotateTransform(angle);
-
-                // Appliquer la transformation de rotation a cosmo
-                cosmo.RenderTransform = Rotation;
+                    // Appliquer la transformation de rotation a cosmo
+                    cosmo.RenderTransform = Rotation;
             }
         }
 
@@ -492,26 +505,28 @@ namespace SAE
             if (haut && bas)
             {
                 Console.WriteLine("haut et bas");
-            } 
+            }
             else if (haut)
             {
                 // Récupérer la position actuelle de la souris relative au Canvas
                 System.Windows.Point PositionSouris = Mouse.GetPosition(this);
-
-                // Calculer le vecteur de déplacement vers la souris
-                distanceX = PositionSouris.X - (Canvas.GetLeft(cosmo) + cosmo.Width / 2);
-                distanceY = PositionSouris.Y - (Canvas.GetTop(cosmo) + cosmo.Height / 2);
-
-                // Calculer la distance vers la souris avec le théoreme de pythagore
-                double distanceXY = Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
-
-                if (distanceXY > 30)
+                if(!(PositionSouris.X < 10 && PositionSouris.Y < 10))
                 {
-                    distanceX = distanceX / distanceXY;
-                    distanceY = distanceY / distanceXY;
+                    // Calculer le vecteur de déplacement vers la souris
+                    distanceX = PositionSouris.X - (Canvas.GetLeft(cosmo) + cosmo.Width / 2);
+                    distanceY = PositionSouris.Y - (Canvas.GetTop(cosmo) + cosmo.Height / 2);
 
-                    Canvas.SetLeft(cosmo, Canvas.GetLeft(cosmo) + distanceX * vitesse);
-                    Canvas.SetTop(cosmo, Canvas.GetTop(cosmo) + distanceY * vitesse);
+                    // Calculer la distance vers la souris avec le théoreme de pythagore
+                    double distanceXY = Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
+
+                    if (distanceXY > 30)
+                    {
+                        distanceX = distanceX / distanceXY;
+                        distanceY = distanceY / distanceXY;
+
+                        Canvas.SetLeft(cosmo, Canvas.GetLeft(cosmo) + distanceX * vitesse);
+                        Canvas.SetTop(cosmo, Canvas.GetTop(cosmo) + distanceY * vitesse);
+                    }
                 }
             }
             else if (bas)

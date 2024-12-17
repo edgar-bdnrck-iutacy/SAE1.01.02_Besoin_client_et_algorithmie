@@ -72,15 +72,6 @@ namespace SAE
             // Arret de la musique actuelle
             musique.Stop();
 
-            // Crée une nouvelle instance de MainWindow
-            MainWindow mainWindow = new MainWindow();
-
-            // Définit MainWindow comme la fenêtre principale de l'application
-            Application.Current.MainWindow = mainWindow;
-
-            // Affiche la nouvelle fenêtre
-            mainWindow.Show();
-
             // Ferme la fenêtre actuelle (MenuDemarrage)
             this.Close();
         }
