@@ -25,10 +25,10 @@ namespace SAE
     public partial class MainWindow : Window
     {
         public static readonly int SCOREMAX1 = 10, SCOREMAX2 = 15, LIMITE_DROITE_ALIEN = 800, LIMITE_GAUCHE_ALIEN = 20, SCOREMAX3 = 25, VITESSE_LAZER = 15, GRANDEVITESSE = 30;
-        public static readonly double ACCELERATION_PAR_TICK = 0.25;
+        public static readonly double ACCELERATION_PAR_TICK = 0.25, ACCELERATION_DECOLAGE = 0.5;
 
         public bool dejaAppele = false, versDroite = true, decolage = false, lobby = true, pause = false, interaction = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false;
-        private static DispatcherTimer tick, tick2;
+        private static DispatcherTimer tick;
         private static double vitesseFusee = 0,distanceX = 0, distanceY = 0, vitesse = 2, vitessemax = 10, vitesseAlien = 5, ticks = 0, trajectoireX, trajectoireY, trajectoireX_2, trajectoireY_2;
         private static int score = 0, niveau = 1, scoreMax = 0;
         private MediaPlayer musique;
@@ -106,13 +106,6 @@ namespace SAE
             tick.Interval = TimeSpan.FromMilliseconds(16);
             tick.Tick += Jeu;
             tick.Start();
-        }
-
-        private void InitTimerDecolage()
-        {
-            tick2 = new DispatcherTimer();
-            tick2.Interval = TimeSpan.FromMilliseconds(50);
-            tick2.Start();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -295,7 +288,7 @@ namespace SAE
             {
                 if (Canvas.GetTop(Fusee) > -Fusee.Height)
                 {
-                    vitesseFusee = vitesseFusee + 0.5;
+                    vitesseFusee = vitesseFusee + ACCELERATION_DECOLAGE;
                     Canvas.SetTop(Fusee, Canvas.GetTop(Fusee) - vitesseFusee);
                 }
                 else 
@@ -331,7 +324,7 @@ namespace SAE
             {
                 scoreMax = SCOREMAX1;
                 Canvas.SetLeft(alien, 360);
-                Canvas.SetTop(alien, 269);
+                Canvas.SetTop(alien, 280);
             }
             else if (niveau == 2)
             {
@@ -339,7 +332,7 @@ namespace SAE
                 alien_2.Visibility = Visibility.Visible;
                 scoreMax = SCOREMAX2;
                 Canvas.SetLeft(alien_2, 50);
-                Canvas.SetTop(alien_2, 186);
+                Canvas.SetTop(alien_2, 200);
             }
             else if (niveau == 3)
             {
