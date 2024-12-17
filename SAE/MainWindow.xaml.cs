@@ -24,10 +24,11 @@ namespace SAE
 {
     public partial class MainWindow : Window
     {
-        public static readonly int SCOREMAX1 = 10, SCOREMAX2 = 15, SCOREMAX3 = 25, VITESSE_LAZER = 15;
+        public static readonly int SCOREMAX1 = 10, SCOREMAX2 = 15, LIMITE_DROITE_ALIEN = 800, LIMITE_GAUCHE_ALIEN = 20, SCOREMAX3 = 25, VITESSE_LAZER = 15, GRANDEVITESSE = 30;
+        public static readonly double ACCELERATION_PAR_TICK = 0.25;
 
-        public bool dejaAppele = false, versDroite = true, lobby = true, pause = false, interaction = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false;
-        private static DispatcherTimer tick, temps;
+        public bool dejaAppele = false, versDroite = true, decolage = false, lobby = true, pause = false, interaction = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false;
+        private static DispatcherTimer tick, tick2;
         private static double vitesseFusee = 0,distanceX = 0, distanceY = 0, vitesse = 2, vitessemax = 10, vitesseAlien = 5, ticks = 0, trajectoireX, trajectoireY, trajectoireX_2, trajectoireY_2;
         private static int score = 0, niveau = 1, scoreMax = 0;
         private MediaPlayer musique;
@@ -107,6 +108,13 @@ namespace SAE
             tick.Start();
         }
 
+        private void InitTimerDecolage()
+        {
+            tick2 = new DispatcherTimer();
+            tick2.Interval = TimeSpan.FromMilliseconds(50);
+            tick2.Start();
+        }
+
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             Console.WriteLine(e.Key);
@@ -145,7 +153,7 @@ namespace SAE
                     score++;
                     break;
                 case Key.I:
-                    vitessemax = 30;
+                    vitessemax = GRANDEVITESSE;
                     break;
 
             }
@@ -156,12 +164,13 @@ namespace SAE
             enMouvement = (droite || gauche || haut || bas) && !(droite && gauche) && !(haut && bas);
             if (!pause)
             {
+                Decolage();
                 DeplacementCosmo();
                 if (enMouvement)
                 {
                     if (vitesse < vitessemax)
                     {
-                        vitesse = vitesse + 0.25;
+                        vitesse = vitesse + ACCELERATION_PAR_TICK;
                     }
                 }
                 else
@@ -183,8 +192,6 @@ namespace SAE
                         Fusee.Source = new BitmapImage(new Uri($"img/fuseeStage{niveau}.png",UriKind.Relative));
                         debris.Source = new BitmapImage(new Uri($"img/debrisStage{niveau}.png", UriKind.Relative));
                         labelScore.Content = $"{score}/{scoreMax}";
-                        if (niveau < 4) 
-                            MessageBox.Show("   Bonjour Cosmo, Tu a réuni assez de satellites pour pouvoir passer aux niveau suivant mais attention, ce niveau et encore plus dangeureux", "Rapport spacial", MessageBoxButton.OK);
                     }
 
                     if (CollisionEntreEntite(cosmo, satellite))
@@ -198,45 +205,48 @@ namespace SAE
                         }
                         while (CollisionEntreEntite(alien, satellite));
                     }
-
-                    if (niveau == 2)
+                    switch (niveau)
                     {
-                        if (versDroite)
-                        {
-                            Canvas.SetLeft(alien_2, Canvas.GetLeft(alien_2) + vitesseAlien);
-                            if (Canvas.GetLeft(alien_2) > 800)
+                        case 2:
+                            if (versDroite)
                             {
-                                versDroite = false;
+                                Canvas.SetLeft(alien_2, Canvas.GetLeft(alien_2) + vitesseAlien);
+                                if (Canvas.GetLeft(alien_2) > LIMITE_DROITE_ALIEN)
+                                {
+                                    versDroite = false;
+                                }
                             }
-                        }
-                        else
-                        {
-                            Canvas.SetLeft(alien_2, Canvas.GetLeft(alien_2) - vitesseAlien);
-                            if (Canvas.GetLeft(alien_2) < 50)
+                            else
                             {
-                                versDroite = true;
+                                Canvas.SetLeft(alien_2, Canvas.GetLeft(alien_2) - vitesseAlien);
+                                if (Canvas.GetLeft(alien_2) < LIMITE_GAUCHE_ALIEN)
+                                {
+                                    versDroite = true;
+                                }
                             }
-                        }
-                    } 
-                    else if (niveau == 3)
-                    {
-                        Canvas.SetLeft(lazer_2, Canvas.GetLeft(alien));
-                        Canvas.SetTop(lazer_2, Canvas.GetLeft(alien));
-                        InitialiseTrajectoire3();
-                        DeplacementAlien();
+                            break;
+                        case 3:
+                            Canvas.SetLeft(lazer_2, Canvas.GetLeft(alien));
+                            Canvas.SetTop(lazer_2, Canvas.GetLeft(alien));
+                            InitialiseTrajectoire3();
+                            DeplacementAlien();
+                            break;
+                        case 4:
+                            MessageBox.Show("   Bonjour Cosmo, Tu a réuni assez de satellites pour pouvoir passer aux niveau suivant mais attention, ce niveau et encore plus dangeureux", "Rapport spacial", MessageBoxButton.OK);
+                            break;
                     }
 
                     if (!lazerTire)
                     {
                         InitialiseTrajectoire();
-                        if (niveau == 2)
-                            InitialiseTrajectoire2();
+                        if (niveau >= 2)
+                            InitialiseTrajectoireRouge();
                     }
                     else
                     {
                         TirLazer();
-                        if (niveau == 2)
-                            TirLazer2();
+                        if (niveau >= 2)
+                            TirLazerRouge();
                     }
 
                     if (CollisionEntreEntite(lazer, cosmo) || CollisionEntreEntite(lazer_2, cosmo) || CollisionEntreEntite(alien, cosmo) || CollisionEntreEntite(alien_2, cosmo))
@@ -264,34 +274,9 @@ namespace SAE
                     {
                         if (niveau >= 4 && interaction)
                         {
-                            if (!dejaAppele)
-                                FinJeu();
-                            if (Canvas.GetTop(Fusee) > -Fusee.Height)
-                            {
-                                interaction = true;
-                                Console.WriteLine("test");
-                                vitesseFusee = vitesseFusee + 0.5;
-                                Canvas.SetTop(Fusee,Canvas.GetTop(Fusee) - vitesseFusee);
-                            } 
-                            else 
-                            {
-                                Console.WriteLine("3141592");
-                                /*// Arret de la musique actuelle
-                                musique.Stop();
-
-                                // Crée une nouvelle instance de MainWindow
-                                MenuDemarrage menuDemarrage = new MenuDemarrage();
-
-                                // Définit MainWindow comme la fenêtre principale de l'application
-                                Application.Current.MainWindow = menuDemarrage;
-
-                                // Affiche la nouvelle fenêtre
-                                MenuDemarrage.Show();
-
-                                // Ferme la fenêtre actuelle (MenuDemarrage)
-                                this.Close();*/
-                            }
-
+                            FinJeu();
+                            niveau = 0;
+                            decolage = true;
                         }
                         else if (interaction)
                         {
@@ -300,6 +285,22 @@ namespace SAE
                             MessageBox.Show("   Attention l'environnement dans lequel ce trouve les satellites est dangeureux, Etes-vous prêt ?", "Rapport spacial", MessageBoxButton.OK);
                         }
                     }
+                }
+            }
+        }
+
+        private void Decolage()
+        {
+            if (decolage)
+            {
+                if (Canvas.GetTop(Fusee) > -Fusee.Height)
+                {
+                    vitesseFusee = vitesseFusee + 0.5;
+                    Canvas.SetTop(Fusee, Canvas.GetTop(Fusee) - vitesseFusee);
+                }
+                else 
+                {
+                    decolage = false;
                 }
             }
         }
@@ -415,7 +416,7 @@ namespace SAE
             trajectoireY = distanceY / distanceXY;
         }
 
-        private void InitialiseTrajectoire2()
+        private void InitialiseTrajectoireRouge()
         {
             Canvas.SetLeft(lazer_2, Canvas.GetLeft(alien_2) + alien.Width / 2);
             Canvas.SetTop(lazer_2, Canvas.GetTop(alien_2) + alien.Height / 2);
@@ -454,13 +455,14 @@ namespace SAE
 
         private void DeplacementCosmo()
         {
+
+
             if (gauche && droite)
             {
                 Console.WriteLine("gauche et droite");
             }
             else if (gauche)
             {
-
                 RotateTransform rotateTransform = cosmo.RenderTransform as RotateTransform;
                 if (rotateTransform != null)
                 {
@@ -481,8 +483,6 @@ namespace SAE
             else if (droite)
             {
                 RotateTransform rotateTransform = cosmo.RenderTransform as RotateTransform;
-                if (rotateTransform != null)
-                {
                     double angle = rotateTransform.Angle;
 
                     // Convertir l'angle en radians
@@ -495,7 +495,6 @@ namespace SAE
                     // Déplace le rectangle en fonction de l'angle
                     Canvas.SetLeft(cosmo, Canvas.GetLeft(cosmo) + distanceX * vitesse);
                     Canvas.SetTop(cosmo, Canvas.GetTop(cosmo) + distanceY * vitesse);
-                }
             }
             if (haut && bas)
             {
@@ -561,7 +560,7 @@ namespace SAE
             }
         }
 
-        private void TirLazer2()
+        private void TirLazerRouge()
         {
             Canvas.SetLeft(lazer_2, Canvas.GetLeft(lazer_2) + trajectoireX_2 * VITESSE_LAZER);
             Canvas.SetTop(lazer_2, Canvas.GetTop(lazer_2) + trajectoireY_2 * VITESSE_LAZER);
@@ -571,7 +570,7 @@ namespace SAE
             {
                 lazerTire = false;
             }
-            if (CollisionAvecBord(canvas, lazer))
+            if (CollisionAvecBord(canvas, lazer_2))
             {
                 lazerTire = false;
             }
