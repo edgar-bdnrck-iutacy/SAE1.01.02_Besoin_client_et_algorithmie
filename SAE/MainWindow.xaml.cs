@@ -76,28 +76,19 @@ namespace SAE
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
+            if (e.Key.ToString() == Parametre.KeyAvancer)
+                haut = false;
+            else if (e.Key.ToString() == Parametre.KeyReculer)
+                bas = false;
+            else if (e.Key.ToString() == Parametre.KeyGauche)
+                gauche = false;
+            else if (e.Key.ToString() == Parametre.KeyDroite)
+                droite = false;
+            else if (e.Key.ToString() == Parametre.KeyPause)
+                pause = false;
+
             switch (e.Key)
             {
-                case Key.Up:
-                case Key.Z:
-                    haut = false;
-                    break;
-
-                case Key.Down:
-                case Key.S:
-                    bas = false;
-                    break;
-
-                case Key.Left:
-                case Key.Q:
-                    gauche = false;
-                    break;
-
-                case Key.Right:
-                case Key.D:
-                    droite = false;
-                    break;
-
                 case Key.Space:
                     interaction = false;
                     break;
@@ -115,32 +106,20 @@ namespace SAE
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             Console.WriteLine(e.Key);
+
+            if (e.Key.ToString() == Parametre.KeyAvancer)
+                haut = true;
+            else if (e.Key.ToString() == Parametre.KeyReculer)
+                bas = true;
+            else if (e.Key.ToString() == Parametre.KeyGauche)
+                gauche = true;
+            else if (e.Key.ToString() == Parametre.KeyDroite)
+                droite = true;
+            else if (e.Key.ToString() == Parametre.KeyPause)
+                pause = !pause;
+
             switch (e.Key)
             {
-                case Key.Up:
-                case Key.Z:
-                    haut = true;
-                    break;
-
-                case Key.Down:
-                case Key.S:
-                    bas = true;
-                    break;
-
-                case Key.Left:
-                case Key.Q:
-                    gauche = true;
-                    break;
-
-                case Key.Right:
-                case Key.D:
-                    droite = true;
-                    break;
-
-                case Key.P:
-                    pause = !pause;
-                    break;
-
                 case Key.Space:
                     interaction = true;
                     break;
