@@ -17,6 +17,7 @@ namespace SAE
     /// <summary>
     /// Logique d'interaction pour Parametre.xaml
     /// </summary>
+ 
     public partial class Parametre : Window
     {
         // Variable statique pour stocker le volume
