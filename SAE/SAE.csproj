@@ -37,6 +37,7 @@
     <None Remove="img\meteore3.png" />
     <None Remove="img\moteur.png" />
     <None Remove="img\pointe.png" />
+    <None Remove="img\rapport_spacial.png" />
     <None Remove="img\satellite.png" />
     <None Remove="img\separation.png" />
     <None Remove="img\sky.jpg" />
@@ -85,6 +86,7 @@
     <Resource Include="img\meteore1.png" />
     <Resource Include="img\meteore2.png" />
     <Resource Include="img\meteore3.png" />
+    <Resource Include="img\rapport_spacial.png" />
     <Resource Include="img\satellite.png" />
     <Resource Include="img\sky.jpg" />
   </ItemGroup>

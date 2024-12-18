@@ -63,7 +63,7 @@
             Canvas.Top="308"
             Width="68"
             Height="88"
-            HorizontalAlignment="Left"
+            HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Source="/img/astronaute_fusee_dorsale_T_pose_full_power.png" />
         <Label
@@ -130,25 +130,28 @@
             VerticalAlignment="Top"
             Content="PAUSE"
             FontSize="200"
-            Foreground="White" />
+            Foreground="White"
+            Visibility="Hidden" />
         <Image
             x:Name="rapportSpacial"
             Canvas.Left="424"
-            Canvas.Top="90"
+            Canvas.Top="97"
             Width="432"
-            Height="524"
+            Height="523"
             Source="/img/rapport_spacial.png"
-            Stretch="Fill" />
+            Stretch="Fill"
+            Visibility="Hidden" />
         <Label
             x:Name="labelRapport"
             Canvas.Left="448"
-            Canvas.Top="172"
+            Canvas.Top="179"
             Width="384"
             Height="328"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="&#x9;       Bonjour Cosmo, je&#xD;&#xA;&#x9;       suis dans le regret de &#xA;&#x9;       t'informer que dans le&#xA;&#x9;       cadre d'une mission &#xA;spaciale ta fusée s'est écrasé sur la&#xA;lune. Il faut maintenant ramaser &#xA;quelque &#x9;satellites pour pouvoir la &#xA;réparer. Bonne chance.&#xA;&#xA;&#x9;    IA copilot de la Fusée."
             FontSize="24"
-            Foreground="#FFE1E3FF" />
+            Foreground="#FFE1E3FF"
+            Visibility="Hidden" />
     </Canvas>
 </Window>
