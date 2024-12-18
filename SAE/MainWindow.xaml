@@ -129,5 +129,14 @@
             Width="1117"
             Height="28"
             Content=" Bonjour Cosmo, je suis dans le regret de t'informer que dans le cadre d'une mission spaciale ta fusée s'est écrasé sur la lune. Il faut maintenant ramaser quelque satellites pour pouvoir la réparer. Bonne chance." />
+        <Label
+            x:Name="labelPause"
+            Canvas.Left="351"
+            Canvas.Top="214"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Content="PAUSE"
+            FontSize="200"
+            Foreground="White" />
     </Canvas>
 </Window>

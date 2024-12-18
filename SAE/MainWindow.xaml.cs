@@ -21,6 +21,7 @@ using System.Xml.Linq;
 using System.Threading;
 using static System.Formats.Asn1.AsnWriter;
 using System.Windows.Media.Animation;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SAE
 {
@@ -162,6 +163,7 @@ namespace SAE
             enMouvement = (droite || gauche || haut || bas) && !(droite && gauche) && !(haut && bas);
             if (!pause)
             {
+                labelPause.Visibility = Visibility.Hidden;
                 Decolage();
                 DeplacementCosmo();
                 if (enMouvement)
@@ -190,7 +192,7 @@ namespace SAE
                         dejaAppele = false;
                         niveau++;
                         lobby = true;
-                        Fusee.Source = new BitmapImage(new Uri($"img/fuseeStage{niveau}.png",UriKind.Relative));
+                        Fusee.Source = new BitmapImage(new Uri($"img/fuseeStage{niveau}.png", UriKind.Relative));
                         debris.Source = new BitmapImage(new Uri($"img/debrisStage{niveau}.png", UriKind.Relative));
                         labelScore.Content = $"{score}/{scoreMax}";
                     }
@@ -246,7 +248,7 @@ namespace SAE
                     }
                     else
                     {
-                        TirLazer(lazer,trajectoireX,trajectoireY);
+                        TirLazer(lazer, trajectoireX, trajectoireY);
                         if (niveau >= 2)
                             TirLazer(lazer_2, trajectoireX_2, trajectoireY_2);
                     }
@@ -269,10 +271,10 @@ namespace SAE
                         LabelGameOver.Visibility = Visibility.Hidden;
                     }
                 }
-                else 
+                else
                 {
                     InitialiseLobby();
-                    if (CollisionEntreEntite(cosmo,Fusee))
+                    if (CollisionEntreEntite(cosmo, Fusee))
                     {
                         if (niveau >= 4 && interaction)
                         {
@@ -289,6 +291,10 @@ namespace SAE
                     }
                 }
             }
+            else 
+            {
+                labelPause.Visibility = Visibility.Visible;
+            }
         }
 
         private void Decolage()
@@ -303,6 +309,8 @@ namespace SAE
                 else 
                 {
                     decolage = false;
+                    MenuDemarrage menuDemarrage = new MenuDemarrage();
+                    menuDemarrage.ShowDialog();
                 }
             }
         }
