@@ -236,9 +236,11 @@ namespace SAE
                             DeplacementAlien();
                             break;
                         case 4:
-                            MessageBox.Show("   Bonjour Cosmo, Tu a réuni assez de satellites pour pouvoir passer aux niveau suivant mais attention, ce niveau et encore plus dangeureux", "Rapport spacial", MessageBoxButton.OK);
-                            
-                            labelRapport.Content = "Bonjour Cosmo, Tu a réuni assez de satellites pour pouvoir passer aux niveau suivant mais attention, ce niveau et encore plus dangeureux";
+                            while (!interaction)
+                            {
+                                rapportSpacial.Visibility = Visibility.Visible;
+                                labelRapport.Content = "Bonjour Cosmo, Tu a réuni assez de satellites pour pouvoir passer aux niveau suivant mais attention, ce niveau et encore plus dangeureux";
+                            }
                             break;
                     }
 

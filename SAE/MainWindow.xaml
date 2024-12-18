@@ -123,13 +123,6 @@
             Source="/img/debrisStage1.png"
             Stretch="Fill" />
         <Label
-            x:Name="labelRapport"
-            Canvas.Left="84"
-            Canvas.Top="-184"
-            Width="1117"
-            Height="28"
-            Content=" Bonjour Cosmo, je suis dans le regret de t'informer que dans le cadre d'une mission spaciale ta fusée s'est écrasé sur la lune. Il faut maintenant ramaser quelque satellites pour pouvoir la réparer. Bonne chance." />
-        <Label
             x:Name="labelPause"
             Canvas.Left="351"
             Canvas.Top="214"
@@ -138,5 +131,24 @@
             Content="PAUSE"
             FontSize="200"
             Foreground="White" />
+        <Image
+            x:Name="rapportSpacial"
+            Canvas.Left="424"
+            Canvas.Top="90"
+            Width="432"
+            Height="524"
+            Source="/img/rapport_spacial.png"
+            Stretch="Fill" />
+        <Label
+            x:Name="labelRapport"
+            Canvas.Left="448"
+            Canvas.Top="172"
+            Width="384"
+            Height="328"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Content="&#x9;       Bonjour Cosmo, je&#xD;&#xA;&#x9;       suis dans le regret de &#xA;&#x9;       t'informer que dans le&#xA;&#x9;       cadre d'une mission &#xA;spaciale ta fusée s'est écrasé sur la&#xA;lune. Il faut maintenant ramaser &#xA;quelque &#x9;satellites pour pouvoir la &#xA;réparer. Bonne chance.&#xA;&#xA;&#x9;    IA copilot de la Fusée."
+            FontSize="24"
+            Foreground="#FFE1E3FF" />
     </Canvas>
 </Window>
