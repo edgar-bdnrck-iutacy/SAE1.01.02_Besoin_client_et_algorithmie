@@ -31,9 +31,6 @@ namespace SAE
         public static string KeyDroite { get; set; } = "D";
         public static string KeyPause { get; set; } = "P";
 
-
-
-
         public Parametre()
         {
             InitializeComponent();
@@ -56,6 +53,27 @@ namespace SAE
             txtGauche.LostFocus += (s, e) => KeyGauche = txtGauche.Text.ToUpper();
             txtDroite.LostFocus += (s, e) => KeyDroite = txtDroite.Text.ToUpper();
             txtPause.LostFocus += (s, e) => KeyPause = txtPause.Text.ToUpper();
+        }
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (textBox != null)
+            {
+                textBox.Text = string.Empty; // Efface le contenu lors du focus
+            }
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+
+            if (textBox != null)
+            {
+                int debutSelection = textBox.SelectionStart; // Sauvegarde de la position du curseur
+                textBox.Text = textBox.Text.ToUpper(); // Conversion en majuscules
+                textBox.SelectionStart = debutSelection; // Restauration de la position du curseur
+            }
         }
 
         private void SlidVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

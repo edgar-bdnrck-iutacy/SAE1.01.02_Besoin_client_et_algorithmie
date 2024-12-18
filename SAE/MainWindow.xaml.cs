@@ -76,6 +76,7 @@ namespace SAE
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
+            // Appel des touches depuis les parametres
             if (e.Key.ToString() == Parametre.KeyAvancer)
                 haut = false;
             else if (e.Key.ToString() == Parametre.KeyReculer)
@@ -107,6 +108,7 @@ namespace SAE
         {
             Console.WriteLine(e.Key);
 
+            // Appel des touches depuis les parametres
             if (e.Key.ToString() == Parametre.KeyAvancer)
                 haut = true;
             else if (e.Key.ToString() == Parametre.KeyReculer)
