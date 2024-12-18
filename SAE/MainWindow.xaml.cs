@@ -330,6 +330,9 @@ namespace SAE
             satellite.Visibility = Visibility.Visible;
             alien.Visibility = Visibility.Visible;
             lazer.Visibility = Visibility.Visible;
+            meteorite1.Visibility = Visibility.Visible;
+            meteorite2.Visibility = Visibility.Visible;
+            meteorite3.Visibility = Visibility.Visible;
             dejaAppele = true;
 
             switch (niveau)
@@ -375,6 +378,9 @@ namespace SAE
             lazer_2.Visibility = Visibility.Hidden;
             satellite.Visibility = Visibility.Hidden;
             alien_2.Visibility = Visibility.Hidden;
+            meteorite1.Visibility = Visibility.Hidden;
+            meteorite2.Visibility = Visibility.Hidden;
+            meteorite3.Visibility = Visibility.Hidden;
 
             SolLunaire.Visibility = Visibility.Visible;
             Fusee.Visibility = Visibility.Visible;
