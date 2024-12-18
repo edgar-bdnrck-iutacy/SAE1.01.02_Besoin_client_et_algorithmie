@@ -11,29 +11,24 @@
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
         <Grid.Background>
-            <ImageBrush ImageSource="/img/sky.jpg" />
+            <ImageBrush ImageSource="/img/sky.jpg"/>
         </Grid.Background>
         <Label
             x:Name="labTitre"
-            Width="248"
+            Width="252"
             Height="64"
-            Margin="0,54,0,0"
+            Margin="0,56,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             Content="Paramètres"
-            FontSize="48"
-            Foreground="White" />
+            FontSize="48" Foreground="White" />
         <Slider
             x:Name="slidVolume"
             Width="322"
             Height="24"
-            Margin="0,365,0,0"
-            HorizontalAlignment="Center"
+            Margin="12,384,0,0"
+            HorizontalAlignment="Left"
             VerticalAlignment="Top"
             RenderTransformOrigin="0.5,0.5">
             <Slider.RenderTransform>
@@ -47,48 +42,11 @@
         </Slider>
         <Label
             x:Name="labVolume"
-            Width="72"
-            Margin="0,550,0,0"
-            HorizontalAlignment="Center"
+            Width="71"
+            Margin="136,569,0,0"
+            HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Volume"
-            FontSize="18"
-            Foreground="White" />
-        <Label
-            x:Name="labCommandes"
-            Grid.Column="1"
-            Width="274"
-            Height="64"
-            Margin="0,54,0,0"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Content="Commandes"
-            FontSize="48"
-            Foreground="White" />
-        <TextBlock
-            Grid.Column="1"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            FontSize="24"
-            Foreground="White"
-            TextWrapping="Wrap"
-            Width="435"
-            Margin="0,234,0,0">
-            <Run Text="🖱️ - Déplacer le regard de l'astronaute" />
-            <LineBreak />
-            <LineBreak />
-            <Run Text="🆉 - Déplacer l'astronaute vers l'avant" />
-            <LineBreak />
-            <Run Text="🆂 - Déplacer l'astronaute vers l'arrière" />
-            <LineBreak />
-            <Run Text="🆀 - Déplacer l'astronaute vers la gauche" />
-            <LineBreak />
-            <Run Text="🅳 - Déplacer l'astronaute vers la droite" />
-            <LineBreak />
-            <Run Text="Espace - Intéragir" />
-            <LineBreak />
-            <LineBreak />
-            <Run Text="🅿 - Pause" />
-        </TextBlock>
+            FontSize="18" Foreground="White" />
     </Grid>
 </Window>

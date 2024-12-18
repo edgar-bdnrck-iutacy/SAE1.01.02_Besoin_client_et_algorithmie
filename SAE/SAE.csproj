@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <None Remove="img\alien.png" />
-    <None Remove="img\alienRouge.png" />
     <None Remove="img\astronaute_atterisage.png" />
     <None Remove="img\astronaute_celebration.png" />
     <None Remove="img\astronaute_fusee_dorsale_T_pose.png" />
@@ -24,11 +23,11 @@
     <None Remove="img\debrisStage1.png" />
     <None Remove="img\debrisStage2.png" />
     <None Remove="img\debrisStage3.png" />
+    <None Remove="img\fuseeComplete.png" />
     <None Remove="img\FuseeDepart.png" />
     <None Remove="img\fuseeStage1.png" />
     <None Remove="img\fuseeStage2.png" />
     <None Remove="img\fuseeStage3.png" />
-    <None Remove="img\fuseeStage4.png" />
     <None Remove="img\ignition.png" />
     <None Remove="img\laser.png" />
     <None Remove="img\lune.png" />
@@ -37,7 +36,6 @@
     <None Remove="img\meteore3.png" />
     <None Remove="img\moteur.png" />
     <None Remove="img\pointe.png" />
-    <None Remove="img\rapport_spacial.png" />
     <None Remove="img\satellite.png" />
     <None Remove="img\separation.png" />
     <None Remove="img\sky.jpg" />
@@ -64,7 +62,6 @@
 
   <ItemGroup>
     <Resource Include="img\alien.png" />
-    <Resource Include="img\alienRouge.png" />
     <Resource Include="img\astronaute_atterisage.png" />
     <Resource Include="img\astronaute_celebration.png" />
     <Resource Include="img\astronaute_fusee_dorsale_T_pose_full_power.png" />
@@ -76,7 +73,7 @@
     <Resource Include="img\debrisStage1.png" />
     <Resource Include="img\debrisStage2.png" />
     <Resource Include="img\debrisStage3.png" />
-    <Resource Include="img\fuseeStage4.png" />
+    <Resource Include="img\fuseeComplete.png" />
     <Resource Include="img\FuseeDepart.png" />
     <Resource Include="img\fuseeStage1.png" />
     <Resource Include="img\fuseeStage2.png" />
@@ -86,7 +83,6 @@
     <Resource Include="img\meteore1.png" />
     <Resource Include="img\meteore2.png" />
     <Resource Include="img\meteore3.png" />
-    <Resource Include="img\rapport_spacial.png" />
     <Resource Include="img\satellite.png" />
     <Resource Include="img\sky.jpg" />
   </ItemGroup>
