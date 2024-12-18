@@ -17,13 +17,14 @@ namespace SAE
     /// </summary>
     public partial class MenuDemarrage : Window
     {
+        private static readonly int AJUSTEMENTVOLUME = 10;
         private MediaPlayer musique;
         public MenuDemarrage()
         {
             InitializeComponent();
 
             // Démarrer les animations
-            Loaded += MenuDemarrage_Loaded;
+            Loaded += MenuDemarrage_Chargée;
 
             // Initialisation du lecteur média
             musique = new MediaPlayer();
@@ -47,11 +48,11 @@ namespace SAE
 
         private void MajVolume(double volume)
         {
-            musique.Volume = volume / 10; // Mettre à jour le volume en temps réel
+            musique.Volume = volume / AJUSTEMENTVOLUME; // Mettre à jour le volume en temps réel
             Console.WriteLine($"Volume mis à jour : {musique.Volume}");
         }
 
-        private void MenuDemarrage_Loaded(object sender, RoutedEventArgs e)
+        private void MenuDemarrage_Chargée(object sender, RoutedEventArgs e)
         {
             // Obtenir les dimensions réelles de l'image
             var luneTransform = (RotateTransform)imgLune.RenderTransform;
@@ -71,15 +72,6 @@ namespace SAE
         {
             // Arret de la musique actuelle
             musique.Stop();
-
-            // Crée une nouvelle instance de MainWindow
-            MainWindow mainWindow = new MainWindow();
-
-            // Définit MainWindow comme la fenêtre principale de l'application
-            Application.Current.MainWindow = mainWindow;
-
-            // Affiche la nouvelle fenêtre
-            mainWindow.Show();
 
             // Ferme la fenêtre actuelle (MenuDemarrage)
             this.Close();
