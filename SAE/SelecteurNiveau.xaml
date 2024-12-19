@@ -20,9 +20,9 @@
             x:Name="BoutonNiv1"
             Width="172"
             Height="172"
-            Margin="266,0,0,0"
+            Margin="276,352,0,0"
             HorizontalAlignment="Left"
-            VerticalAlignment="Center"
+            VerticalAlignment="Top"
             BorderBrush="#00707070"
             Click="Bouton1_Click"
             Content="">
@@ -34,8 +34,8 @@
             x:Name="BoutonNiv2"
             Width="172"
             Height="172"
-            Margin="0,76,0,0"
-            HorizontalAlignment="Center"
+            Margin="564,162,0,0"
+            HorizontalAlignment="Left"
             VerticalAlignment="Top"
             BorderBrush="#00707070"
             Click="Bouton2_Click"
@@ -48,9 +48,9 @@
             x:Name="BoutonNiv3"
             Width="172"
             Height="172"
-            Margin="828,0,0,0"
+            Margin="838,352,0,0"
             HorizontalAlignment="Left"
-            VerticalAlignment="Center"
+            VerticalAlignment="Top"
             BorderBrush="#00707070"
             Click="Bouton3_Click"
             Content=""
@@ -73,5 +73,6 @@
                 <ImageBrush ImageSource="/img/Annuler.png" />
             </Button.Background>
         </Button>
+        <Label Content="Choix du niveau" HorizontalAlignment="Left" Margin="448,56,0,0" VerticalAlignment="Top" Height="79" Width="400" Foreground="White" FontSize="48" FontFamily="72 Black"/>
     </Grid>
 </Window>

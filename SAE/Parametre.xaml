@@ -21,14 +21,14 @@
         </Grid.Background>
         <Label
             x:Name="labTitre"
-            Width="248"
+            Width="286"
             Height="64"
             Margin="0,54,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             Content="Paramètres"
             FontSize="48"
-            Foreground="White" />
+            Foreground="White" FontFamily="72 Black" />
         <Slider
             x:Name="slidVolume"
             Width="322"
@@ -58,14 +58,14 @@
         <Label
             x:Name="labCommandes"
             Grid.Column="1"
-            Width="274"
+            Width="315"
             Height="64"
             Margin="0,54,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             Content="Commandes"
             FontSize="48"
-            Foreground="White" />
+            Foreground="White" FontFamily="72 Black" />
 
         <!-- Commandes avec TextBox -->
         <StackPanel Grid.Column="1" Margin="162,264,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
