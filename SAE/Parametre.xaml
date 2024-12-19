@@ -91,7 +91,11 @@
                 <TextBlock FontSize="18" Foreground="White" Text="Pause :" Width="120" />
                 <TextBox x:Name="txtPause" Width="50" Text="P" GotFocus="TextBox_GotFocus" TextChanged="TextBox_TextChanged" HorizontalAlignment="Left" />
             </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <TextBlock FontSize="18" Foreground="White" Text="Avancé auto :" Width="120" />
+                <TextBox x:Name="txtAvanceAuto" Width="50" Text="A" GotFocus="TextBox_GotFocus" TextChanged="TextBox_TextChanged" HorizontalAlignment="Left" />
+            </StackPanel>
         </StackPanel>
-        <Button Grid.Column="1" Content="OK" HorizontalAlignment="Left" Margin="377,500,0,0" VerticalAlignment="Top" Height="28" Width="80"/>
+        <Button Grid.Column="1" Content="OK" HorizontalAlignment="Left" Margin="386,531,0,0" VerticalAlignment="Top" Height="28" Width="80"/>
     </Grid>
 </Window>
