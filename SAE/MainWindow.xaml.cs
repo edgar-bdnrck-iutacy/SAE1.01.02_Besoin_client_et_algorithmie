@@ -153,7 +153,14 @@ namespace SAE
 
         private void Jeu(object sender, EventArgs e)
         {
-            labelScore.Content = $"{score}/{scoreMax}";
+            if (ModeDejeu == 2)
+            {
+                labelScore.Content = $"{score}";
+            } 
+            else
+            {
+                labelScore.Content = $"{score}/{scoreMax}";
+            }
             bool enMouvement = (droite || gauche || haut || bas) && !(droite && gauche) && !(haut && bas);
             if (!pause)
             {
@@ -263,7 +270,6 @@ namespace SAE
                         if (CollisionEntreEntite(cosmo, satellite))
                         {
                             score++;
-                            labelScore.Content = $"{score}/{scoreMax}";
                             do
                             {
                                 Canvas.SetLeft(satellite, random.Next(0, (int)(canvas.ActualWidth - satellite.Width)));
@@ -383,6 +389,13 @@ namespace SAE
                 lobby = false;
                 niveau = dialog.niveauSelectionne;
             }
+            else 
+            {
+                if (ModeDejeu == 2)
+                {
+                    Application.Current.Shutdown();
+                }
+            }
             this.Show();
             interaction = false;
             invinsible = true;
@@ -439,6 +452,7 @@ namespace SAE
             debris.Visibility = Visibility.Hidden;
 
             labelScore.Visibility = Visibility.Visible;
+            satelliteLogo.Visibility = Visibility.Visible;
             satellite.Visibility = Visibility.Visible;
             alien.Visibility = Visibility.Visible;
             lazer.Visibility = Visibility.Visible;
@@ -493,6 +507,7 @@ namespace SAE
         private void InitialiseLobby()
         {
             labelScore.Visibility = Visibility.Hidden;
+            satelliteLogo.Visibility = Visibility.Hidden;
             alien.Visibility = Visibility.Hidden;
             lazer.Visibility = Visibility.Hidden;
             lazer_2.Visibility = Visibility.Hidden;

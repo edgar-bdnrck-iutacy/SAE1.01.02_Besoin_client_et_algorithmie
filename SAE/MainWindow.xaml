@@ -117,8 +117,8 @@
             Stretch="Fill" />
         <Label
             x:Name="labelScore"
-            Canvas.Left="1160"
-            Canvas.Top="23"
+            Canvas.Left="1119"
+            Canvas.Top="19"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="0/10"
@@ -200,5 +200,15 @@
             Source="/img/rapport_spacial4.png"
             Stretch="Fill"
             Visibility="Hidden" />
+        <Image
+            x:Name="satelliteLogo"
+            Canvas.Left="1206"
+            Canvas.Top="21"
+            Width="54"
+            Height="54"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Source="/img/satellite.png"
+            Stretch="Fill" />
     </Canvas>
 </Window>
