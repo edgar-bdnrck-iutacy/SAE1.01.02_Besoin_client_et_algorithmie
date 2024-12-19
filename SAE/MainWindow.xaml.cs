@@ -279,17 +279,7 @@ namespace SAE
                             }
                             else
                             {
-                                this.Hide();
-                                SelecteurNiveau dialog = new SelecteurNiveau();
-                                bool? result = dialog.ShowDialog();
-                                Console.WriteLine(dialog.niveauSelectionne);
-                                if (dialog.niveauSelectionne > 0)
-                                {
-                                    lobby = false;
-                                    niveau = dialog.niveauSelectionne;
-                                }
-                                this.Show();
-                                interaction = false;
+                                SelecteurNiveau();
                             }
                         }
                     }
@@ -299,6 +289,20 @@ namespace SAE
             {
                 labelPause.Visibility = Visibility.Visible;
             }
+        }
+
+        private void SelecteurNiveau() 
+        {
+            this.Hide();
+            SelecteurNiveau dialog = new SelecteurNiveau();
+            bool? result = dialog.ShowDialog();
+            if (dialog.niveauSelectionne > 0)
+            {
+                lobby = false;
+                niveau = dialog.niveauSelectionne;
+            }
+            this.Show();
+            interaction = false;
         }
 
         private bool CollisionMortel()
