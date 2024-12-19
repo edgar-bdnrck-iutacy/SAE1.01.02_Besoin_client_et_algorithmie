@@ -85,8 +85,6 @@ namespace SAE
                 gauche = false;
             else if (e.Key.ToString() == Parametre.KeyDroite)
                 droite = false;
-            else if (e.Key.ToString() == Parametre.KeyPause)
-                pause = false;
 
             switch (e.Key)
             {
@@ -139,156 +137,157 @@ namespace SAE
 
         private void Jeu(object sender, EventArgs e)
         {
-            if (!dejaAppele2 && !interaction && niveau == 1)
-            {
-                rapportSpacial.Visibility = Visibility.Visible;
-                labelRapport.Visibility = Visibility.Visible;
-            }
-            else if (!dejaAppele2 && !interaction && niveau > 1 && niveau < 4)
-            {
-                rapportSpacial.Visibility = Visibility.Visible;
-                labelRapport.Content = "Bonjour Cosmo, Tu a réuni assez de satellites pour pouvoir passer aux niveau suivant mais attention, ce niveau et encore plus dangeureux";
-            }
-            else
-            {
-                labelRapport.Visibility = Visibility.Hidden;
-                rapportSpacial.Visibility = Visibility.Hidden;
-                dejaAppele2 = true;
 
                 enMouvement = (droite || gauche || haut || bas) && !(droite && gauche) && !(haut && bas);
-                if (!pause)
+            if (!pause)
+            {
+                if (!dejaAppele2 && !interaction && niveau == 1)
                 {
+                    rapportSpacial.Visibility = Visibility.Visible;
+                    labelRapport.Visibility = Visibility.Visible;
+                }
+                else if (!dejaAppele2 && !interaction && niveau > 1 && niveau < 4)
+                {
+                    rapportSpacial.Visibility = Visibility.Visible;
+                    labelRapport.Content = "Bonjour Cosmo, Tu a réuni assez de satellites pour pouvoir passer aux niveau suivant mais attention, ce niveau et encore plus dangeureux";
+                }
+                else
+                {
+                    labelRapport.Visibility = Visibility.Hidden;
+                    rapportSpacial.Visibility = Visibility.Hidden;
+                    dejaAppele2 = true;
+
                     labelPause.Visibility = Visibility.Hidden;
                     Decolage();
                     DeplacementCosmo();
-                    if (enMouvement)
+                }
+                if (enMouvement)
+                {
+                    if (vitesse < vitessemax)
                     {
-                        if (vitesse < vitessemax)
-                        {
-                            vitesse = vitesse + ACCELERATION_PAR_TICK;
-                        }
-                    }
-                    else
-                    {
-                        vitesse = 0;
-                    }
-
-                    if (!lobby)
-                    {
-                        if (!dejaAppele)
-                        {
-                            InitialiseNiv();
-                            Thread.Sleep(50);
-                        }
-
-                        if (score == scoreMax)
-                        {
-                            score = 0;
-                            dejaAppele = false;
-                            niveau++;
-                            lobby = true;
-                            Fusee.Source = new BitmapImage(new Uri($"img/fuseeStage{niveau}.png", UriKind.Relative));
-                            debris.Source = new BitmapImage(new Uri($"img/debrisStage{niveau}.png", UriKind.Relative));
-                            labelScore.Content = $"{score}/{scoreMax}";
-                            dejaAppele2 = false;
-                        }
-
-                        if (CollisionEntreEntite(cosmo, satellite))
-                        {
-                            score++;
-                            labelScore.Content = $"{score}/{scoreMax}";
-                            do
-                            {
-                                Canvas.SetLeft(satellite, random.Next(0, (int)(canvas.ActualWidth - satellite.Width)));
-                                Canvas.SetTop(satellite, random.Next(0, (int)(canvas.ActualHeight - satellite.Height)));
-                            }
-                            while (CollisionEntreEntite(alien, satellite));
-                        }
-
-                        switch (niveau)
-                        {
-                            case 2:
-                                if (versDroite)
-                                {
-                                    Canvas.SetLeft(alien_2, Canvas.GetLeft(alien_2) + vitesseAlien);
-                                    if (Canvas.GetLeft(alien_2) > LIMITE_DROITE_ALIEN)
-                                    {
-                                        versDroite = false;
-                                    }
-                                }
-                                else
-                                {
-                                    Canvas.SetLeft(alien_2, Canvas.GetLeft(alien_2) - vitesseAlien);
-                                    if (Canvas.GetLeft(alien_2) < LIMITE_GAUCHE_ALIEN)
-                                    {
-                                        versDroite = true;
-                                    }
-                                }
-                                break;
-                            case 3:
-                                Canvas.SetLeft(lazer_2, Canvas.GetLeft(alien));
-                                Canvas.SetTop(lazer_2, Canvas.GetLeft(alien));
-                                InitialiseTrajectoire3();
-                                DeplacementAlien();
-                                break;
-                            case 4:
-                                break;
-                        }
-
-                        if (!lazerTire)
-                        {
-                            InitialiseTrajectoire();
-                            if (niveau >= 2)
-                                InitialiseTrajectoireRouge();
-                        }
-                        else
-                        {
-                            TirLazer(lazer, trajectoireX, trajectoireY);
-                            if (niveau >= 2)
-                                TirLazer(lazer_2, trajectoireX_2, trajectoireY_2);
-                        }
-
-                        if (CollisionEntreEntite(lazer, cosmo) || CollisionEntreEntite(lazer_2, cosmo) || CollisionEntreEntite(alien, cosmo) || CollisionEntreEntite(alien_2, cosmo))
-                        {
-                            Canvas.SetLeft(LabelGameOver, canvas.ActualWidth / 2);
-                            Canvas.SetTop(LabelGameOver, canvas.ActualHeight / 2);
-                            LabelGameOver.Visibility = Visibility.Visible;
-                            lobby = true;
-                            score = 0;
-                            labelScore.Content = $"{score}/{scoreMax}";
-                            dejaAppele = false;
-                            Canvas.SetLeft(cosmo, canvas.ActualWidth / 2);
-                            Canvas.SetTop(cosmo, canvas.ActualHeight / 2);
-
-                        }
-                        else
-                        {
-                            LabelGameOver.Visibility = Visibility.Hidden;
-                        }
-                    }
-                    else
-                    {
-                        InitialiseLobby();
-                        if (CollisionEntreEntite(cosmo, Fusee))
-                        {
-                            if (niveau >= 4 && interaction)
-                            {
-                                FinJeu();
-                                niveau = 0;
-                                decolage = true;
-                            }
-                            else if (interaction)
-                            {
-                                lobby = false;
-                                interaction = false;
-                            }
-                        }
+                        vitesse = vitesse + ACCELERATION_PAR_TICK;
                     }
                 }
                 else
                 {
-                    labelPause.Visibility = Visibility.Visible;
+                    vitesse = 0;
                 }
+
+                if (!lobby)
+                {
+                    if (!dejaAppele)
+                    {
+                        InitialiseNiv();
+                        Thread.Sleep(50);
+                    }
+
+                    if (score == scoreMax)
+                    {
+                        score = 0;
+                        dejaAppele = false;
+                        niveau++;
+                        lobby = true;
+                        Fusee.Source = new BitmapImage(new Uri($"img/fuseeStage{niveau}.png", UriKind.Relative));
+                        debris.Source = new BitmapImage(new Uri($"img/debrisStage{niveau}.png", UriKind.Relative));
+                        labelScore.Content = $"{score}/{scoreMax}";
+                        dejaAppele2 = false;
+                    }
+
+                    if (CollisionEntreEntite(cosmo, satellite))
+                    {
+                        score++;
+                        labelScore.Content = $"{score}/{scoreMax}";
+                        do
+                        {
+                            Canvas.SetLeft(satellite, random.Next(0, (int)(canvas.ActualWidth - satellite.Width)));
+                            Canvas.SetTop(satellite, random.Next(0, (int)(canvas.ActualHeight - satellite.Height)));
+                        }
+                        while (CollisionEntreEntite(alien, satellite));
+                    }
+
+                    switch (niveau)
+                    {
+                        case 2:
+                            if (versDroite)
+                            {
+                                Canvas.SetLeft(alien_2, Canvas.GetLeft(alien_2) + vitesseAlien);
+                                if (Canvas.GetLeft(alien_2) > LIMITE_DROITE_ALIEN)
+                                {
+                                    versDroite = false;
+                                }
+                            }
+                            else
+                            {
+                                Canvas.SetLeft(alien_2, Canvas.GetLeft(alien_2) - vitesseAlien);
+                                if (Canvas.GetLeft(alien_2) < LIMITE_GAUCHE_ALIEN)
+                                {
+                                    versDroite = true;
+                                }
+                            }
+                            break;
+                        case 3:
+                            Canvas.SetLeft(lazer_2, Canvas.GetLeft(alien));
+                            Canvas.SetTop(lazer_2, Canvas.GetLeft(alien));
+                            InitialiseTrajectoire3();
+                            DeplacementAlien();
+                            break;
+                        case 4:
+                            break;
+                    }
+
+                    if (!lazerTire)
+                    {
+                        InitialiseTrajectoire();
+                        if (niveau >= 2)
+                            InitialiseTrajectoireRouge();
+                    }
+                    else
+                    {
+                        TirLazer(lazer, trajectoireX, trajectoireY);
+                        if (niveau >= 2)
+                            TirLazer(lazer_2, trajectoireX_2, trajectoireY_2);
+                    }
+
+                    if (CollisionEntreEntite(lazer, cosmo) || CollisionEntreEntite(lazer_2, cosmo) || CollisionEntreEntite(alien, cosmo) || CollisionEntreEntite(alien_2, cosmo))
+                    {
+                        Canvas.SetLeft(LabelGameOver, canvas.ActualWidth / 2);
+                        Canvas.SetTop(LabelGameOver, canvas.ActualHeight / 2);
+                        LabelGameOver.Visibility = Visibility.Visible;
+                        lobby = true;
+                        score = 0;
+                        labelScore.Content = $"{score}/{scoreMax}";
+                        dejaAppele = false;
+                        Canvas.SetLeft(cosmo, canvas.ActualWidth / 2);
+                        Canvas.SetTop(cosmo, canvas.ActualHeight / 2);
+
+                    }
+                    else
+                    {
+                        LabelGameOver.Visibility = Visibility.Hidden;
+                    }
+                }
+                else
+                {
+                    InitialiseLobby();
+                    if (CollisionEntreEntite(cosmo, Fusee))
+                    {
+                        if (niveau >= 4 && interaction)
+                        {
+                            FinJeu();
+                            niveau = 0;
+                            decolage = true;
+                        }
+                        else if (interaction)
+                        {
+                            lobby = false;
+                            interaction = false;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                labelPause.Visibility = Visibility.Visible;
             }
         }
 

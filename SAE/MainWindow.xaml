@@ -17,9 +17,35 @@
         <Canvas.Background>
             <ImageBrush ImageSource="/img/sky.jpg" />
         </Canvas.Background>
-        <Image x:Name="meteorite1" Height="93" Canvas.Left="339" Source="/img/meteore1.png" Stretch="Fill" Canvas.Top="52" Width="93" Opacity="0.6"/>
-        <Image x:Name="meteorite2" Height="148" Canvas.Left="1053" Source="/img/meteore2.png" Stretch="Fill" Canvas.Top="228" Width="148" Opacity="0.6"/>
-        <Image x:Name="meteorite3" Height="74" Canvas.Left="187" Source="/img/meteore3.png" Stretch="Fill" Canvas.Top="606" Width="74" Opacity="0.6" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Image
+            x:Name="meteorite1"
+            Canvas.Left="339"
+            Canvas.Top="52"
+            Width="93"
+            Height="93"
+            Opacity="0.6"
+            Source="/img/meteore1.png"
+            Stretch="Fill" />
+        <Image
+            x:Name="meteorite2"
+            Canvas.Left="1053"
+            Canvas.Top="228"
+            Width="148"
+            Height="148"
+            Opacity="0.6"
+            Source="/img/meteore2.png"
+            Stretch="Fill" />
+        <Image
+            x:Name="meteorite3"
+            Canvas.Left="187"
+            Canvas.Top="606"
+            Width="74"
+            Height="74"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Opacity="0.6"
+            Source="/img/meteore3.png"
+            Stretch="Fill" />
         <Image
             x:Name="lazer"
             Canvas.Left="-745"
