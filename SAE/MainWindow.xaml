@@ -191,5 +191,14 @@
             Source="/img/rapport_spacial3.png"
             Stretch="Fill"
             Visibility="Hidden" />
+        <Image
+            x:Name="rapportSpacial4"
+            Canvas.Left="424"
+            Canvas.Top="97"
+            Width="432"
+            Height="523"
+            Source="/img/rapport_spacial4.png"
+            Stretch="Fill"
+            Visibility="Hidden" />
     </Canvas>
 </Window>
