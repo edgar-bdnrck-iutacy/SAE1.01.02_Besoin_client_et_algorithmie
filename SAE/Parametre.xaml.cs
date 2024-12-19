@@ -21,7 +21,7 @@ namespace SAE
     public partial class Parametre : Window
     {
         // Variable statique pour stocker le volume
-        public static double Volume { get; set; } = 50; // Valeur par défaut 100%
+        public static double Volume { get; set; } = 100; // Valeur par défaut 100%
         // Notifier le changement de volume
         public static event Action<double> changementVolume;
 
@@ -38,7 +38,7 @@ namespace SAE
 
             //Volume
             slidVolume.Value = Volume; // Initialiser le slider avec la valeur actuelle
-            slidVolume.ValueChanged += SlidVolume_ValueChanged;
+            slidVolume.ValueChanged += SlidVolume_ValeurChange;
 
             //Changement des commandes
             // Initialise les valeurs des TextBox
@@ -79,7 +79,7 @@ namespace SAE
             }
         }
 
-        private void SlidVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void SlidVolume_ValeurChange(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Volume = slidVolume.Value; // Mettre à jour la variable statique
             changementVolume?.Invoke(Volume); // Notifier les abonnés

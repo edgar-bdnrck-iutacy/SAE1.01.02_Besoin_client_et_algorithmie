@@ -91,13 +91,13 @@
         <!--  Boutons  -->
         <Button
             x:Name="butJouer"
-            Width="258"
+            Width="188"
             Height="104"
-            Margin="0,0,0,300"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Bottom"
+            Margin="432,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
             Click="butJouer_Click"
-            Content="Jouer"
+            Content=" Mode&#xD;&#xA;Histoire"
             FontSize="36" />
         <Button
             x:Name="butParametre"
@@ -126,6 +126,16 @@
             VerticalAlignment="Bottom"
             Click="butQuitter_Click"
             Content="Quitter"
+            FontSize="36" />
+        <Button
+            x:Name="butInifinie"
+            Width="188"
+            Height="104"
+            Margin="666,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Click="butInfini_Click"
+            Content="Mode&#xD;&#xA; Infini"
             FontSize="36" />
     </Grid>
 </Window>

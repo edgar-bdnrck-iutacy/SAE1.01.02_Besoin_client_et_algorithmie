@@ -34,7 +34,7 @@ namespace SAE
         public bool niv1fini = false, niv2fini = false, niv3fini = false, invinsible =  false, dejaAppele = false, dejaAppele2 = false, versDroite = true, decolage = false, lobby = true, pause = false, interaction = false, gauche = false, droite = false, haut = false, bas = false, lazerTire = false;
         private static DispatcherTimer tick;
         private static double vitesseFusee = 0,distanceX = 0, distanceY = 0, vitesse = 2, vitessemax = 10, vitesseAlien = 5, trajectoireX, trajectoireY, trajectoireX_2, trajectoireY_2;
-        private static int score = 0, niveau = 0, scoreMax = 0, nbNiveauComplete = 0, tempsRestantInvisibilite = 0;
+        private static int ModeDejeu = 0, score = 0, niveau = 0, scoreMax = 0, nbNiveauComplete = 0, tempsRestantInvisibilite = 0;
         private MediaPlayer musique;
         private Random random = new Random();
 
@@ -45,8 +45,12 @@ namespace SAE
             LanceMenuDemarrage();
             InitialiseLobby();
             this.MouseMove += DeplacementSouris;
-            
+            InitialiseMusique();
+            InitTimer();
+        }
 
+        private void InitialiseMusique()
+        {
             //Init du lecteur de média pour la musique de niveaux
             musique = new MediaPlayer();
             musique.Open(new Uri("music/Level.mp3", UriKind.Relative));
@@ -65,7 +69,6 @@ namespace SAE
 
             // Changement du volume en temps réel
             Parametre.changementVolume += MajVolume;
-            InitTimer();
         }
 
         private void LanceMenuDemarrage()
@@ -73,6 +76,7 @@ namespace SAE
             this.Hide();
             MenuDemarrage dialog = new MenuDemarrage();
             bool? result = dialog.ShowDialog();
+            ModeDejeu = dialog.ModeDeJeu;
             if (result == false)
                 Application.Current.Shutdown();
             this.Show();
@@ -153,178 +157,191 @@ namespace SAE
             bool enMouvement = (droite || gauche || haut || bas) && !(droite && gauche) && !(haut && bas);
             if (!pause)
             {
-                if (!dejaAppele2 && !interaction && niveau == 0)
+                if (ModeDejeu == 2)
                 {
-                    rapportSpacial1.Visibility = Visibility.Visible;
-                }
-                else if (!dejaAppele2 && !interaction && nbNiveauComplete < 3)
-                {
-                    rapportSpacial2.Visibility = Visibility.Visible;
-                }
-                else if (!dejaAppele2 && !interaction && nbNiveauComplete == 3)
-                {
-                    rapportSpacial4.Visibility = Visibility.Visible;
-
-                }
+                    scoreMax = 999999999;
+                } 
                 else
                 {
-                    rapportSpacial4.Visibility = Visibility.Hidden;
-                    rapportSpacial1.Visibility = Visibility.Hidden;
-                    rapportSpacial2.Visibility = Visibility.Hidden;
-                    dejaAppele2 = true;
+                    if (!dejaAppele2 && !interaction && niveau == 0)
+                    {
+                        rapportSpacial1.Visibility = Visibility.Visible;
+                    }
+                    else if (!dejaAppele2 && !interaction && nbNiveauComplete < 3)
+                    {
+                        rapportSpacial2.Visibility = Visibility.Visible;
+                    }
+                    else if (!dejaAppele2 && !interaction && nbNiveauComplete == 3)
+                    {
+                        rapportSpacial4.Visibility = Visibility.Visible;
 
-                    labelPause.Visibility = Visibility.Hidden;
-                    Decolage();
-                    DeplacementCosmo();
+                    }
+                    else
+                    {
+                        rapportSpacial4.Visibility = Visibility.Hidden;
+                        rapportSpacial1.Visibility = Visibility.Hidden;
+                        rapportSpacial2.Visibility = Visibility.Hidden;
+                        dejaAppele2 = true;
+
+                        labelPause.Visibility = Visibility.Hidden;
+                        Decolage();
+                    }
                 }
+                DeplacementCosmo();
                 if (enMouvement)
-                {
-                    if (vitesse < vitessemax)
                     {
-                        vitesse = vitesse + ACCELERATION_PAR_TICK;
+                        if (vitesse < vitessemax)
+                        {
+                            vitesse = vitesse + ACCELERATION_PAR_TICK;
+                        }
                     }
-                }
                 else
-                {
-                    vitesse = 0;
-                }
-
+                    {
+                        vitesse = 0;
+                    }
                 if (!lobby)
-                {
+                    {
 
-                    if (tempsRestantInvisibilite  == 0)
-                    {
-                        invinsible = false;
-                    } 
-                    else
-                    {
-                        tempsRestantInvisibilite--;
-                    }
-
-                    if (!dejaAppele)
-                    {
-                        InitialiseNiv();
-                    }
-
-                    if (score == scoreMax)
-                    {
-                        switch (niveau)
+                        if (tempsRestantInvisibilite == 0)
                         {
-                            case 1:
-                                if (!niv1fini)
-                                    nbNiveauComplete++;
-                                break;
-                            case 2:
-                                if (!niv2fini)
-                                    nbNiveauComplete++;
-                                break;
-                            case 3:
-                                if (!niv3fini)
-                                    nbNiveauComplete++;
-                                break;
+                            invinsible = false;
                         }
-                        score = 0;
-                        lobby = true;
-                        Fusee.Source = new BitmapImage(new Uri($"img/fuseeStage{nbNiveauComplete + 1}.png", UriKind.Relative));
-                        debris.Source = new BitmapImage(new Uri($"img/debrisStage{nbNiveauComplete + 1}.png", UriKind.Relative));
-                        dejaAppele = false;
-                        dejaAppele2 = false;
-                        switch (niveau)
+                        else
                         {
-                            case 1:
-                            {
-                                niv1fini = true;
-                                break;
-                            }
-                            case 2:
-                            {
-                                niv2fini = true;
-                                break;
-                            }
-                            case 3:
-                            {
-                                niv3fini = true;
-                                break;
-                            }
-
+                            tempsRestantInvisibilite--;
                         }
-                    }
 
-                    if (CollisionEntreEntite(cosmo, satellite))
-                    {
-                        score++;
-                        labelScore.Content = $"{score}/{scoreMax}";
-                        do
+                        if (!dejaAppele)
                         {
-                            Canvas.SetLeft(satellite, random.Next(0, (int)(canvas.ActualWidth - satellite.Width)));
-                            Canvas.SetTop(satellite, random.Next(0, (int)(canvas.ActualHeight - satellite.Height)));
+                            InitialiseNiv();
                         }
-                        while (CollisionEntreEntite(alien, satellite));
-                    }
 
-                    switch (niveau)
-                    {
-                        case 2:
-                            DeplacementAlien_2GaucheDroite();
-                            break;
-                        case 3:
-                            Canvas.SetLeft(lazer_2, Canvas.GetLeft(alien));
-                            Canvas.SetTop(lazer_2, Canvas.GetLeft(alien));
-                            InitialiseTrajectoireAlienRouge();
-                            DeplacementAlien();
-                            break;
-                    }
-
-                    if (!lazerTire)
-                    {
-                        InitialiseTrajectoireLazer(lazer, alien , ref trajectoireX, ref trajectoireY);
-                        if (niveau >= 2)
-                            InitialiseTrajectoireLazer(lazer_2, alien_2, ref trajectoireX_2, ref trajectoireY_2);
-                    }
-                    else
-                    {
-                        TirLazer(lazer, trajectoireX, trajectoireY);
-                        if (niveau >= 2)
-                            TirLazer(lazer_2, trajectoireX_2, trajectoireY_2);
-                    }
-
-                    if (!invinsible)
-                    {
-                        if (CollisionMortel())
+                        if (score == scoreMax)
                         {
-                            LabelGameOver.Visibility = Visibility.Visible;
-                            lobby = true;
+                            switch (niveau)
+                            {
+                                case 1:
+                                    if (!niv1fini)
+                                        nbNiveauComplete++;
+                                    break;
+                                case 2:
+                                    if (!niv2fini)
+                                        nbNiveauComplete++;
+                                    break;
+                                case 3:
+                                    if (!niv3fini)
+                                        nbNiveauComplete++;
+                                    break;
+                            }
                             score = 0;
+                            lobby = true;
+                            Fusee.Source = new BitmapImage(new Uri($"img/fuseeStage{nbNiveauComplete + 1}.png", UriKind.Relative));
+                            debris.Source = new BitmapImage(new Uri($"img/debrisStage{nbNiveauComplete + 1}.png", UriKind.Relative));
                             dejaAppele = false;
-                            Canvas.SetLeft(cosmo, canvas.ActualWidth / 2);
-                            Canvas.SetTop(cosmo, canvas.ActualHeight / 2);
-
-                        }
-                        cosmo.Opacity = 1;
-                    }
-                    else
-                    {
-                        cosmo.Opacity = 0.5;
-                        LabelGameOver.Visibility = Visibility.Hidden;
-                    }
-                }
-                else
-                {
-                    InitialiseLobby();
-                    if (CollisionEntreEntite(cosmo, Fusee))
-                    {
-                        if (interaction) 
-                        {
-                            if (nbNiveauComplete == 3)
+                            dejaAppele2 = false;
+                            switch (niveau)
                             {
-                                FinJeu();
-                                niveau = 0;
-                                decolage = true;
+                                case 1:
+                                    {
+                                        niv1fini = true;
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        niv2fini = true;
+                                        break;
+                                    }
+                                case 3:
+                                    {
+                                        niv3fini = true;
+                                        break;
+                                    }
 
                             }
-                            else
+                        }
+
+                        if (CollisionEntreEntite(cosmo, satellite))
+                        {
+                            score++;
+                            labelScore.Content = $"{score}/{scoreMax}";
+                            do
                             {
-                                SelecteurNiveau();
+                                Canvas.SetLeft(satellite, random.Next(0, (int)(canvas.ActualWidth - satellite.Width)));
+                                Canvas.SetTop(satellite, random.Next(0, (int)(canvas.ActualHeight - satellite.Height)));
+                            }
+                            while (CollisionEntreEntite(alien, satellite));
+                        }
+
+                        switch (niveau)
+                        {
+                            case 2:
+                                DeplacementAlien_2GaucheDroite();
+                                break;
+                            case 3:
+                                Canvas.SetLeft(lazer_2, Canvas.GetLeft(alien));
+                                Canvas.SetTop(lazer_2, Canvas.GetLeft(alien));
+                                InitialiseTrajectoireAlienRouge();
+                                DeplacementAlien();
+                                break;
+                        }
+
+                        if (!lazerTire)
+                        {
+                            InitialiseTrajectoireLazer(lazer, alien, ref trajectoireX, ref trajectoireY);
+                            if (niveau >= 2)
+                                InitialiseTrajectoireLazer(lazer_2, alien_2, ref trajectoireX_2, ref trajectoireY_2);
+                        }
+                        else
+                        {
+                            TirLazer(lazer, trajectoireX, trajectoireY);
+                            if (niveau >= 2)
+                                TirLazer(lazer_2, trajectoireX_2, trajectoireY_2);
+                        }
+
+                        if (!invinsible)
+                        {
+                            if (CollisionMortel())
+                            {
+                                LabelGameOver.Visibility = Visibility.Visible;
+                                lobby = true;
+                                score = 0;
+                                dejaAppele = false;
+                                Canvas.SetLeft(cosmo, canvas.ActualWidth / 2);
+                                Canvas.SetTop(cosmo, canvas.ActualHeight / 2);
+
+                            }
+                            cosmo.Opacity = 1;
+                        }
+                        else
+                        {
+                            cosmo.Opacity = 0.5;
+                            LabelGameOver.Visibility = Visibility.Hidden;
+                        }
+                    }
+                else
+                    {
+                    if (ModeDejeu == 2)
+                    {
+                        SelecteurNiveau();
+                    }
+                    else 
+                    {
+                        InitialiseLobby();
+                        if (CollisionEntreEntite(cosmo, Fusee))
+                        {
+                            if (interaction)
+                            {
+                                if (nbNiveauComplete == 3)
+                                {
+                                    FinJeu();
+                                    niveau = 0;
+                                    decolage = true;
+
+                                }
+                                else
+                                {
+                                    SelecteurNiveau();
+                                }
                             }
                         }
                     }
@@ -396,9 +413,11 @@ namespace SAE
                 else 
                 {
                     decolage = false;
-                    MenuDemarrage menuDemarrage = new MenuDemarrage();
-                    menuDemarrage.ShowDialog();
-                    //ReinitialiseJeu();
+                    LanceMenuDemarrage();
+                    InitialiseLobby();
+                    Canvas.SetLeft(Fusee, 965);
+                    Canvas.SetTop(Fusee, 131);
+                    Fusee.Visibility = Visibility.Visible;
                 }
             }
         }

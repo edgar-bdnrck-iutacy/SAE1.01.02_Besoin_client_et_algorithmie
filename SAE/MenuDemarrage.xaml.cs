@@ -18,6 +18,9 @@ namespace SAE
     public partial class MenuDemarrage : Window
     {
         private static readonly int AJUSTEMENTVOLUME = 10;
+
+        public int ModeDeJeu { get; set; }
+
         private MediaPlayer musique;
         public MenuDemarrage()
         {
@@ -75,6 +78,8 @@ namespace SAE
 
             this.DialogResult = true;
 
+            ModeDeJeu = 1;
+
             // Ferme la fenêtre actuelle (MenuDemarrage)
             this.Close();
         }
@@ -87,6 +92,19 @@ namespace SAE
 
         private void butQuitter_Click(object sender, RoutedEventArgs e)
         {
+            this.Close();
+        }
+
+        private void butInfini_Click(object sender, RoutedEventArgs e)
+        {
+            // Arret de la musique actuelle
+            musique.Stop();
+
+            this.DialogResult = true;
+
+            ModeDeJeu = 2;
+
+            // Ferme la fenêtre actuelle (MenuDemarrage)
             this.Close();
         }
     }
