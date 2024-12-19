@@ -93,9 +93,9 @@
             x:Name="butJouer"
             Width="188"
             Height="104"
-            Margin="432,0,0,0"
+            Margin="432,0,0,300"
             HorizontalAlignment="Left"
-            VerticalAlignment="Center"
+            VerticalAlignment="Bottom"
             Click="butJouer_Click"
             Content=" Mode&#xD;&#xA;Histoire"
             FontSize="36" />
@@ -131,9 +131,9 @@
             x:Name="butInifinie"
             Width="188"
             Height="104"
-            Margin="666,0,0,0"
+            Margin="666,0,0,300"
             HorizontalAlignment="Left"
-            VerticalAlignment="Center"
+            VerticalAlignment="Bottom"
             Click="butInfini_Click"
             Content="Mode&#xD;&#xA; Infini"
             FontSize="36" />
