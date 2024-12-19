@@ -73,6 +73,8 @@ namespace SAE
             // Arret de la musique actuelle
             musique.Stop();
 
+            this.DialogResult = true;
+
             // Ferme la fenêtre actuelle (MenuDemarrage)
             this.Close();
         }
@@ -85,7 +87,7 @@ namespace SAE
 
         private void butQuitter_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            this.Close();
         }
     }
 }

@@ -32,8 +32,8 @@ namespace SAE
 
         public bool niv1fini = false, niv2fini = false, niv3fini = false, invinsible =  false, dejaAppele = false, dejaAppele2 = false, versDroite = true, decolage = false, lobby = true, pause = false, interaction = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false;
         private static DispatcherTimer tick;
-        private static double vitesseFusee = 0,distanceX = 0, distanceY = 0, vitesse = 2, vitessemax = 10, vitesseAlien = 5, ticks = 0, trajectoireX, trajectoireY, trajectoireX_2, trajectoireY_2;
-        private static int score = 0, niveau = 1, scoreMax = 0, nbNiveauComplete = 0, tempsRestantInvisibilite = 0;
+        private static double vitesseFusee = 0,distanceX = 0, distanceY = 0, vitesse = 2, vitessemax = 10, vitesseAlien = 5, trajectoireX, trajectoireY, trajectoireX_2, trajectoireY_2;
+        private static int score = 0, niveau = 0, scoreMax = 0, nbNiveauComplete = 0, tempsRestantInvisibilite = 0;
         private MediaPlayer musique;
         private Random random = new Random();
 
@@ -41,11 +41,8 @@ namespace SAE
         public MainWindow()
         {
             InitializeComponent();
-            this.Hide();
-            MenuDemarrage menuDemarrage = new MenuDemarrage();
-            menuDemarrage.ShowDialog();
+            LanceMenuDemarrage();
             InitialiseLobby();
-            this.Show();
             this.MouseMove += DeplacementSouris;
             
 
@@ -68,6 +65,16 @@ namespace SAE
             // Changement du volume en temps réel
             Parametre.changementVolume += MajVolume;
             InitTimer();
+        }
+
+        private void LanceMenuDemarrage()
+        {
+            this.Hide();
+            MenuDemarrage dialog = new MenuDemarrage();
+            bool? result = dialog.ShowDialog();
+            if (result == false)
+                Application.Current.Shutdown();
+            this.Show();
         }
 
         private void MajVolume(double volume)
@@ -145,20 +152,24 @@ namespace SAE
             enMouvement = (droite || gauche || haut || bas) && !(droite && gauche) && !(haut && bas);
             if (!pause)
             {
-                if (!dejaAppele2 && !interaction && niveau == 1)
+                if (!dejaAppele2 && !interaction && niveau == 0)
                 {
-                    rapportSpacial.Visibility = Visibility.Visible;
-                    labelRapport.Visibility = Visibility.Visible;
+                    rapportSpacial1.Visibility = Visibility.Visible;
                 }
-                else if (!dejaAppele2 && !interaction && niveau > 1 && niveau < 4)
+                else if (!dejaAppele2 && !interaction && nbNiveauComplete < 3)
                 {
-                    rapportSpacial.Visibility = Visibility.Visible;
-                    labelRapport.Content = "Bonjour Cosmo, Tu a réuni assez de satellites pour pouvoir passer aux niveau suivant mais attention, ce niveau et encore plus dangeureux";
+                    rapportSpacial2.Visibility = Visibility.Visible;
+                }
+                else if (!dejaAppele2 && !interaction && nbNiveauComplete == 3)
+                {
+                    rapportSpacial4.Visibility = Visibility.Visible;
+
                 }
                 else
                 {
-                    labelRapport.Visibility = Visibility.Hidden;
-                    rapportSpacial.Visibility = Visibility.Hidden;
+                    rapportSpacial4.Visibility = Visibility.Hidden;
+                    rapportSpacial1.Visibility = Visibility.Hidden;
+                    rapportSpacial2.Visibility = Visibility.Hidden;
                     dejaAppele2 = true;
 
                     labelPause.Visibility = Visibility.Hidden;
@@ -394,7 +405,7 @@ namespace SAE
         {
             dejaAppele = true;
             interaction = false;
-            MessageBox.Show("   Bien Joué Cosmos, Tu a réussi !!\nLa fusée étant sur pied il est temps de rentrer sur terre !!", "Rapport spacial", MessageBoxButton.OK);
+
             cosmo.Visibility = Visibility.Hidden;
             Fusee.Source = new BitmapImage(new Uri($"img/fuseeDepart.png", UriKind.Relative));
             vitesseFusee = 0;
