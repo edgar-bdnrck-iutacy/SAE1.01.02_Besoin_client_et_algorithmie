@@ -33,7 +33,7 @@ namespace SAE
         public bool niv1fini = false, niv2fini = false, niv3fini = false, invinsible =  false, dejaAppele = false, dejaAppele2 = false, versDroite = true, decolage = false, lobby = true, pause = false, interaction = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false;
         private static DispatcherTimer tick;
         private static double vitesseFusee = 0,distanceX = 0, distanceY = 0, vitesse = 2, vitessemax = 10, vitesseAlien = 5, ticks = 0, trajectoireX, trajectoireY, trajectoireX_2, trajectoireY_2;
-        private static int score = 0, niveau = 1, scoreMax = 0, nbNiveauComplete = 0, tempsRestantInvisibilite = 0;
+        private static int score = 0, niveau = 0, scoreMax = 0, nbNiveauComplete = 0, tempsRestantInvisibilite = 0;
         private MediaPlayer musique;
         private Random random = new Random();
 
@@ -143,15 +143,13 @@ namespace SAE
             enMouvement = (droite || gauche || haut || bas) && !(droite && gauche) && !(haut && bas);
             if (!pause)
             {
-                if (!dejaAppele2 && !interaction && niveau == 1)
+                if (!dejaAppele2 && !interaction && niveau == 0)
                 {
                     rapportSpacial.Visibility = Visibility.Visible;
-                    labelRapport.Visibility = Visibility.Visible;
                 }
-                else if (!dejaAppele2 && !interaction && niveau > 1 && niveau < 4)
+                else if (!dejaAppele2 && !interaction && nbNiveauComplete < 3)
                 {
                     rapportSpacial.Visibility = Visibility.Visible;
-                    labelRapport.Content = "Bonjour Cosmo, Tu a réuni assez de satellites pour pouvoir passer aux niveau suivant mais attention, ce niveau et encore plus dangeureux";
                 }
                 else
                 {
