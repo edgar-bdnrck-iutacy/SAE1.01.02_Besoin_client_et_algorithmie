@@ -26,12 +26,13 @@
             AutoReverse="True"
             RepeatBehavior="Forever">
             <DoubleAnimation
-                Storyboard.TargetName="imgAstro"
-                Storyboard.TargetProperty="(RenderTransform).(TranslateTransform.Y)"
+                Storyboard.TargetName="translateAstro"
+                Storyboard.TargetProperty="Y"
                 From="0"
-                To="100"
-                Duration="0:1:0" />
+                To="50"
+                Duration="0:0:3" />
         </Storyboard>
+
 
 
     </Window.Resources>
@@ -68,11 +69,10 @@
                     <ScaleTransform />
                     <SkewTransform />
                     <RotateTransform Angle="11.384" />
-                    <TranslateTransform Y="0" />
+                    <TranslateTransform x:Name="translateAstro" Y="0" />
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-
 
 
         <!--  Titre  -->
