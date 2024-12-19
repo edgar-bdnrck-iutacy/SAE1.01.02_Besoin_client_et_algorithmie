@@ -11,6 +11,7 @@
   <ItemGroup>
     <None Remove="img\alien.png" />
     <None Remove="img\alienRouge.png" />
+    <None Remove="img\annuler.png" />
     <None Remove="img\astronaute_atterisage.png" />
     <None Remove="img\astronaute_celebration.png" />
     <None Remove="img\astronaute_fusee_dorsale_T_pose.png" />
@@ -38,6 +39,9 @@
     <None Remove="img\meteore2.png" />
     <None Remove="img\meteore3.png" />
     <None Remove="img\moteur.png" />
+    <None Remove="img\nv1.png" />
+    <None Remove="img\nv2.png" />
+    <None Remove="img\nv3.png" />
     <None Remove="img\pointe.png" />
     <None Remove="img\rapport_spacial.png" />
     <None Remove="img\satellite.png" />
@@ -67,6 +71,7 @@
   <ItemGroup>
     <Resource Include="img\alien.png" />
     <Resource Include="img\alienRouge.png" />
+    <Resource Include="img\annuler.png" />
     <Resource Include="img\astronaute_atterisage.png" />
     <Resource Include="img\astronaute_celebration.png" />
     <Resource Include="img\astronaute_fusee_dorsale_T_pose_full_power.png" />
@@ -90,6 +95,9 @@
     <Resource Include="img\meteore1.png" />
     <Resource Include="img\meteore2.png" />
     <Resource Include="img\meteore3.png" />
+    <Resource Include="img\nv1.png" />
+    <Resource Include="img\nv2.png" />
+    <Resource Include="img\nv3.png" />
     <Resource Include="img\rapport_spacial.png" />
     <Resource Include="img\satellite.png" />
     <Resource Include="img\sky.jpg" />
