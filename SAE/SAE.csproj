@@ -29,6 +29,8 @@
     <None Remove="img\fuseeStage2.png" />
     <None Remove="img\fuseeStage3.png" />
     <None Remove="img\fuseeStage4.png" />
+    <None Remove="img\IconCosmonaute.ico" />
+    <None Remove="img\IconParametre.ico" />
     <None Remove="img\ignition.png" />
     <None Remove="img\laser.png" />
     <None Remove="img\lune.png" />
@@ -81,6 +83,8 @@
     <Resource Include="img\fuseeStage1.png" />
     <Resource Include="img\fuseeStage2.png" />
     <Resource Include="img\fuseeStage3.png" />
+    <Resource Include="img\IconCosmonaute.ico" />
+    <Resource Include="img\IconParametre.ico" />
     <Resource Include="img\laser.png" />
     <Resource Include="img\lune.png" />
     <Resource Include="img\meteore1.png" />
