@@ -218,7 +218,7 @@ namespace SAE
                     switch (niveau)
                     {
                         case 2:
-                            DeplacementAlien_2GaucheDroite()
+                            DeplacementAlien_2GaucheDroite();
                             break;
                         case 3:
                             Canvas.SetLeft(lazer_2, Canvas.GetLeft(alien));
