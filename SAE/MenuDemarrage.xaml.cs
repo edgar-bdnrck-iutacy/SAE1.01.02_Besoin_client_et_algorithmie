@@ -87,7 +87,7 @@ namespace SAE
 
         private void butQuitter_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            this.Close();
         }
     }
 }
