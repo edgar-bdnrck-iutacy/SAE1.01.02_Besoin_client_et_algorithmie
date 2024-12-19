@@ -63,7 +63,7 @@ namespace SAE
             var moonStoryboard = (Storyboard)FindResource("RotateMoonStoryboard");
             moonStoryboard.Begin();
 
-            // Démarrer l'animation de l'astronaute
+            // Démarrer l'animation de montée et descente pour imgAstro
             var astroStoryboard = (Storyboard)FindResource("MoveAstronautStoryboard");
             astroStoryboard.Begin();
         }
