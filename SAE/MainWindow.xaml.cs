@@ -295,7 +295,7 @@ namespace SAE
         {
             this.Hide();
             SelecteurNiveau dialog = new SelecteurNiveau();
-
+            bool? result = dialog.ShowDialog();
             if (dialog.niveauSelectionne > 0)
             {
                 lobby = false;
