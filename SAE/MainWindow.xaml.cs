@@ -147,16 +147,16 @@ namespace SAE
             {
                 if (!dejaAppele2 && !interaction && niveau == 0)
                 {
-                    rapportSpacial.Visibility = Visibility.Visible;
+                    rapportSpacial1.Visibility = Visibility.Visible;
                 }
                 else if (!dejaAppele2 && !interaction && nbNiveauComplete < 3)
                 {
-                    rapportSpacial.Visibility = Visibility.Visible;
+                    rapportSpacial2.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    labelRapport.Visibility = Visibility.Hidden;
                     rapportSpacial.Visibility = Visibility.Hidden;
+                    rapportSpacial2.Visibility = Visibility.Hidden;
                     dejaAppele2 = true;
 
                     labelPause.Visibility = Visibility.Hidden;
@@ -392,7 +392,12 @@ namespace SAE
         {
             dejaAppele = true;
             interaction = false;
-            MessageBox.Show("   Bien Joué Cosmos, Tu a réussi !!\nLa fusée étant sur pied il est temps de rentrer sur terre !!", "Rapport spacial", MessageBoxButton.OK);
+            while (interaction)
+            {
+                rapportSpacial2.Visibility = Visibility.Visible;
+            }
+            rapportSpacial4.Visibility = Visibility.Hidden;
+
             cosmo.Visibility = Visibility.Hidden;
             Fusee.Source = new BitmapImage(new Uri($"img/fuseeDepart.png", UriKind.Relative));
             vitesseFusee = 0;
