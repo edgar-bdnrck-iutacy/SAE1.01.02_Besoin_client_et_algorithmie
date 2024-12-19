@@ -27,7 +27,7 @@ namespace SAE
 {
     public partial class MainWindow : Window
     {
-        public static readonly int VITESSE_ALIEN2 = 4, DEMITOUR = 180,AJUSTEMENT_ANGLE = 90 , SCOREMAX4 = 50, SCOREMAX1 = 10, SCOREMAX2 = 15, LIMITE_DROITE_ALIEN = 800, POSITION_ALIEN2_LEFT = 50, POSITION_ALIEN2_TOP = 200, POSITION_ALIEN_TOP = 280, POSITION_ALIEN_LEFT = 360, FPS = 16, LIMITE_GAUCHE_ALIEN = 20, SCOREMAX3 = 25, VITESSE_LAZER = 15, GRANDEVITESSE = 30, AJUSTEMENTVOLUME = 10;
+        public static readonly int VITESSE_ALIEN2 = 4, DEMITOUR = 180,AJUSTEMENT_ANGLE = 90, HORS_ECRAN_X = -100, HORS_ECRAN_Y = -100, SCOREMAX4 = 50, SCOREMAX1 = 10, SCOREMAX2 = 15, LIMITE_DROITE_ALIEN = 800, POSITION_ALIEN2_LEFT = 50, POSITION_ALIEN2_TOP = 200, POSITION_ALIEN_TOP = 280, POSITION_ALIEN_LEFT = 360, FPS = 16, LIMITE_GAUCHE_ALIEN = 20, SCOREMAX3 = 25, VITESSE_LAZER = 15, GRANDEVITESSE = 30, AJUSTEMENTVOLUME = 10;
         public static readonly double ACCELERATION_PAR_TICK = 0.25, ACCELERATION_DECOLAGE = 0.5;
 
         public bool dejaAppele = false, dejaAppele2 = false, versDroite = true, decolage = false, lobby = true, pause = false, interaction = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false;
@@ -367,6 +367,8 @@ namespace SAE
                         scoreMax = SCOREMAX1;
                         Canvas.SetLeft(alien, POSITION_ALIEN_LEFT);
                         Canvas.SetTop(alien, POSITION_ALIEN_TOP);
+                        Canvas.SetLeft(alien_2, HORS_ECRAN_X);
+                        Canvas.SetTop(alien_2, HORS_ECRAN_Y);
                         break;
                     }
 
@@ -375,6 +377,8 @@ namespace SAE
                         lazer_2.Visibility = Visibility.Visible;
                         alien_2.Visibility = Visibility.Visible;
                         scoreMax = SCOREMAX2;
+                        Canvas.SetLeft(alien, POSITION_ALIEN_LEFT);
+                        Canvas.SetTop(alien, POSITION_ALIEN_TOP);
                         Canvas.SetLeft(alien_2, POSITION_ALIEN2_LEFT);
                         Canvas.SetTop(alien_2, POSITION_ALIEN2_TOP);
                         break;
@@ -382,6 +386,10 @@ namespace SAE
 
                 case 3:
                     {
+                        Canvas.SetLeft(alien, POSITION_ALIEN_LEFT);
+                        Canvas.SetTop(alien, POSITION_ALIEN_TOP);
+                        Canvas.SetLeft(alien_2, POSITION_ALIEN2_LEFT);
+                        Canvas.SetTop(alien_2, POSITION_ALIEN2_TOP);
                         alien_2.Visibility = Visibility.Visible;
                         scoreMax = SCOREMAX3;
                         break;
