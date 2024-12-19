@@ -65,30 +65,32 @@
             Content="Commandes"
             FontSize="48"
             Foreground="White" />
-        <TextBlock
-            Grid.Column="1"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            FontSize="24"
-            Foreground="White"
-            TextWrapping="Wrap"
-            Width="435"
-            Margin="0,234,0,0">
-            <Run Text="🖱️ - Déplacer le regard de l'astronaute" />
-            <LineBreak />
-            <LineBreak />
-            <Run Text="🆉 - Déplacer l'astronaute vers l'avant" />
-            <LineBreak />
-            <Run Text="🆂 - Déplacer l'astronaute vers l'arrière" />
-            <LineBreak />
-            <Run Text="🆀 - Déplacer l'astronaute vers la gauche" />
-            <LineBreak />
-            <Run Text="🅳 - Déplacer l'astronaute vers la droite" />
-            <LineBreak />
-            <Run Text="Espace - Intéragir" />
-            <LineBreak />
-            <LineBreak />
-            <Run Text="🅿 - Pause" />
-        </TextBlock>
+
+        <!-- Commandes avec TextBox -->
+        <StackPanel Grid.Column="1" Margin="162,264,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock FontSize="18" Foreground="White" Text="🖱️ - Déplacer le regard de l'astronaute" />
+            <TextBlock FontSize="18" Foreground="White" Text="Espace - Intéragir" />
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <TextBlock FontSize="18" Foreground="White" Text="Avancer :" Width="120" />
+                <TextBox x:Name="txtAvancer" Width="50" Text="Z" GotFocus="TextBox_GotFocus" TextChanged="TextBox_TextChanged" HorizontalAlignment="Left" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <TextBlock FontSize="18" Foreground="White" Text="Reculer :" Width="120" />
+                <TextBox x:Name="txtReculer" Width="50" Text="S" GotFocus="TextBox_GotFocus" TextChanged="TextBox_TextChanged" HorizontalAlignment="Left" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <TextBlock FontSize="18" Foreground="White" Text="Gauche :" Width="120" />
+                <TextBox x:Name="txtGauche" Width="50" Text="Q" GotFocus="TextBox_GotFocus" TextChanged="TextBox_TextChanged" HorizontalAlignment="Left" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <TextBlock FontSize="18" Foreground="White" Text="Droite :" Width="120" />
+                <TextBox x:Name="txtDroite" Width="50" Text="D" GotFocus="TextBox_GotFocus" TextChanged="TextBox_TextChanged" HorizontalAlignment="Left" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <TextBlock FontSize="18" Foreground="White" Text="Pause :" Width="120" />
+                <TextBox x:Name="txtPause" Width="50" Text="P" GotFocus="TextBox_GotFocus" TextChanged="TextBox_TextChanged" HorizontalAlignment="Left" />
+            </StackPanel>
+        </StackPanel>
+        <Button Grid.Column="1" Content="OK" HorizontalAlignment="Left" Margin="377,500,0,0" VerticalAlignment="Top" Height="28" Width="80"/>
     </Grid>
 </Window>

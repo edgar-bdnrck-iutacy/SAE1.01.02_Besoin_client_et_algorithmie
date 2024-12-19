@@ -76,28 +76,20 @@ namespace SAE
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
+            // Appel des touches depuis les parametres
+            if (e.Key.ToString() == Parametre.KeyAvancer)
+                haut = false;
+            else if (e.Key.ToString() == Parametre.KeyReculer)
+                bas = false;
+            else if (e.Key.ToString() == Parametre.KeyGauche)
+                gauche = false;
+            else if (e.Key.ToString() == Parametre.KeyDroite)
+                droite = false;
+            else if (e.Key.ToString() == Parametre.KeyPause)
+                pause = false;
+
             switch (e.Key)
             {
-                case Key.Up:
-                case Key.Z:
-                    haut = false;
-                    break;
-
-                case Key.Down:
-                case Key.S:
-                    bas = false;
-                    break;
-
-                case Key.Left:
-                case Key.Q:
-                    gauche = false;
-                    break;
-
-                case Key.Right:
-                case Key.D:
-                    droite = false;
-                    break;
-
                 case Key.Space:
                     interaction = false;
                     break;
@@ -115,32 +107,21 @@ namespace SAE
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             Console.WriteLine(e.Key);
+
+            // Appel des touches depuis les parametres
+            if (e.Key.ToString() == Parametre.KeyAvancer)
+                haut = true;
+            else if (e.Key.ToString() == Parametre.KeyReculer)
+                bas = true;
+            else if (e.Key.ToString() == Parametre.KeyGauche)
+                gauche = true;
+            else if (e.Key.ToString() == Parametre.KeyDroite)
+                droite = true;
+            else if (e.Key.ToString() == Parametre.KeyPause)
+                pause = !pause;
+
             switch (e.Key)
             {
-                case Key.Up:
-                case Key.Z:
-                    haut = true;
-                    break;
-
-                case Key.Down:
-                case Key.S:
-                    bas = true;
-                    break;
-
-                case Key.Left:
-                case Key.Q:
-                    gauche = true;
-                    break;
-
-                case Key.Right:
-                case Key.D:
-                    droite = true;
-                    break;
-
-                case Key.P:
-                    pause = !pause;
-                    break;
-
                 case Key.Space:
                     interaction = true;
                     break;
@@ -349,6 +330,9 @@ namespace SAE
             satellite.Visibility = Visibility.Visible;
             alien.Visibility = Visibility.Visible;
             lazer.Visibility = Visibility.Visible;
+            meteorite1.Visibility = Visibility.Visible;
+            meteorite2.Visibility = Visibility.Visible;
+            meteorite3.Visibility = Visibility.Visible;
             dejaAppele = true;
 
             switch (niveau)
@@ -394,6 +378,9 @@ namespace SAE
             lazer_2.Visibility = Visibility.Hidden;
             satellite.Visibility = Visibility.Hidden;
             alien_2.Visibility = Visibility.Hidden;
+            meteorite1.Visibility = Visibility.Hidden;
+            meteorite2.Visibility = Visibility.Hidden;
+            meteorite3.Visibility = Visibility.Hidden;
 
             SolLunaire.Visibility = Visibility.Visible;
             Fusee.Visibility = Visibility.Visible;
