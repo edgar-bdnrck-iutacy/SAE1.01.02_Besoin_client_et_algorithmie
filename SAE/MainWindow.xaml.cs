@@ -119,6 +119,8 @@ namespace SAE
                 droite = true;
             else if (e.Key.ToString() == Parametre.KeyPause)
                 pause = !pause;
+            else if (e.Key.ToString() == Parametre.KeyAvanceAuto)
+                haut = !haut;
 
             switch (e.Key)
             {

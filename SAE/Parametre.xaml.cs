@@ -30,6 +30,7 @@ namespace SAE
         public static string KeyGauche { get; set; } = "Q";
         public static string KeyDroite { get; set; } = "D";
         public static string KeyPause { get; set; } = "P";
+        public static string KeyAvanceAuto { get; set; } = "A";
 
         public Parametre()
         {
@@ -46,6 +47,7 @@ namespace SAE
             txtGauche.Text = KeyGauche;
             txtDroite.Text = KeyDroite;
             txtPause.Text = KeyPause;
+            txtAvanceAuto.Text = KeyAvanceAuto;
 
             // Quand LostFocus sauvegarde des nouvelles touches
             txtAvancer.LostFocus += (s, e) => KeyAvancer = txtAvancer.Text.ToUpper();
@@ -53,6 +55,7 @@ namespace SAE
             txtGauche.LostFocus += (s, e) => KeyGauche = txtGauche.Text.ToUpper();
             txtDroite.LostFocus += (s, e) => KeyDroite = txtDroite.Text.ToUpper();
             txtPause.LostFocus += (s, e) => KeyPause = txtPause.Text.ToUpper();
+            txtAvanceAuto.LostFocus += (s, e) => KeyAvanceAuto = txtAvanceAuto.Text.ToUpper();
         }
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
