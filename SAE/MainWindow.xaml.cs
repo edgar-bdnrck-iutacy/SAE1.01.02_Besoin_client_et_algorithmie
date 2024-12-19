@@ -197,8 +197,8 @@ namespace SAE
                         score = 0;
                         nbNiveauComplete++;
                         lobby = true;
-                        Fusee.Source = new BitmapImage(new Uri($"img/fuseeStage{nbNiveauComplete}.png", UriKind.Relative));
-                        debris.Source = new BitmapImage(new Uri($"img/debrisStage{nbNiveauComplete}.png", UriKind.Relative));
+                        Fusee.Source = new BitmapImage(new Uri($"img/fuseeStage{nbNiveauComplete + 1}.png", UriKind.Relative));
+                        debris.Source = new BitmapImage(new Uri($"img/debrisStage{nbNiveauComplete + 1}.png", UriKind.Relative));
                         dejaAppele = false;
                         dejaAppele2 = false;
                     }
