@@ -22,6 +22,7 @@ using System.Threading;
 using static System.Formats.Asn1.AsnWriter;
 using System.Windows.Media.Animation;
 using System.Security.Cryptography.X509Certificates;
+using System.Data;
 
 namespace SAE
 {
@@ -30,7 +31,7 @@ namespace SAE
         public static readonly int VITESSE_ALIEN2 = 4, DEMITOUR = 180,AJUSTEMENT_ANGLE = 90, HORS_ECRAN_X = -100, HORS_ECRAN_Y = -100, SCOREMAX4 = 50, SCOREMAX1 = 10, SCOREMAX2 = 15, LIMITE_DROITE_ALIEN = 800, POSITION_ALIEN2_LEFT = 50, POSITION_ALIEN2_TOP = 200, POSITION_ALIEN_TOP = 280, POSITION_ALIEN_LEFT = 360, FPS = 16, LIMITE_GAUCHE_ALIEN = 20, SCOREMAX3 = 25, VITESSE_LAZER = 15, GRANDEVITESSE = 30, AJUSTEMENTVOLUME = 10;
         public static readonly double ACCELERATION_PAR_TICK = 0.25, ACCELERATION_DECOLAGE = 0.5;
 
-        public bool niv1fini = false, niv2fini = false, niv3fini = false, invinsible =  false, dejaAppele = false, dejaAppele2 = false, versDroite = true, decolage = false, lobby = true, pause = false, interaction = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false;
+        public bool niv1fini = false, niv2fini = false, niv3fini = false, invinsible =  false, dejaAppele = false, dejaAppele2 = false, versDroite = true, decolage = false, lobby = true, pause = false, interaction = false, gauche = false, droite = false, haut = false, bas = false, lazerTire = false;
         private static DispatcherTimer tick;
         private static double vitesseFusee = 0,distanceX = 0, distanceY = 0, vitesse = 2, vitessemax = 10, vitesseAlien = 5, trajectoireX, trajectoireY, trajectoireX_2, trajectoireY_2;
         private static int score = 0, niveau = 0, scoreMax = 0, nbNiveauComplete = 0, tempsRestantInvisibilite = 0;
@@ -149,7 +150,7 @@ namespace SAE
         private void Jeu(object sender, EventArgs e)
         {
             labelScore.Content = $"{score}/{scoreMax}";
-            enMouvement = (droite || gauche || haut || bas) && !(droite && gauche) && !(haut && bas);
+            bool enMouvement = (droite || gauche || haut || bas) && !(droite && gauche) && !(haut && bas);
             if (!pause)
             {
                 if (!dejaAppele2 && !interaction && niveau == 0)
@@ -269,16 +270,16 @@ namespace SAE
                         case 3:
                             Canvas.SetLeft(lazer_2, Canvas.GetLeft(alien));
                             Canvas.SetTop(lazer_2, Canvas.GetLeft(alien));
-                            InitialiseTrajectoire3();
+                            InitialiseTrajectoireAlienRouge();
                             DeplacementAlien();
                             break;
                     }
 
                     if (!lazerTire)
                     {
-                        InitialiseTrajectoire();
+                        InitialiseTrajectoireLazer(lazer, alien , ref trajectoireX, ref trajectoireY);
                         if (niveau >= 2)
-                            InitialiseTrajectoireRouge();
+                            InitialiseTrajectoireLazer(lazer_2, alien_2, ref trajectoireX_2, ref trajectoireY_2);
                     }
                     else
                     {
@@ -299,11 +300,11 @@ namespace SAE
                             Canvas.SetTop(cosmo, canvas.ActualHeight / 2);
 
                         }
-                        cosmo.Opacity = 100;
+                        cosmo.Opacity = 1;
                     }
                     else
                     {
-                        cosmo.Opacity = 50;
+                        cosmo.Opacity = 0.5;
                         LabelGameOver.Visibility = Visibility.Hidden;
                     }
                 }
@@ -397,6 +398,7 @@ namespace SAE
                     decolage = false;
                     MenuDemarrage menuDemarrage = new MenuDemarrage();
                     menuDemarrage.ShowDialog();
+                    //ReinitialiseJeu();
                 }
             }
         }
@@ -510,7 +512,7 @@ namespace SAE
             }
         }
 
-        private void InitialiseTrajectoire()
+        private void InitialiseTrajectoireLazer(Image lazer, Image alien, ref double trajectoireX, ref double trajectoireY)
         {
             Canvas.SetLeft(lazer, Canvas.GetLeft(alien) + alien.Width / 2);
             Canvas.SetTop(lazer, Canvas.GetTop(alien) + alien.Height / 2);
@@ -536,33 +538,7 @@ namespace SAE
             trajectoireY = distanceY / distanceXY;
         }
 
-        private void InitialiseTrajectoireRouge()
-        {
-            Canvas.SetLeft(lazer_2, Canvas.GetLeft(alien_2) + alien.Width / 2);
-            Canvas.SetTop(lazer_2, Canvas.GetTop(alien_2) + alien.Height / 2);
-            lazerTire = true;
-
-            distanceX = (Canvas.GetLeft(cosmo) + cosmo.Width / 2) - (Canvas.GetLeft(lazer_2) + lazer.Width / 2);
-            distanceY = (Canvas.GetTop(cosmo) + cosmo.Height / 2) - (Canvas.GetTop(lazer_2) + lazer.Height / 2);
-
-            // Calcule l'angle en utilisant la fonction Atan2
-            double angle = Math.Atan2(distanceY, distanceX) * (DEMITOUR / Math.PI) + DEMITOUR; // Conversion en degrés et ajustement de l'angle
-
-            lazer.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
-
-            // Créer un objet RotateTransform avec l'angle calculé et le centre comme origine de la rotation
-            RotateTransform Rotation = new RotateTransform(angle);
-
-            // Appliquer la transformation de rotation a cosmo
-            lazer_2.RenderTransform = Rotation;
-
-            double distanceXY = Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
-
-            trajectoireX_2 = distanceX / distanceXY;
-            trajectoireY_2 = distanceY / distanceXY;
-        }
-
-        private void InitialiseTrajectoire3()
+        private void InitialiseTrajectoireAlienRouge()
         {
             distanceX = (Canvas.GetLeft(cosmo) + cosmo.Width / 2) - (Canvas.GetLeft(alien_2) + alien_2.Width / 2);
             distanceY = (Canvas.GetTop(cosmo) + cosmo.Height / 2) - (Canvas.GetTop(alien_2) + alien_2.Height / 2);
@@ -696,7 +672,7 @@ namespace SAE
             }
         }
 
-        private bool CollisionAvecBord(Canvas canvas, UIElement element)
+        private bool CollisionAvecBord(Canvas canvas, Image element)
         {
 
             double gauche = Canvas.GetLeft(element);
@@ -715,7 +691,7 @@ namespace SAE
             return toucheGauche || toucheDroite || toucheHaut || toucheBas;
         }
 
-        private bool CollisionEntreEntite(UIElement element1, UIElement element2)
+        private bool CollisionEntreEntite(Image element1, Image element2)
         {
 
             double gauche = Canvas.GetLeft(element1);
