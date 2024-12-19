@@ -218,22 +218,7 @@ namespace SAE
                     switch (niveau)
                     {
                         case 2:
-                            if (versDroite)
-                            {
-                                Canvas.SetLeft(alien_2, Canvas.GetLeft(alien_2) + vitesseAlien);
-                                if (Canvas.GetLeft(alien_2) > LIMITE_DROITE_ALIEN)
-                                {
-                                    versDroite = false;
-                                }
-                            }
-                            else
-                            {
-                                Canvas.SetLeft(alien_2, Canvas.GetLeft(alien_2) - vitesseAlien);
-                                if (Canvas.GetLeft(alien_2) < LIMITE_GAUCHE_ALIEN)
-                                {
-                                    versDroite = true;
-                                }
-                            }
+                            DeplacementAlien_2GaucheDroite()
                             break;
                         case 3:
                             Canvas.SetLeft(lazer_2, Canvas.GetLeft(alien));
@@ -301,6 +286,26 @@ namespace SAE
             else
             {
                 labelPause.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void DeplacementAlien_2GaucheDroite() 
+        {
+            if (versDroite)
+            {
+                Canvas.SetLeft(alien_2, Canvas.GetLeft(alien_2) + vitesseAlien);
+                if (Canvas.GetLeft(alien_2) > LIMITE_DROITE_ALIEN)
+                {
+                    versDroite = false;
+                }
+            }
+            else
+            {
+                Canvas.SetLeft(alien_2, Canvas.GetLeft(alien_2) - vitesseAlien);
+                if (Canvas.GetLeft(alien_2) < LIMITE_GAUCHE_ALIEN)
+                {
+                    versDroite = true;
+                }
             }
         }
 
