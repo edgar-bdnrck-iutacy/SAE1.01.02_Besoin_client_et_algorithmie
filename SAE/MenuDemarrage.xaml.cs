@@ -59,16 +59,16 @@ namespace SAE
         private void MenuDemarrage_Chargée(object sender, RoutedEventArgs e)
         {
             // Obtenir les dimensions réelles de l'image
-            var luneTransform = (RotateTransform)imgLune.RenderTransform;
+            RotateTransform luneTransform = (RotateTransform)imgLune.RenderTransform;
             luneTransform.CenterX = imgLune.ActualWidth / 2;
             luneTransform.CenterY = imgLune.ActualHeight / 2;
 
             // Animation de la lune
-            var moonStoryboard = (Storyboard)FindResource("RotateMoonStoryboard");
+            Storyboard moonStoryboard = (Storyboard)FindResource("RotateMoonStoryboard");
             moonStoryboard.Begin();
 
             // Animation de l'astronaute
-            var astroStoryboard = (Storyboard)FindResource("MoveAstronautStoryboard");
+            Storyboard astroStoryboard = (Storyboard)FindResource("MoveAstronautStoryboard");
             astroStoryboard.Begin();
         }
 

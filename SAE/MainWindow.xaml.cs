@@ -165,6 +165,7 @@ namespace SAE
             bool enMouvement = (droite || gauche || haut || bas) && !(droite && gauche) && !(haut && bas);
             if (!pause)
             {
+                labelPause.Visibility = Visibility.Hidden;
                 if (ModeDejeu == 2)
                 {
                     scoreMax = 999999999;
@@ -191,7 +192,6 @@ namespace SAE
                         rapportSpacial2.Visibility = Visibility.Hidden;
                         dejaAppele2 = true;
 
-                        labelPause.Visibility = Visibility.Hidden;
                         Decolage();
                     }
                 }
