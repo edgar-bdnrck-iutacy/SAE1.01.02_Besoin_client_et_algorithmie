@@ -34,7 +34,8 @@ namespace SAE
         public bool niv1fini = false, niv2fini = false, niv3fini = false, invinsible =  false, dejaAppele = false, dejaAppele2 = false, versDroite = true, decolage = false, lobby = true, pause = false, interaction = false, gauche = false, droite = false, haut = false, bas = false, lazerTire = false;
         private static DispatcherTimer tick;
         private static double vitesseFusee = 0,distanceX = 0, distanceY = 0, vitesse = 2, vitessemax = 10, vitesseAlien = 5, trajectoireX, trajectoireY, trajectoireX_2, trajectoireY_2;
-        private static int ModeDejeu = 0, score = 0, niveau = 0, scoreMax = 0, nbNiveauComplete = 0, tempsRestantInvisibilite = 0;
+        private static int ModeDejeu = 0, niveau = 0, scoreMax = 0, nbNiveauComplete = 0, tempsRestantInvisibilite = 0;
+        public static int score = 0;
         private MediaPlayer musique;
         private Random random = new Random();
 
@@ -76,7 +77,7 @@ namespace SAE
             this.Hide();
             MenuDemarrage dialog = new MenuDemarrage();
             bool? result = dialog.ShowDialog();
-            ModeDejeu = dialog.ModeDeJeu;
+            ModeDejeu = MenuDemarrage.ModeDeJeu;
             if (result == false)
                 Application.Current.Shutdown();
             this.Show();
@@ -310,7 +311,6 @@ namespace SAE
                             {
                                 LabelGameOver.Visibility = Visibility.Visible;
                                 lobby = true;
-                                score = 0;
                                 dejaAppele = false;
                                 Canvas.SetLeft(cosmo, canvas.ActualWidth / 2);
                                 Canvas.SetTop(cosmo, canvas.ActualHeight / 2);
@@ -431,6 +431,18 @@ namespace SAE
                     Canvas.SetLeft(Fusee, 965);
                     Canvas.SetTop(Fusee, 131);
                     Fusee.Visibility = Visibility.Visible;
+                    debris.Visibility = Visibility.Visible;
+                    Fusee.Source = new BitmapImage(new Uri("img/fuseeStage1.png", UriKind.Relative));
+                    debris.Source = new BitmapImage(new Uri("img/debrisStage1.png", UriKind.Relative));
+                    Canvas.SetLeft(cosmo, 607);
+                    Canvas.SetTop(cosmo, 308);
+                    cosmo.Visibility = Visibility.Visible;
+                    nbNiveauComplete = 0;
+                    niv1fini = false;
+                    niv2fini = false;
+                    niv3fini = false;
+                    score = 0;
+                    dejaAppele = false;
                 }
             }
         }
@@ -447,6 +459,8 @@ namespace SAE
 
         private void InitialiseNiv()
         {
+            score = 0;
+
             SolLunaire.Visibility = Visibility.Hidden;
             Fusee.Visibility = Visibility.Hidden;
             debris.Visibility = Visibility.Hidden;

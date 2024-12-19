@@ -83,5 +83,17 @@
             FontFamily="72 Black"
             FontSize="48"
             Foreground="White" />
+        <TextBlock
+            x:Name="textBlockScore"
+            Width="236"
+            Margin="530,397,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            FontFamily="72 Black"
+            FontSize="48"
+            FontWeight="Bold"
+            Foreground="White"
+            TextAlignment="Center"
+            TextWrapping="Wrap" Text=""/>
     </Grid>
 </Window>

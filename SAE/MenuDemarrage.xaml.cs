@@ -9,6 +9,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace SAE
 {
@@ -19,7 +20,7 @@ namespace SAE
     {
         private static readonly int AJUSTEMENTVOLUME = 10;
 
-        public int ModeDeJeu { get; set; }
+        public static int ModeDeJeu { get; set;}
 
         private MediaPlayer musique;
         public MenuDemarrage()

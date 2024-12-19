@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace SAE
 {
@@ -21,10 +23,36 @@ namespace SAE
     {
 
         public int niveauSelectionne {  get; set; }
+        private static DispatcherTimer tick;
+        private static int FPS;
 
         public SelecteurNiveau()
         {
             InitializeComponent();
+            InitTimer();
+            textBlockScore.Text = $"{MainWindow.score}";
+        }
+
+        private void InitTimer()
+        {
+            tick = new DispatcherTimer();
+            tick.Interval = TimeSpan.FromMilliseconds(FPS);
+            tick.Tick += Jeu;
+            tick.Start();
+        }
+
+        private void Jeu(object sender, EventArgs e)
+        {
+            Console.WriteLine(MainWindow.score);
+            if (MenuDemarrage.ModeDeJeu == 2)
+            {
+                textBlockScore.Text = $"{MainWindow.score}";
+                textBlockScore.Visibility = Visibility.Visible;
+            }
+            else 
+            {
+                textBlockScore.Visibility = Visibility.Hidden;
+            }
         }
         private void Bouton1_Click(object sender, RoutedEventArgs e)
         {
