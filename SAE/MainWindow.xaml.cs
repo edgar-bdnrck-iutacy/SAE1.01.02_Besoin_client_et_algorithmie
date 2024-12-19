@@ -194,8 +194,22 @@ namespace SAE
 
                     if (score == scoreMax)
                     {
+                        switch (niveau)
+                        {
+                            case 1:
+                                if (!niv1fini)
+                                    nbNiveauComplete++;
+                                break;
+                            case 2:
+                                if (!niv2fini)
+                                    nbNiveauComplete++;
+                                break;
+                            case 3:
+                                if (!niv3fini)
+                                    nbNiveauComplete++;
+                                break;
+                        }
                         score = 0;
-                        nbNiveauComplete++;
                         lobby = true;
                         Fusee.Source = new BitmapImage(new Uri($"img/fuseeStage{nbNiveauComplete + 1}.png", UriKind.Relative));
                         debris.Source = new BitmapImage(new Uri($"img/debrisStage{nbNiveauComplete + 1}.png", UriKind.Relative));
@@ -205,17 +219,17 @@ namespace SAE
                         {
                             case 1:
                             {
-                                niv1fini = true,
+                                niv1fini = true;
                                 break;
                             }
                             case 2:
                             {
-                                niv2fini = true,
+                                niv2fini = true;
                                 break;
                             }
                             case 3:
                             {
-                                niv3fini = true,
+                                niv3fini = true;
                                 break;
                             }
 
