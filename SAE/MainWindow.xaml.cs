@@ -33,7 +33,7 @@ namespace SAE
         public bool dejaAppele = false, dejaAppele2 = false, versDroite = true, decolage = false, lobby = true, pause = false, interaction = false, gauche = false, droite = false, haut = false, bas = false, enMouvement = false, lazerTire = false;
         private static DispatcherTimer tick;
         private static double vitesseFusee = 0,distanceX = 0, distanceY = 0, vitesse = 2, vitessemax = 10, vitesseAlien = 5, ticks = 0, trajectoireX, trajectoireY, trajectoireX_2, trajectoireY_2;
-        private static int score = 0, niveau = 1, scoreMax = 0;
+        private static int score = 0, niveau = 1, scoreMax = 0, nbNiveauComplete = 0;
         private MediaPlayer musique;
         private Random random = new Random();
 
@@ -41,9 +41,11 @@ namespace SAE
         public MainWindow()
         {
             InitializeComponent();
+            this.Hide();
             MenuDemarrage menuDemarrage = new MenuDemarrage();
             menuDemarrage.ShowDialog();
             InitialiseLobby();
+            this.Show();
             this.MouseMove += DeplacementSouris;
             
 
@@ -137,8 +139,8 @@ namespace SAE
 
         private void Jeu(object sender, EventArgs e)
         {
-
-                enMouvement = (droite || gauche || haut || bas) && !(droite && gauche) && !(haut && bas);
+            labelScore.Content = $"{score}/{scoreMax}";
+            enMouvement = (droite || gauche || haut || bas) && !(droite && gauche) && !(haut && bas);
             if (!pause)
             {
                 if (!dejaAppele2 && !interaction && niveau == 1)
@@ -178,18 +180,16 @@ namespace SAE
                     if (!dejaAppele)
                     {
                         InitialiseNiv();
-                        Thread.Sleep(50);
                     }
 
                     if (score == scoreMax)
                     {
                         score = 0;
-                        dejaAppele = false;
-                        niveau++;
+                        nbNiveauComplete++;
                         lobby = true;
-                        Fusee.Source = new BitmapImage(new Uri($"img/fuseeStage{niveau}.png", UriKind.Relative));
-                        debris.Source = new BitmapImage(new Uri($"img/debrisStage{niveau}.png", UriKind.Relative));
-                        labelScore.Content = $"{score}/{scoreMax}";
+                        Fusee.Source = new BitmapImage(new Uri($"img/fuseeStage{nbNiveauComplete}.png", UriKind.Relative));
+                        debris.Source = new BitmapImage(new Uri($"img/debrisStage{nbNiveauComplete}.png", UriKind.Relative));
+                        dejaAppele = false;
                         dejaAppele2 = false;
                     }
 
@@ -231,8 +231,6 @@ namespace SAE
                             InitialiseTrajectoire3();
                             DeplacementAlien();
                             break;
-                        case 4:
-                            break;
                     }
 
                     if (!lazerTire)
@@ -248,14 +246,13 @@ namespace SAE
                             TirLazer(lazer_2, trajectoireX_2, trajectoireY_2);
                     }
 
-                    if (CollisionEntreEntite(lazer, cosmo) || CollisionEntreEntite(lazer_2, cosmo) || CollisionEntreEntite(alien, cosmo) || CollisionEntreEntite(alien_2, cosmo))
+                    if (CollisionMortel())
                     {
                         Canvas.SetLeft(LabelGameOver, canvas.ActualWidth / 2);
                         Canvas.SetTop(LabelGameOver, canvas.ActualHeight / 2);
                         LabelGameOver.Visibility = Visibility.Visible;
                         lobby = true;
                         score = 0;
-                        labelScore.Content = $"{score}/{scoreMax}";
                         dejaAppele = false;
                         Canvas.SetLeft(cosmo, canvas.ActualWidth / 2);
                         Canvas.SetTop(cosmo, canvas.ActualHeight / 2);
@@ -271,16 +268,29 @@ namespace SAE
                     InitialiseLobby();
                     if (CollisionEntreEntite(cosmo, Fusee))
                     {
-                        if (niveau >= 4 && interaction)
+                        if (interaction) 
                         {
-                            FinJeu();
-                            niveau = 0;
-                            decolage = true;
-                        }
-                        else if (interaction)
-                        {
-                            lobby = false;
-                            interaction = false;
+                            if (nbNiveauComplete == 3)
+                            {
+                                FinJeu();
+                                niveau = 0;
+                                decolage = true;
+
+                            }
+                            else
+                            {
+                                this.Hide();
+                                SelecteurNiveau dialog = new SelecteurNiveau();
+                                bool? result = dialog.ShowDialog();
+                                Console.WriteLine(dialog.niveauSelectionne);
+                                if (dialog.niveauSelectionne > 0)
+                                {
+                                    lobby = false;
+                                    niveau = dialog.niveauSelectionne;
+                                }
+                                this.Show();
+                                interaction = false;
+                            }
                         }
                     }
                 }
@@ -290,6 +300,18 @@ namespace SAE
                 labelPause.Visibility = Visibility.Visible;
             }
         }
+
+        private bool CollisionMortel()
+        {
+            if (CollisionEntreEntite(lazer, cosmo) || CollisionEntreEntite(lazer_2, cosmo) || CollisionEntreEntite(alien, cosmo) || CollisionEntreEntite(alien_2, cosmo))
+            {
+                return true;
+            } 
+            else
+            {
+                return false;
+            }
+        } 
 
         private void Decolage()
         {
