@@ -62,11 +62,11 @@ namespace SAE
             luneTransform.CenterX = imgLune.ActualWidth / 2;
             luneTransform.CenterY = imgLune.ActualHeight / 2;
 
-            // Démarrer l'animation de la lune
+            // Animation de la lune
             var moonStoryboard = (Storyboard)FindResource("RotateMoonStoryboard");
             moonStoryboard.Begin();
 
-            // Démarrer l'animation de montée et descente pour imgAstro
+            // Animation de l'astronaute
             var astroStoryboard = (Storyboard)FindResource("MoveAstronautStoryboard");
             astroStoryboard.Begin();
         }
