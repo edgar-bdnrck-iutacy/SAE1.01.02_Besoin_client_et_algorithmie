@@ -47,6 +47,7 @@
     <None Remove="img\rapport_spacial.png" />
     <None Remove="img\rapport_spacial1.png" />
     <None Remove="img\rapport_spacial2.png" />
+    <None Remove="img\rapport_spacial3.png" />
     <None Remove="img\rapport_spacial4.png" />
     <None Remove="img\satellite.png" />
     <None Remove="img\separation.png" />
@@ -57,7 +58,6 @@
     <None Remove="img\testFusée4.png" />
     <None Remove="music\Level.mp3" />
     <None Remove="music\Main Menu.mp3" />
-    <None Remove="music\Mission Control.mp3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -65,9 +65,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="music\Main Menu.mp3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="music\Mission Control.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
