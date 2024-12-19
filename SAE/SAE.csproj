@@ -44,6 +44,10 @@
     <None Remove="img\nv3.png" />
     <None Remove="img\pointe.png" />
     <None Remove="img\rapport_spacial.png" />
+    <None Remove="img\rapport_spacial1.png" />
+    <None Remove="img\rapport_spacial2.png" />
+    <None Remove="img\rapport_spacial3.png" />
+    <None Remove="img\rapport_spacial4.png" />
     <None Remove="img\satellite.png" />
     <None Remove="img\separation.png" />
     <None Remove="img\sky.jpg" />
@@ -99,6 +103,10 @@
     <Resource Include="img\nv2.png" />
     <Resource Include="img\nv3.png" />
     <Resource Include="img\rapport_spacial.png" />
+    <Resource Include="img\rapport_spacial1.png" />
+    <Resource Include="img\rapport_spacial2.png" />
+    <Resource Include="img\rapport_spacial3.png" />
+    <Resource Include="img\rapport_spacial4.png" />
     <Resource Include="img\satellite.png" />
     <Resource Include="img\sky.jpg" />
   </ItemGroup>
